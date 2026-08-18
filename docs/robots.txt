@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://dshandymen.com/sitemap.xml
+
+# colour-direction preview, not part of the site
+Disallow: /teal-preview/

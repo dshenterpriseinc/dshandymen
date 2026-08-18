@@ -508,6 +508,8 @@ def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
     for f in sorted(glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True)):
+        if 'teal-preview' in f.replace(chr(92), '/'):
+            continue          # hand-built colour preview, not a generated page
         s = io.open(f, encoding="utf-8").read()
         orig = s
         if 'REVIEW PENDING' in s:

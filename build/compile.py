@@ -203,6 +203,8 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     # remove only generated html, never fight the OS over locked asset dirs
     for f in glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True):
+        if "teal-preview" in f.replace(chr(92), "/"):
+            continue          # hand-built colour preview, not generated from a capture
         try: os.remove(f)
         except OSError: pass
     shutil.copytree(os.path.join(SRC, "assets"), os.path.join(OUT, "assets"), dirs_exist_ok=True)
