@@ -60,3 +60,17 @@ Fix that (sign in as dshenterpriseinc, or add the account as a collaborator) bef
 
 Start by reading DESIGN.md and site-export/, then show me a build plan before writing code.
 ---
+
+## Quote form
+
+The quote form posts to FormSubmit (`postprocess.py` → `wire_form`), which needs no
+account and forwards photo attachments straight to `dshandymen@yahoo.com`.
+
+**One-time activation is required.** The very first submission triggers a confirmation
+email to `dshandymen@yahoo.com` with an activation link. Until Dave clicks it, nothing
+is delivered. Send one test submission, then have him click the link.
+
+`LIVE_BASE` at the top of `postprocess.py` drives the post-submit redirect (`_next`).
+It must be the address the site is actually served from — change it to
+`https://dshandymen.com/` at the same time the DNS cutover happens, or submissions will
+bounce to a 404.

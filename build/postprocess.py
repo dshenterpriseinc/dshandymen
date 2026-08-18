@@ -170,6 +170,98 @@ def fix_copy(s):
         s = s.replace(a, b)
     return s
 
+
+# ---------------------------------------------------------------- 6. quote form
+# The export shipped the form with no action and no method - the site's primary
+# conversion path silently did nothing. Wired to FormSubmit, which needs no
+# account and no API key, just the destination address, and accepts the photo
+# upload. Requires ONE activation click in the first confirmation email.
+LIVE_BASE = "https://dshenterpriseinc.github.io/dshandymen/"
+FORM_ENDPOINT = "https://formsubmit.co/dshandymen@yahoo.com"
+
+FORM_HIDDEN = (
+ '<input type="hidden" name="_subject" value="New quote request from dshandymen.com">'
+ '<input type="hidden" name="_template" value="table">'
+ '<input type="hidden" name="_captcha" value="false">'
+ '<input type="hidden" name="_honey" value="">'
+ '<input type="hidden" name="_next" value="{NEXT}">'
+)
+
+def wire_form(path, s, prefix):
+    """Point the quote form at a real endpoint and make it enforce its own fields.
+
+    The design tool emitted a form with correct name= attributes but no action and
+    no method, so submitting it did nothing at all. FormSubmit needs no account and
+    forwards file attachments, which matters here - people photograph the driveway.
+    """
+    if '<form' not in s or 'formsubmit.co' in s:
+        return s
+    s = s.replace('<form style=',
+                  '<form action="%s" method="POST" enctype="multipart/form-data" style=' % FORM_ENDPOINT, 1)
+    i = s.find('>', s.find('<form')) + 1
+    # FormSubmit needs an absolute redirect URL. Until the apex DNS moves this must
+    # be the address the site is actually served from, or every submit lands on a 404.
+    s = s[:i] + FORM_HIDDEN.replace('{NEXT}', LIVE_BASE + 'thank-you/') + s[i:]
+
+    # the HTML parser alphabetises attributes, so key off name= rather than position
+    def add_attr(html, field, attr):
+        pat = re.compile('(<(?:input|textarea|select)[^>]* name="' + field + '"[^>]*?)(/?>)')
+        key = attr.split('=')[0]
+        def f(m):
+            return m.group(0) if key in m.group(1) else m.group(1) + ' ' + attr + m.group(2)
+        return pat.sub(f, html, count=1)
+
+    # FormSubmit only forwards a file if the field is literally named "attachment"
+    s = re.sub('(<input[^>]* )name="photos"',
+               lambda m: m.group(1) + 'name="attachment"', s, count=1)
+
+    for field, attr in [('name', 'required'), ('phone', 'required'), ('description', 'required'),
+                        ('attachment', 'accept="image/*"'), ('attachment', 'multiple'),
+                        ('companyname', 'tabindex="-1"'), ('companyname', 'autocomplete="off"'),
+                        ('companyname', 'aria-hidden="true"')]:
+        s = add_attr(s, field, attr)
+    return s
+
+
+THANKYOU = """<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks &mdash; we&rsquo;ll be in touch | DS Handymen, Inc.</title>
+<meta name="description" content="Thanks for your quote request. Dave will get back to you shortly. Call (716) 803-0091 if it is urgent.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://dshandymen.com/thank-you/">
+<link rel="icon" href="../assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#1B2A4A;color:#fff;
+      font-family:'Source Sans 3',system-ui,sans-serif;font-size:18px;text-align:center;padding:28px}
+ .card{max-width:620px}
+ img{width:150px;height:auto;margin-bottom:18px}
+ h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(38px,7vw,60px);
+    text-transform:uppercase;letter-spacing:.01em;margin:0 0 14px;line-height:1.02}
+ p{color:#DCE6F2;margin:0 0 22px;line-height:1.55}
+ a.btn{display:inline-block;background:#F5B324;color:#0C1620;text-decoration:none;font-weight:700;
+    font-family:'Barlow Condensed',sans-serif;font-size:21px;letter-spacing:.06em;text-transform:uppercase;
+    padding:14px 28px;border-radius:4px}
+ a.plain{color:#F5B324}
+ @media(prefers-reduced-motion:no-preference){img{animation:bob 4s ease-in-out infinite}
+   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}}
+</style></head>
+<body><div class="card">
+ <img src="../assets/web/mascot-waving.png" alt="" loading="eager" decoding="async" fetchpriority="high" width="150" height="176">
+ <h1>Got it &mdash; thanks.</h1>
+ <p>Your request is with Dave. He&rsquo;ll come back to you as soon as he&rsquo;s off the route.<br>
+    If it&rsquo;s urgent, just call &mdash; that&rsquo;s always fastest.</p>
+ <p><a class="btn" href="tel:+17168030091">Call the Bear &middot; (716) 803-0091</a></p>
+ <p><a class="plain" href="../">&larr; Back to the site</a></p>
+</div></body></html>
+"""
+
+def write_thankyou():
+    d = os.path.join(OUT, "thank-you")
+    os.makedirs(d, exist_ok=True)
+    io.open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(THANKYOU)
+
 # ---------------------------------------------------------------- run
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
@@ -187,10 +279,12 @@ def main():
         s = fix_copy(s)
         depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
         s = insert_map(f, s, '../'*depth)
+        s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:
             s = s.replace("</head>", "<style>picture{display:contents}\n" + css + "</style>\n</head>", 1)
         if s != orig:
             io.open(f, "w", encoding="utf-8").write(s); n += 1
+    write_thankyou()
     print("  post-processed %d pages" % n)
 
     # report

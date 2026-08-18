@@ -133,12 +133,12 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </section>
 <section style="max-width: 860px; margin: 0px auto; padding: 64px 24px 88px;">
-<form style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+<form action="https://formsubmit.co/dshandymen@yahoo.com" method="POST" enctype="multipart/form-data" style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;"><input type="hidden" name="_subject" value="New quote request from dshandymen.com"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_honey" value=""><input type="hidden" name="_next" value="https://dshenterpriseinc.github.io/dshandymen/thank-you/">
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: rgb(27, 42, 74); font-size: 16px;">Name
-          <input autocomplete="name" name="name" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit;" type="text">
+          <input autocomplete="name" name="name" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit;" type="text" required>
 </label>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: rgb(27, 42, 74); font-size: 16px;">Phone
-          <input autocomplete="tel" name="phone" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit;" type="tel">
+          <input autocomplete="tel" name="phone" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit;" type="tel" required>
 </label>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: rgb(27, 42, 74); font-size: 16px;">Email
           <input autocomplete="email" name="email" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit;" type="email">
@@ -179,10 +179,10 @@ html,body{max-width:100%;overflow-x:hidden}
 </select>
 </label>
 <label style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: rgb(27, 42, 74); font-size: 16px;">Tell us about the job
-          <textarea name="description" placeholder="Length of the driveway, size of the deck, what the room needs&hellip;" rows="4" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit; resize: vertical;"></textarea>
+          <textarea name="description" placeholder="Length of the driveway, size of the deck, what the room needs&hellip;" rows="4" style="border: 1.5px solid rgb(194, 206, 220); border-radius: 6px; padding: 12px 14px; font-size: 17px; font-family: inherit; resize: vertical;" required></textarea>
 </label>
 <label style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: rgb(27, 42, 74); font-size: 16px;">Photos (the single most useful thing you can send)
-          <input accept="image/*" name="photos" style="border: 1.5px dashed rgb(194, 206, 220); border-radius: 6px; padding: 18px 14px; font-size: 16px; font-family: inherit; background: rgb(244, 248, 251);" type="file">
+          <input accept="image/*" name="attachment" style="border: 1.5px dashed rgb(194, 206, 220); border-radius: 6px; padding: 18px 14px; font-size: 16px; font-family: inherit; background: rgb(244, 248, 251);" type="file" multiple>
 </label>
 <input aria-hidden="true" autocomplete="off" name="companyname" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;" tabindex="-1" type="text">
 <div style="grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
