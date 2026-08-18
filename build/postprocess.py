@@ -514,7 +514,12 @@ def main():
             s = fix_reviews(f, s)
             if '"@type":"Review"' not in s:
                 s = s.replace("</head>", REVIEW_LD + "\n</head>", 1)
-        s = fix_header_badge(s)   # before fix_images, so the webp twin is found
+        depth = f.replace(chr(92), '/').split('/docs/')[1].count('/')
+        prefix = '../' * depth
+        s = fix_header_badge(s)
+        # both of these rename image files, and must land before fix_images so
+        # the srcset it builds names the new files and only variants that exist
+        s = fix_pressure_washing(f, s, prefix)
         if '<picture>' not in s:
             s = fix_images(f, s)
         s = relabel_nav(s)
@@ -526,12 +531,14 @@ def main():
         s = slim_hero_video(s)
         s = fix_figure_labels(s)
         s = apply_contrast_map(f, s)
-        depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
-        s = fix_pressure_washing(f, s, "../"*depth)
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:
-            s = s.replace("</head>", "<style>picture{display:contents}\n" + css + "</style>\n</head>", 1)
+            # display:contents promotes a picture's children to grid/flex items, and
+            # that includes <source>, which Chrome does not give display:none. Every
+            # photo grid was laying out with an invisible item in every other cell.
+            head_css = "picture{display:contents}picture>source{display:none}"
+            s = s.replace("</head>", "<style>" + head_css + chr(10) + css + "</style>" + chr(10) + "</head>", 1)
         if s != orig:
             io.open(f, "w", encoding="utf-8").write(s); n += 1
     write_thankyou()
