@@ -120,6 +120,14 @@ footer nav a{display:block !important;padding:10px 0 !important}
 button[aria-pressed]{min-height:44px !important}
 footer a[href^="mailto:"],footer a[href^="tel:"],footer a[href*="facebook"],
 main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !important}
+
+/* The width/height attributes every <img> carries (for aspect-ratio hinting and
+   CLS) are also presentational hints for the used width and height. Inline CSS
+   sets width:100% but leaves height alone, so the hint won and images rendered
+   at their intrinsic pixel height - the gallery's aspect-ratio:4/3 was ignored
+   and the page ran to 13,000px. A plain author rule outranks the hint while
+   still losing to any inline height, which is exactly the precedence wanted. */
+img{height:auto}
 </style>
 </head>
 <body>
@@ -192,39 +200,39 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </div>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/kitchen-remodel-01.webp" type="image/webp"><img alt="Remodeled kitchen with new cabinets" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-01.webp" type="image/webp"><img alt="Remodeled kitchen with new cabinets" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Kitchen remodel &middot; after</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/kitchen-remodel-02.webp" type="image/webp"><img alt="Kitchen remodel, second angle" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-02.webp" type="image/webp"><img alt="Kitchen remodel, second angle" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Kitchen remodel &middot; detail</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/kitchen-remodel-03.webp" type="image/webp"><img alt="Kitchen remodel, third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-03.webp" type="image/webp"><img alt="Kitchen remodel, third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Kitchen remodel &middot; finished</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/tile-backsplash-detail.webp" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/tile-backsplash-detail.webp" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Backsplash &middot; tile detail</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/bathroom-vanity-remodel.webp" type="image/webp"><img alt="Remodeled bathroom vanity" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/bathroom-vanity-remodel.webp" type="image/webp"><img alt="Remodeled bathroom vanity" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Bathroom vanity &middot; after</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER.webp" type="image/webp"><img alt="Living room with finished fireplace surround" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER.webp" type="image/webp"><img alt="Living room with finished fireplace surround" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Living room &middot; after</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/diningroom-arched-window.webp" type="image/webp"><img alt="Dining room with arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/diningroom-arched-window.webp" type="image/webp"><img alt="Dining room with arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Dining room &middot; arched window trim</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/basement-finished-01.webp" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-01.webp" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Finished basement</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/photos/basement-finished-02.webp" type="image/webp"><img alt="Finished basement, another angle" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-02.webp" type="image/webp"><img alt="Finished basement, another angle" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Finished basement &middot; second view</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
@@ -236,19 +244,19 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Interior finish work</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-remodel-03.webp" type="image/webp"><img alt="Trim and paint work" loading="lazy" src="../assets/gallery/fb-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-remodel-03.webp" type="image/webp"><img alt="Trim and paint work" loading="lazy" src="../assets/gallery/fb-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Trim & paint</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-remodel-04.webp" type="image/webp"><img alt="Painted and trimmed room" loading="lazy" src="../assets/gallery/fb-remodel-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-remodel-04.webp" type="image/webp"><img alt="Painted and trimmed room" loading="lazy" src="../assets/gallery/fb-remodel-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Trim & paint</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-remodel-05.webp" type="image/webp"><img alt="Finish carpentry detail" loading="lazy" src="../assets/gallery/fb-remodel-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-remodel-05.webp" type="image/webp"><img alt="Finish carpentry detail" loading="lazy" src="../assets/gallery/fb-remodel-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Finish carpentry</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-remodel-06.webp" type="image/webp"><img alt="Interior remodel" loading="lazy" src="../assets/gallery/fb-remodel-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-remodel-06.webp" type="image/webp"><img alt="Interior remodel" loading="lazy" src="../assets/gallery/fb-remodel-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Interior remodel</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
@@ -260,15 +268,15 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Custom bar &middot; finished</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-job-01.webp" type="image/webp"><img alt="Exterior construction project" loading="lazy" src="../assets/gallery/fb-job-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-01.webp" type="image/webp"><img alt="Exterior construction project" loading="lazy" src="../assets/gallery/fb-job-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Exterior project</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-job-02.webp" type="image/webp"><img alt="Exterior project work" loading="lazy" src="../assets/gallery/fb-job-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-02.webp" type="image/webp"><img alt="Exterior project work" loading="lazy" src="../assets/gallery/fb-job-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="1016" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Exterior project</span></figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 6px; overflow: hidden; background: rgb(239, 231, 220);">
-<picture><source srcset="../assets/gallery/fb-job-03.webp" type="image/webp"><img alt="Exterior project" loading="lazy" src="../assets/gallery/fb-job-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-03.webp" type="image/webp"><img alt="Exterior project" loading="lazy" src="../assets/gallery/fb-job-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="762" height="572" decoding="async"></picture>
 <figcaption style='padding: 12px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(110, 101, 92);'><span class="sc-interp">Exterior project</span></figcaption>
 </figure>
 </div>

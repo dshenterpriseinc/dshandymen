@@ -119,6 +119,14 @@ footer nav a{display:block !important;padding:10px 0 !important}
 button[aria-pressed]{min-height:44px !important}
 footer a[href^="mailto:"],footer a[href^="tel:"],footer a[href*="facebook"],
 main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !important}
+
+/* The width/height attributes every <img> carries (for aspect-ratio hinting and
+   CLS) are also presentational hints for the used width and height. Inline CSS
+   sets width:100% but leaves height alone, so the hint won and images rendered
+   at their intrinsic pixel height - the gallery's aspect-ratio:4/3 was ignored
+   and the page ran to 13,000px. A plain author rule outranks the hint while
+   still losing to any inline height, which is exactly the precedence wanted. */
+img{height:auto}
 </style>
 </head>
 <body>
@@ -159,19 +167,19 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 <p style="margin: 0px 0px 36px; font-size: 18.5px; color: rgb(61, 71, 86); max-width: 62ch;">Every photo below is our crew's work &mdash; decks brought back from grey, sidewalks you could eat off, roofs de-mossed without wrecking the shingles.</p>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
 <picture><source srcset="../assets/gallery/house-washing.webp" type="image/webp"><img alt="House siding wash in progress" loading="lazy" src="../assets/gallery/house-washing.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="830" height="550" decoding="async"></picture>
-<picture><source srcset="../assets/gallery/pressure-wash-deck.webp" type="image/webp"><img alt="Deck pressure washing, half done" loading="lazy" src="../assets/gallery/pressure-wash-deck.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="2848" height="2134" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/pressure-wash-deck.webp" type="image/webp"><img alt="Deck pressure washing, half done" loading="lazy" src="../assets/gallery/pressure-wash-deck.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="806" height="604" decoding="async"></picture>
 <picture><source srcset="../assets/gallery/roof-cleaning.webp" type="image/webp"><img alt="Roof cleaning" loading="lazy" src="../assets/gallery/roof-cleaning.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="420" height="315" decoding="async"></picture>
-<picture><source srcset="../assets/gallery/sidewalk-1.webp" type="image/webp"><img alt="Sidewalk before and during washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="1536" height="2048" decoding="async"></picture>
-<picture><source srcset="../assets/gallery/sidewalk-2.webp" type="image/webp"><img alt="Clean sidewalk after washing" loading="lazy" src="../assets/gallery/sidewalk-2.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/sidewalk-1.webp" type="image/webp"><img alt="Sidewalk before and during washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="806" height="1075" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/sidewalk-2.webp" type="image/webp"><img alt="Clean sidewalk after washing" loading="lazy" src="../assets/gallery/sidewalk-2.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="806" height="1075" decoding="async"></picture>
 <picture><source srcset="../assets/gallery/power-washing.webp" type="image/webp"><img alt="Power washing a driveway" loading="lazy" src="../assets/gallery/power-washing.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="800" height="466" decoding="async"></picture>
 </div>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
 <figure style="margin: 0px;">
-<picture><source srcset="../assets/gallery/deck-wash-before.webp" type="image/webp"><img alt="Deck before washing &mdash; grey and weathered" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;" width="1512" height="2016" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-before.webp" type="image/webp"><img alt="Deck before washing &mdash; grey and weathered" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(107, 119, 140); margin-top: 8px;'>Before</figcaption>
 </figure>
 <figure style="margin: 0px;">
-<picture><source srcset="../assets/gallery/deck-wash-after.webp" type="image/webp"><img alt="Same deck after washing &mdash; wood grain restored" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;" width="1512" height="2016" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-after.webp" type="image/webp"><img alt="Same deck after washing &mdash; wood grain restored" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(0, 51, 141); margin-top: 8px;'>After</figcaption>
 </figure>
 </div>

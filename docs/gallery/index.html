@@ -118,6 +118,14 @@ footer nav a{display:block !important;padding:10px 0 !important}
 button[aria-pressed]{min-height:44px !important}
 footer a[href^="mailto:"],footer a[href^="tel:"],footer a[href*="facebook"],
 main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !important}
+
+/* The width/height attributes every <img> carries (for aspect-ratio hinting and
+   CLS) are also presentational hints for the used width and height. Inline CSS
+   sets width:100% but leaves height alone, so the hint won and images rendered
+   at their intrinsic pixel height - the gallery's aspect-ratio:4/3 was ignored
+   and the page ran to 13,000px. A plain author rule outranks the hint while
+   still losing to any inline height, which is exactly the precedence wanted. */
+img{height:auto}
 </style>
 </head>
 <body>
@@ -174,84 +182,84 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-01.webp" type="image/webp"><img alt="Remodeled kitchen" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-01.webp" type="image/webp"><img alt="Remodeled kitchen" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-02.webp" type="image/webp"><img alt="Kitchen remodel detail" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-02.webp" type="image/webp"><img alt="Kitchen remodel detail" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-03.webp" type="image/webp"><img alt="Kitchen remodel third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-03.webp" type="image/webp"><img alt="Kitchen remodel third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/tile-backsplash-detail.webp" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/tile-backsplash-detail.webp" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Tile backsplash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/bathroom-vanity-remodel.webp" type="image/webp"><img alt="Bathroom vanity remodel" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/bathroom-vanity-remodel.webp" type="image/webp"><img alt="Bathroom vanity remodel" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Bathroom vanity</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER.webp" type="image/webp"><img alt="Living room fireplace" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER.webp" type="image/webp"><img alt="Living room fireplace" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Living room</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/diningroom-arched-window.webp" type="image/webp"><img alt="Dining room arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/diningroom-arched-window.webp" type="image/webp"><img alt="Dining room arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Dining room</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/basement-finished-01.webp" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-01.webp" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/basement-finished-02.webp" type="image/webp"><img alt="Finished basement second view" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-02.webp" type="image/webp"><img alt="Finished basement second view" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/deck-refinished-AFTER.webp" type="image/webp"><img alt="Refinished deck" loading="lazy" src="../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2848" height="2134" decoding="async"></picture>
+<picture><source srcset="../assets/photos/deck-refinished-AFTER.webp" type="image/webp"><img alt="Refinished deck" loading="lazy" src="../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="968" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck refinish</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/deck-wash-before.webp" type="image/webp"><img alt="Weathered deck before washing" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1512" height="2016" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-before.webp" type="image/webp"><img alt="Weathered deck before washing" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/deck-wash-after.webp" type="image/webp"><img alt="Deck after pressure washing" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1512" height="2016" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-after.webp" type="image/webp"><img alt="Deck after pressure washing" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
@@ -265,7 +273,7 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/sidewalk-1.webp" type="image/webp"><img alt="Sidewalk washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/sidewalk-1.webp" type="image/webp"><img alt="Sidewalk washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="806" height="1075" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Sidewalk wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
@@ -279,14 +287,14 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/landscaping-mulch-bed.webp" type="image/webp"><img alt="Fresh mulch bed" loading="lazy" src="../assets/photos/landscaping-mulch-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/landscaping-mulch-bed.webp" type="image/webp"><img alt="Fresh mulch bed" loading="lazy" src="../assets/photos/landscaping-mulch-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Mulch bed</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/landscaping-stone-bed.webp" type="image/webp"><img alt="Stone landscaping bed" loading="lazy" src="../assets/photos/landscaping-stone-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/landscaping-stone-bed.webp" type="image/webp"><img alt="Stone landscaping bed" loading="lazy" src="../assets/photos/landscaping-stone-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Stone bed</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
@@ -314,35 +322,35 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/exterior-window-install-inprogress.webp" type="image/webp"><img alt="Window installation in progress" loading="lazy" src="../assets/photos/exterior-window-install-inprogress.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/exterior-window-install-inprogress.webp" type="image/webp"><img alt="Window installation in progress" loading="lazy" src="../assets/photos/exterior-window-install-inprogress.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="969" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Window install</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/exterior-siding-night-work.webp" type="image/webp"><img alt="Siding work at night" loading="lazy" src="../assets/photos/exterior-siding-night-work.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/exterior-siding-night-work.webp" type="image/webp"><img alt="Siding work at night" loading="lazy" src="../assets/photos/exterior-siding-night-work.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding, after dark</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/roof-damage-BEFORE.webp" type="image/webp"><img alt="Roof damage before repair" loading="lazy" src="../assets/photos/roof-damage-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/roof-damage-BEFORE.webp" type="image/webp"><img alt="Roof damage before repair" loading="lazy" src="../assets/photos/roof-damage-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof repair</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/roof-tearoff-BEFORE.webp" type="image/webp"><img alt="Roof tear-off" loading="lazy" src="../assets/photos/roof-tearoff-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/roof-tearoff-BEFORE.webp" type="image/webp"><img alt="Roof tear-off" loading="lazy" src="../assets/photos/roof-tearoff-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof tear-off</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/patio-1.webp" type="image/webp"><img alt="Patio project" loading="lazy" src="../assets/gallery/patio-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="995" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/patio-1.webp" type="image/webp"><img alt="Patio project" loading="lazy" src="../assets/gallery/patio-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="388" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Patio project</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
@@ -363,49 +371,49 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/bench.webp" type="image/webp"><img alt="Custom outdoor bench" loading="lazy" src="../assets/gallery/bench.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="957" height="960" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/bench.webp" type="image/webp"><img alt="Custom outdoor bench" loading="lazy" src="../assets/gallery/bench.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="801" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Outdoor bench</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-04.webp" type="image/webp"><img alt="Crew job site" loading="lazy" src="../assets/gallery/fb-job-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-04.webp" type="image/webp"><img alt="Crew job site" loading="lazy" src="../assets/gallery/fb-job-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-05.webp" type="image/webp"><img alt="Job in progress" loading="lazy" src="../assets/gallery/fb-job-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-05.webp" type="image/webp"><img alt="Job in progress" loading="lazy" src="../assets/gallery/fb-job-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-06.webp" type="image/webp"><img alt="Yard work" loading="lazy" src="../assets/gallery/fb-job-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-06.webp" type="image/webp"><img alt="Yard work" loading="lazy" src="../assets/gallery/fb-job-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Yard work</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-07.webp" type="image/webp"><img alt="Job site" loading="lazy" src="../assets/gallery/fb-job-07.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1536" height="2048" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-07.webp" type="image/webp"><img alt="Job site" loading="lazy" src="../assets/gallery/fb-job-07.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="1064" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-08.webp" type="image/webp"><img alt="Work in progress" loading="lazy" src="../assets/gallery/fb-job-08.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-08.webp" type="image/webp"><img alt="Work in progress" loading="lazy" src="../assets/gallery/fb-job-08.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/truck-branded-lakeside.webp" type="image/webp"><img alt="DS Handymen branded truck" loading="lazy" src="../assets/photos/truck-branded-lakeside.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="3449" height="1247" decoding="async"></picture>
+<picture><source srcset="../assets/photos/truck-branded-lakeside.webp" type="image/webp"><img alt="DS Handymen branded truck" loading="lazy" src="../assets/photos/truck-branded-lakeside.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="467" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
 <span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">The truck</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">&mdash;</span></span>

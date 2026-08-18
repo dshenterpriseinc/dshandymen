@@ -119,6 +119,14 @@ footer nav a{display:block !important;padding:10px 0 !important}
 button[aria-pressed]{min-height:44px !important}
 footer a[href^="mailto:"],footer a[href^="tel:"],footer a[href*="facebook"],
 main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !important}
+
+/* The width/height attributes every <img> carries (for aspect-ratio hinting and
+   CLS) are also presentational hints for the used width and height. Inline CSS
+   sets width:100% but leaves height alone, so the hint won and images rendered
+   at their intrinsic pixel height - the gallery's aspect-ratio:4/3 was ignored
+   and the page ran to 13,000px. A plain author rule outranks the hint while
+   still losing to any inline height, which is exactly the precedence wanted. */
+img{height:auto}
 </style>
 </head>
 <body>

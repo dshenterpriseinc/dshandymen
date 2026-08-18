@@ -118,6 +118,14 @@ footer nav a{display:block !important;padding:10px 0 !important}
 button[aria-pressed]{min-height:44px !important}
 footer a[href^="mailto:"],footer a[href^="tel:"],footer a[href*="facebook"],
 main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !important}
+
+/* The width/height attributes every <img> carries (for aspect-ratio hinting and
+   CLS) are also presentational hints for the used width and height. Inline CSS
+   sets width:100% but leaves height alone, so the hint won and images rendered
+   at their intrinsic pixel height - the gallery's aspect-ratio:4/3 was ignored
+   and the page ran to 13,000px. A plain author rule outranks the hint while
+   still losing to any inline height, which is exactly the precedence wanted. */
+img{height:auto}
 </style>
 </head>
 <body>
@@ -163,7 +171,7 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
 </ul>
 <p style="margin: 0px; font-size: 18px; color: rgb(61, 71, 86);">Village or the rural edges past Chestnut Ridge &mdash; <a href="../../quote/">send photos</a>, get a straight quote.</p>
 </div>
-<picture><source srcset="../../assets/photos/deck-refinished-AFTER.webp" type="image/webp"><img alt="Refinished deck at an Orchard Park home" loading="lazy" src="../../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px;" width="2848" height="2134" decoding="async"></picture>
+<picture><source srcset="../../assets/photos/deck-refinished-AFTER.webp" type="image/webp"><img alt="Refinished deck at an Orchard Park home" loading="lazy" src="../../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px;" width="1292" height="968" decoding="async"></picture>
 </section>
 <section style="background: rgb(0, 51, 141);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
