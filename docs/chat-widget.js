@@ -43,6 +43,16 @@ var __DSH_BASE = (function () {
     pointing:  U('assets/web/mascot-pigeon-blueprint.webp'),
     thumbsup:  U('assets/web/mascot-pigeon-blueprint.webp')
   };
+  // The animation loop: three real poses of the same character. He waves,
+  // pivots, folds his arms, holds, and pivots back. Frames rather than a
+  // rendered clip so the animation is exactly the mascot on the cards and in the
+  // logo, keeps a real alpha channel, and costs ~100 KB instead of megabytes.
+  var POSES = [
+    U('assets/web/bear-pose-wave.webp'),
+    U('assets/web/bear-pose-stand.webp'),
+    U('assets/web/bear-pose-arms.webp')
+  ];
+
   var FIG = function (persona, state) {
     var set = persona === 'bear' ? BEAR_FIG : BIRD_FIG;
     return set[state] || set.neutral;
@@ -245,7 +255,10 @@ var __DSH_BASE = (function () {
 '  button{font:inherit}',
 '',
 '  /* ---- the mascot ---- */',
-'  .stage{position:fixed;right:14px;bottom:0;z-index:9000;display:flex;align-items:flex-end;gap:10px;',
+'  /* the bubble sits ABOVE him, not beside. Beside, it reached back across the',
+'     page and covered content; above, it stacks into the margin he already uses. */',
+'  .stage{position:fixed;right:14px;bottom:0;z-index:9000;display:flex;flex-direction:column;',
+'    align-items:flex-end;gap:0;',
 '    pointer-events:none;opacity:0;transform:translateY(28px) scale(.96);',
 '    transition:opacity .6s ease,transform .6s cubic-bezier(.2,1.1,.35,1)}',
 '  .stage.in{opacity:1;transform:none}',
@@ -254,16 +267,37 @@ var __DSH_BASE = (function () {
 '    filter:drop-shadow(0 14px 26px rgba(10, 23, 26, .36));transition:transform .25s cubic-bezier(.2,1.2,.4,1)}',
 '  /* three times the old size on a desktop, tied to viewport height so a short',
 '     laptop screen is not swallowed by a giant bear */',
-'  .launcher img{height:min(400px,44vh);width:auto;display:block;pointer-events:none}',
+'  .figs{position:relative;display:block;height:min(400px,44vh);width:calc(min(400px,44vh) * 0.92);',
+'    transform-origin:50% 100%;animation:pivot 11s ease-in-out infinite}',
+'  .figs img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;',
+'    display:block;pointer-events:none;opacity:0;animation:11s linear infinite}',
+'  .figs img:nth-child(1){animation-name:poseA;opacity:1}',
+'  .figs img:nth-child(2){animation-name:poseB}',
+'  .figs img:nth-child(3){animation-name:poseC}',
+'  /* cross-fades, and a squash at each hand-over that reads as him turning on',
+'     the spot. Only opacity and transform, so it stays on the compositor. */',
+'  @keyframes poseA{0%,25%{opacity:1}29%,90%{opacity:0}96%,100%{opacity:1}}',
+'  @keyframes poseB{0%,25%{opacity:0}29%,53%{opacity:1}57%,100%{opacity:0}}',
+'  @keyframes poseC{0%,53%{opacity:0}57%,90%{opacity:1}96%,100%{opacity:0}}',
+'  @keyframes pivot{',
+'    0%,24%{transform:scaleX(1) translateY(0)}',
+'    27%{transform:scaleX(.80) translateY(-4px)}',
+'    31%,52%{transform:scaleX(1) translateY(0)}',
+'    55%{transform:scaleX(.80) translateY(-4px)}',
+'    59%,89%{transform:scaleX(1) translateY(0)}',
+'    93%{transform:scaleX(.80) translateY(-4px)}',
+'    97%,100%{transform:scaleX(1) translateY(0)}}',
+'  /* a tab in the background, or the panel open, has no business burning CPU */',
+'  .stage.still .figs,.stage.still .figs img{animation-play-state:paused}',
 '  .launcher:hover{transform:translateY(-8px) scale(1.03)}',
 '  .launcher:focus-visible{outline:3px solid ' + p.accent + ';outline-offset:8px;border-radius:14px}',
 '',
 '  /* ---- speech bubble ---- */',
 '  .hello{pointer-events:auto;position:relative;background:#fff;color:#0A171A;border-radius:16px;',
-'    padding:16px 18px 14px;width:min(320px,calc(100vw - 130px));margin-bottom:52px;',
+'    padding:16px 18px 14px;width:min(340px,calc(100vw - 32px));margin-bottom:14px;margin-right:8px;',
 '    box-shadow:0 10px 34px rgba(10, 23, 26, .26);border:1px solid rgba(10, 23, 26, .08)}',
-'  .hello:after{content:"";position:absolute;right:-9px;bottom:26px;width:18px;height:18px;background:#fff;',
-'    border-right:1px solid rgba(10, 23, 26, .08);border-top:1px solid rgba(10, 23, 26, .08);',
+'  .hello:after{content:"";position:absolute;bottom:-9px;right:54px;width:18px;height:18px;background:#fff;',
+'    border-right:1px solid rgba(10, 23, 26, .08);border-bottom:1px solid rgba(10, 23, 26, .08);',
 '    transform:rotate(45deg)}',
 '  .hello p{margin:0 0 12px;padding-right:22px;font-size:16.5px;line-height:1.45;min-height:1.45em}',
 '  .caret{display:inline-block;width:2px;height:1.05em;background:' + p.accent + ';',
@@ -280,15 +314,20 @@ var __DSH_BASE = (function () {
 '    color:#54666A;cursor:pointer;min-width:32px;min-height:32px}',
 '  .ask:focus-visible,.mic:focus-visible,.hello-x:focus-visible{outline:3px solid ' + p.accent + ';outline-offset:2px}',
 '',
-'  @media(max-width:900px){ .launcher img{height:min(230px,30vh)} .hello{width:min(260px,calc(100vw - 120px))} }',
+'  @media(max-width:900px){',
+'    .figs{height:min(250px,32vh);width:calc(min(250px,32vh) * 0.92)}',
+'    .hello{width:min(300px,calc(100vw - 40px))}',
+'  }',
 '  @media(max-width:640px){',
-'    .stage{right:8px;gap:4px}',
-'    .launcher img{height:150px}',
-'    .hello{width:calc(100vw - 190px);padding:12px 14px;margin-bottom:26px}',
+'    .stage{right:8px}',
+'    .figs{height:172px;width:158px}',
+'    .hello{width:calc(100vw - 32px);padding:12px 14px;margin-bottom:8px}',
 '    .hello p{font-size:15px;margin-bottom:10px}',
 '  }',
 '  @media(prefers-reduced-motion:reduce){',
 '    .stage,.launcher{transition:none}.launcher:hover{transform:none}.caret{animation:none}',
+'    .figs,.figs img{animation:none}',
+'    .figs img:nth-child(1){opacity:1}.figs img:nth-child(2),.figs img:nth-child(3){opacity:0}',
 '  }',
 '',
 '  /* ---- panel ---- */',
@@ -350,7 +389,11 @@ var __DSH_BASE = (function () {
 '    </div>',
 '  </div>',
 '  <button class="launcher" aria-label="Open chat — ' + p.title + '" aria-expanded="false">',
-'    <img alt="" src="' + FIG(this.persona, 'waving') + '">',
+'    <span class="figs">',
+'      <img alt="" src="' + POSES[0] + '" fetchpriority="low" decoding="async">',
+'      <img alt="" data-src="' + POSES[1] + '" decoding="async">',
+'      <img alt="" data-src="' + POSES[2] + '" decoding="async">',
+'    </span>',
 '  </button>',
 '</div>',
 '<div class="panel hidden" role="dialog" aria-label="' + p.title + '" aria-modal="false">',
@@ -393,6 +436,9 @@ var __DSH_BASE = (function () {
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && self.open) self._toggle(false);
       });
+      document.addEventListener('visibilitychange', function () {
+        self._still(document.hidden || self.open);
+      });
 
       // speech in and out are enhancements: only offer what the browser has
       if (SR) {
@@ -416,11 +462,24 @@ var __DSH_BASE = (function () {
     /* ------------------------------------------------------------- entrance */
     _arrive() {
       if (this._dismissed || this.open) return;
-      this.$stage.classList.add('in');
+      // the later poses are not needed until the loop starts, so they stay off
+      // the critical path rather than adding ~70 KB to every page load
+      this.shadowRoot.querySelectorAll('.figs img[data-src]').forEach(function (im) {
+        im.src = im.getAttribute('data-src');
+        im.removeAttribute('data-src');
+      });
       var p = this._p();
       // a phone has no room for the long version - it would bury the hero's
       // call to action behind the bubble for as long as it is up
       var line = (window.innerWidth < 700 && p.helloShort) ? p.helloShort : p.hello;
+      // Reserve the final height before he becomes visible. Without this the
+      // typewriter grows the bubble line by line, and since the stage is
+      // anchored to the bottom of the viewport every new line nudges everything
+      // above it - which the browser scores as layout shift, 0.037 a go.
+      this.$helloTxt.textContent = line;
+      this.$helloTxt.style.minHeight = this.$helloTxt.offsetHeight + 'px';
+      this.$helloTxt.textContent = '';
+      this.$stage.classList.add('in');
       if (this.reduced) { this.$helloTxt.textContent = line; return; }
       this._type(this.$helloTxt, line);
       // he has said his piece - fold the bubble away rather than camp on the
@@ -530,11 +589,11 @@ var __DSH_BASE = (function () {
     }
 
     _setAvatar(state) {
-      var src = FIG(this.persona, state);
-      var lim = this.$launcher.querySelector('img');
-      if (lim) lim.src = src;
-      if (this.$headImg) this.$headImg.src = src;
+      // the big figure runs its own loop now; only the panel's head reacts to state
+      if (this.$headImg) this.$headImg.src = FIG(this.persona, state);
     }
+
+    _still(on) { this.$stage.classList.toggle('still', !!on); }
 
     _toggle(open) {
       this.open = open;
@@ -542,6 +601,7 @@ var __DSH_BASE = (function () {
       this.$panel.classList.toggle('hidden', !open);
       this.$launcher.setAttribute('aria-expanded', String(open));
       this.$stage.classList.toggle('gone', open);
+      this._still(open);
       if (open && !this._greeted) {
         this._greeted = true;
         this._bot(this._p().greet, 'waving');
