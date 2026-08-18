@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55}
+  a{color:#00338D}a:hover{color:#1B2A4A}
+  @keyframes stamp{0%{transform:scale(1.35);opacity:0}60%{transform:scale(0.96);opacity:1}100%{transform:scale(1);opacity:1}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<dc-import name="SiteHeader" hint-size="100%,72px"></dc-import>
+<main>
+  <section aria-label="Seasonal welcome" style="position: relative; background: {{ heroBg }}; overflow: hidden; min-height: 620px; display: flex; align-items: center;">
+    <video src="{{ heroVideo }}" muted autoplay loop playsinline preload="metadata" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;"></video>
+    <div style="position: absolute; inset: 0; background: linear-gradient(100deg, rgba(12,22,32,0.88) 0%, rgba(27,42,74,0.72) 45%, rgba(27,42,74,0.25) 100%);"></div>
+    <div style="position: relative; max-width: 1240px; margin: 0 auto; padding: 90px 24px; width: 100%;">
+      <p style="margin: 0 0 18px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324; display: flex; align-items: center; gap: 10px;"><span style="display: inline-block; width: 34px; height: 2px; background: #F5B324;"></span>The Southtowns Almanac · {{ seasonLabel }}</p>
+      <h1 style="margin: 0 0 16px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(52px, 7vw, 92px); line-height: 0.98; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; max-width: 13ch; text-wrap: pretty;">{{ heroHeadline }}</h1>
+      <p style="margin: 0 0 34px; font-size: 21px; color: #DCE6F2; max-width: 46ch; text-wrap: pretty;">{{ heroSub }}</p>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+        <a href="{{ heroCtaHref }}" style="background: #00338D; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #00276B; color: #FFFFFF;">{{ heroCta }}</a>
+        <a href="tel:+17168030091" style="color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255,255,255,0.55); border-radius: 4px;" style-hover="border-color: #FFFFFF; color: #FFFFFF;">Call the Bear · (716) 803-0091</a>
+      </div>
+    </div>
+  </section>
+  <section aria-label="Trust" style="background: #F4F8FB; border-bottom: 1px solid #E1E9F2;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: 0.08em; text-transform: uppercase; color: #1B2A4A;">
+      <span>BBB Accredited · A+</span><span style="color: #C2CEDC;">|</span>
+      <span>Since 2009</span><span style="color: #C2CEDC;">|</span>
+      <span>Fully Insured</span><span style="color: #C2CEDC;">|</span>
+      <span>4.7★ · 13 Reviews</span><span style="color: #C2CEDC;">|</span>
+      <span>Locally Owned · Hamburg, NY</span>
+    </div>
+  </section>
+  <section aria-label="Services" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 72px;">
+    <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">If it needs doing, the Bear does it</h2>
+    <p style="margin: 0 0 44px; font-size: 19px; color: #3D4756; max-width: 60ch;">Six ways we keep Southtowns homes running — all year, every mood the lake throws at us.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="6">
+        <a href="{{ svc.href }}" style="text-decoration: none; background: #F4F8FB; border-radius: 8px; padding: 26px 26px 0; display: flex; flex-direction: column; gap: 10px; color: #0C1620; overflow: hidden; border: 1px solid #E1E9F2; transition: transform 0.15s ease, box-shadow 0.15s ease;" style-hover="transform: translateY(-3px); box-shadow: 0 10px 24px rgba(27,42,74,0.14); color: #0C1620;">
+          <h3 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: 0.03em; text-transform: uppercase; color: #1B2A4A;">{{ svc.name }}</h3>
+          <p style="margin: 0; font-size: 16.5px; color: #3D4756; min-height: 52px;">{{ svc.blurb }}</p>
+          <img src="{{ svc.img }}" alt="" width="220" height="220" loading="lazy" style="width: 170px; height: 170px; object-fit: contain; align-self: flex-end; margin-top: auto; display: block;">
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  <section aria-label="The Bear and the Bird" style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+      <img src="assets/web/mascot-bear-and-bird-duo.png" alt="The Bear and the Bird — the two sides of DS Handymen" width="600" height="600" loading="lazy" style="width: 100%; max-width: 520px; height: auto; display: block; margin: 0 auto;">
+      <div>
+        <p style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">One company, two temperaments</p>
+        <h2 style="margin: 0 0 20px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.02; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF;">The Bear &amp; the Bird work together</h2>
+        <p style="margin: 0 0 16px; font-size: 18.5px; color: #DCE6F2; text-wrap: pretty;"><strong style="color: #FFFFFF;">The Bear</strong> is Dave Schultz — 50 years in Hamburg, out at 4am when the lake dumps a foot on your driveway. Plowing, washing, mowing, fixing.</p>
+        <p style="margin: 0 0 28px; font-size: 18.5px; color: #DCE6F2; text-wrap: pretty;"><strong style="color: #FFFFFF;">The Bird</strong> is Nichole Pigeon — RIT Design School graduate leading the Pigeon Division, our interior &amp; exterior design and construction arm. Trim, cabinets, tile, paint, finish work.</p>
+        <a href="PigeonDivision.dc.html" style="display: inline-block; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: 0.08em; text-transform: uppercase; border: 2px solid #B5673F; background: rgba(181,103,63,0.18); padding: 12px 24px; border-radius: 4px;" style-hover="background: #B5673F; color: #FFFFFF;">Meet the Pigeon Division →</a>
+      </div>
+    </div>
+  </section>
+  <section aria-label="Before and after" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 72px;">
+    <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">Same house. See for yourself.</h2>
+    <p style="margin: 0 0 36px; font-size: 19px; color: #3D4756; max-width: 62ch;">New siding and windows by our own crew. Drag the handle — the Bills flag stays either way.</p>
+    <div ref="{{ baRef }}" onPointerDown="{{ baDown }}" onPointerMove="{{ baMove }}" onPointerUp="{{ baUp }}" role="slider" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ baPctRounded }}" tabindex="0" onKeyDown="{{ baKey }}" style="position: relative; border-radius: 10px; overflow: hidden; cursor: ew-resize; user-select: none; touch-action: none; aspect-ratio: 16 / 9; max-height: 640px; box-shadow: 0 14px 40px rgba(27,42,74,0.20);">
+      <img src="assets/photos/beforeafter-siding-windows-BEFORE.jpg" alt="Before: yellow house with old windows" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" draggable="false">
+      <img src="assets/photos/beforeafter-siding-windows-AFTER.jpg" alt="After: new blue siding and windows, hedge cleared" draggable="false" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: {{ baClip }};">
+      <div style="position: absolute; top: 0; bottom: 0; left: {{ baLeft }}; width: 3px; background: #FFFFFF; box-shadow: 0 0 8px rgba(12,22,32,0.5);"></div>
+      <div style="position: absolute; top: 50%; left: {{ baLeft }}; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #1B2A4A; box-shadow: 0 3px 10px rgba(12,22,32,0.4); font-size: 15px;">⇔</div>
+      <span style="position: absolute; left: 16px; top: 16px; background: rgba(12,22,32,0.75); color: #FFFFFF; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px;">Before</span>
+      <span style="position: absolute; right: 16px; top: 16px; background: rgba(0,51,141,0.85); color: #FFFFFF; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px;">After</span>
+    </div>
+  </section>
+  <section aria-label="Reviews" style="background: #F4F8FB;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 300px 1fr; gap: 56px; align-items: start;">
+      <div style="text-align: center;">
+        <img ref="{{ stampRef }}" src="assets/web/logo-badge-primary.png" alt="DS Handymen badge" width="220" height="220" loading="lazy" style="width: 220px; height: 220px; display: block; margin: 0 auto 18px; opacity: {{ stampOpacity }};">
+        <p style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 34px; color: #1B2A4A; line-height: 1;">4.7★</p>
+        <p style="margin: 4px 0 0; color: #3D4756; font-size: 16px;">from 13 reviews · <a href="Reviews.dc.html">read them all</a></p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <sc-for list="{{ reviews }}" as="rv" hint-placeholder-count="4">
+          <figure style="margin: 0; background: #FFFFFF; border-radius: 8px; padding: 22px 24px; border: 1px solid #E1E9F2;">
+            <p style="margin: 0 0 12px; color: #F5B324; letter-spacing: 3px; font-size: 15px;" aria-label="5 stars">★★★★★</p>
+            <blockquote style="margin: 0 0 14px; font-size: 17px; color: #0C1620; text-wrap: pretty;">{{ rv.text }}</blockquote>
+            <figcaption style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.06em; text-transform: uppercase; color: #1B2A4A;">{{ rv.name }}</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <section aria-label="Radio ad" style="max-width: 1240px; margin: 0 auto; padding: 80px 24px;">
+    <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; background: #292D33; border-radius: 12px; padding: 44px 48px;">
+      <button onClick="{{ toggleRadio }}" aria-label="{{ radioAria }}" style="width: 108px; height: 108px; border-radius: 50%; border: 4px solid #F5B324; background: #1B2A4A; color: #FFFFFF; font-size: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="background: #00338D;">{{ radioGlyph }}</button>
+      <div>
+        <p style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; color: #F5B324;">Tune in · As heard on Buffalo radio</p>
+        <h2 style="margin: 0 0 10px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 38px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Hear our radio ad</h2>
+        <p style="margin: 0; color: #C9D4E6; font-size: 17.5px; max-width: 60ch;">Thirty seconds of the Bear, straight off the Buffalo airwaves. {{ radioStatus }}</p>
+      </div>
+    </div>
+  </section>
+  <section aria-label="Service area" style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 80px 24px;">
+      <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Where the trucks go</h2>
+      <p style="margin: 0 0 40px; font-size: 19px; color: #C9D4E6; max-width: 60ch;">Home base is Miriam Avenue in Blasdell. If you can hear the stadium on game day, you're probably on our route.</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <sc-for list="{{ towns }}" as="town" hint-placeholder-count="4">
+          <a href="{{ town.href }}" style="text-decoration: none; background: rgba(244,248,251,0.06); border: 1px solid rgba(244,248,251,0.16); border-radius: 8px; padding: 24px;" style-hover="background: rgba(244,248,251,0.12); border-color: #F5B324;">
+            <h3 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: 0.04em; text-transform: uppercase; color: #FFFFFF;">{{ town.name }}</h3>
+            <p style="margin: 0; color: #9FB1CC; font-size: 15.5px;">{{ town.note }}</p>
+          </a>
+        </sc-for>
+      </div>
+      <p style="margin: 28px 0 0; color: #7C8BA3; font-size: 15.5px;">…plus the wider Southtowns. Not sure? <a href="tel:+17168030091" style="color: #C9D4E6;">Call and ask</a> — worst case the Bear knows a guy.</p>
+    </div>
+  </section>
+  <section aria-label="Get a quote" style="background: #00338D;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
+      <div>
+        <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 46px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Free estimates. Always.</h2>
+        <p style="margin: 0; font-size: 19px; color: #C9D4E6;">Send photos of the job — Dave quotes faster and straighter with a picture.</p>
+      </div>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <a href="Quote.dc.html" style="background: #FFFFFF; color: #00338D; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #F4F8FB; color: #00276B;">Get a free quote</a>
+        <a href="tel:+17168030091" style="color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255,255,255,0.6); border-radius: 4px;" style-hover="border-color: #FFFFFF; color: #FFFFFF;">(716) 803-0091</a>
+      </div>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;season&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;auto&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;deep-winter&quot;, &quot;thaw&quot;, &quot;green&quot;, &quot;leaf-fall&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Season Engine&quot;}}">
+class Component extends DCLogic {
+  state = { baPct: 50, stamped: false, playing: false };
+  SEASONS = {
+    'deep-winter': {
+      label: 'Deep Winter', video: 'assets/video/hero-winter.mp4',
+      bg: '#0C1620',
+      headline: 'Lake effect snow? No problem.',
+      sub: "Don't get stuck — get plowed. Two trucks on route across the Southtowns, seasonal contracts or one-off. Dave's out at 4am so you're out by 7.",
+      cta: 'Get on the plow list', ctaHref: 'SnowPlowing.dc.html',
+    },
+    thaw: {
+      label: 'Thaw', video: 'assets/video/hero-thaw.mp4',
+      bg: '#1B2A4A',
+      headline: 'Wash away winter.',
+      sub: "Salt stains, grime, a driveway that's seen five months of lake effect. If it's outside and it's dirty, we can help you out.",
+      cta: 'Book a pressure wash', ctaHref: 'PressureWashing.dc.html',
+    },
+    green: {
+      label: 'Green', video: 'assets/video/hero-green.mp4',
+      bg: '#1B2A4A',
+      headline: 'Perfect stripes. Every week.',
+      sub: 'Mowing, mulch, planting and trim — plus decks, washing and every fix-it job on the list. Summer is short here. We make it count.',
+      cta: 'Book landscaping', ctaHref: 'Landscaping.dc.html',
+    },
+    'leaf-fall': {
+      label: 'Leaf-Fall', video: 'assets/video/hero-leaffall.mp4',
+      bg: '#292D33',
+      headline: "We'll clear your way.",
+      sub: 'Gutters cleaned, leaves gone, shrubs wrapped — and the smart move: get on the plow list before the first lake-effect band rolls in.',
+      cta: 'Beat the first snow', ctaHref: 'SnowPlowing.dc.html',
+    },
+  };
+  seasonKey() {
+    const pick = this.props.season ?? 'auto';
+    if (pick !== 'auto') return pick;
+    // Rotating almanac: show the season AHEAD of today's, so visitors book early.
+    const m = new Date().getMonth(); // 0-11
+    const current = m >= 11 || m <= 1 ? 0 : m <= 4 ? 1 : m <= 7 ? 2 : 3; // winter, thaw, green, leaf-fall
+    const order = ['deep-winter', 'thaw', 'green', 'leaf-fall'];
+    return order[(current + 1) % 4];
+  }
+  componentDidMount() {
+    this.audio = new Audio('assets/audio/radio-ad.mp3');
+    this.audio.addEventListener('ended', () => this.setState({ playing: false }));
+    if (this.stampEl) {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) { this.setState({ stamped: true }); return; }
+      const io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.stampEl.style.animation = 'stamp 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) forwards';
+          this.setState({ stamped: true });
+          io.disconnect();
+        }
+      }, { threshold: 0.5 });
+      io.observe(this.stampEl);
+    }
+  }
+  componentWillUnmount() { if (this.audio) this.audio.pause(); }
+  baPos(e) {
+    const r = this.baEl.getBoundingClientRect();
+    return Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100));
+  }
+  renderVals() {
+    const s = this.SEASONS[this.seasonKey()] || this.SEASONS['deep-winter'];
+    const pct = this.state.baPct;
+    return {
+      seasonLabel: s.label, heroVideo: s.video, heroBg: s.bg,
+      heroHeadline: s.headline, heroSub: s.sub, heroCta: s.cta, heroCtaHref: s.ctaHref,
+      services: [
+        { name: 'Snow Plowing', href: 'SnowPlowing.dc.html', img: 'assets/web/mascot-plow-truck.png', blurb: 'Residential driveways and commercial lots. Seasonal contract or one-off. Two trucks on route.' },
+        { name: 'Landscaping', href: 'Landscaping.dc.html', img: 'assets/web/mascot-mowing.png', blurb: 'Mow, mulch, plant, trim, rake, gutter clean-outs and winter shrub protection.' },
+        { name: 'Pressure Washing', href: 'PressureWashing.dc.html', img: 'assets/web/mascot-pressure-washing.png', blurb: "Driveways, siding, decks, roofs, sidewalks, pool decks. If it's outside and it's dirty…" },
+        { name: 'Handyman & Remodeling', href: 'HandymanRemodeling.dc.html', img: 'assets/web/mascot-ladder-drill.png', blurb: 'Windows, basements, kitchens, flooring, drywall, decks and three-season rooms.' },
+        { name: 'House Clearance', href: 'HouseClearance.dc.html', img: 'assets/web/mascot-shovelling.png', blurb: 'Attics, garages and estate clear-outs. It can be overwhelming figuring out where to start — we start.' },
+        { name: 'Sunrooms & Enclosures', href: 'Sunrooms.dc.html', img: 'assets/web/mascot-waving.png', blurb: 'Three-season rooms, plus Helios retractable glass sunrooms — trained dealer & installer.' },
+      ],
+      reviews: [
+        { name: 'Ben Osborne', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Gary Walters', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Dave Brennan', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Renee P', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+      ],
+      towns: [
+        { name: 'Hamburg', href: 'HamburgNY.dc.html', note: "Dave's hometown — 50 years and counting." },
+        { name: 'Blasdell', href: 'BlasdellNY.dc.html', note: 'Home base. The shop is on Miriam Avenue.' },
+        { name: 'Orchard Park', href: 'OrchardParkNY.dc.html', note: 'Bills country. Go Bills!' },
+        { name: 'Lackawanna', href: 'LackawannaNY.dc.html', note: 'From the Basilica to the lakeshore.' },
+      ],
+      // before/after slider
+      baRef: (el) => { this.baEl = el; },
+      baClip: `inset(0 0 0 ${pct}%)`,
+      baLeft: `${pct}%`,
+      baPctRounded: Math.round(pct),
+      baDown: (e) => { this.dragging = true; this.baEl.setPointerCapture(e.pointerId); this.setState({ baPct: this.baPos(e) }); },
+      baMove: (e) => { if (this.dragging) this.setState({ baPct: this.baPos(e) }); },
+      baUp: () => { this.dragging = false; },
+      baKey: (e) => {
+        if (e.key === 'ArrowLeft') this.setState((st) => ({ baPct: Math.max(0, st.baPct - 4) }));
+        if (e.key === 'ArrowRight') this.setState((st) => ({ baPct: Math.min(100, st.baPct + 4) }));
+      },
+      // stamp
+      stampRef: (el) => { this.stampEl = el; },
+      stampOpacity: this.state.stamped ? 1 : 0,
+      // radio
+      toggleRadio: () => {
+        if (!this.audio) return;
+        if (this.state.playing) { this.audio.pause(); this.setState({ playing: false }); }
+        else { this.audio.play(); this.setState({ playing: true }); }
+      },
+      radioGlyph: this.state.playing ? '❚❚' : '▶',
+      radioAria: this.state.playing ? 'Pause radio ad' : 'Play radio ad',
+      radioStatus: this.state.playing ? 'Now playing…' : 'Press play — no autoplay, ever.',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

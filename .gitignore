@@ -1,0 +1,24 @@
+# ── raw production library: kept locally, too heavy for git ──
+# The curated subset the site actually uses lives in site-export/assets/
+assets/06_job_photos_fb/
+assets/07_job_photos_other/
+assets/09_scenes/
+assets/00_NEW_brand_concepts/
+assets/08_video_broll/
+assets/03_trucks/
+assets/04_promos/
+assets/05_community/
+assets/02_mascot_bear/
+assets/01_logos/
+
+# ── never commit: licence does not demonstrably transfer ──
+assets/99_stock_DO_NOT_USE/
+
+# ── finished commercials: large binaries, host on a CDN/YouTube ──
+assets/10_FINAL_commercials/
+assets/09_commercials/
+
+# ── working files ──
+.worker.lock
+*.zip
+.thumbnail/

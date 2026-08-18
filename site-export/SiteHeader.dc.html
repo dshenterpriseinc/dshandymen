@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0}
+  a{color:#00338D}a:hover{color:#1B2A4A}
+</style>
+</helmet>
+<header style="position: sticky; top: 0; z-index: 500; background: #1B2A4A; box-shadow: 0 2px 10px rgba(12,22,32,0.35);">
+  <div style="max-width: 1240px; margin: 0 auto; display: flex; align-items: center; gap: 28px; padding: 10px 24px;">
+    <a href="Home.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; flex: none;">
+      <img src="assets/web/logo-badge-white-knockout.png" alt="DS Handymen, Inc. — home" width="52" height="52" style="display: block;">
+      <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: #FFFFFF; text-transform: uppercase; line-height: 1;">DS Handymen<span style="display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; color: #9FB1CC;">Blasdell · Hamburg, NY</span></span>
+    </a>
+    <nav aria-label="Main" style="display: flex; align-items: center; gap: 4px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
+        <a href="{{ item.href }}" aria-current="{{ item.current }}" style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: {{ item.color }}; text-decoration: none; padding: 8px 12px; border-bottom: 2px solid {{ item.underline }};" style-hover="color: #FFFFFF; border-bottom: 2px solid #F4F8FB;">{{ item.label }}</a>
+      </sc-for>
+    </nav>
+    <a href="tel:+17168030091" style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-decoration: none; background: #00338D; padding: 8px 16px; border-radius: 4px;" style-hover="background: #00276B;">
+      <span style="font-family: 'Source Sans 3', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9FB1CC;">Call the Bear</span>
+      <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; color: #FFFFFF; line-height: 1;">(716) 803-0091</span>
+    </a>
+  </div>
+</header>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 80}, &quot;active&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? '';
+    const items = [
+      ['Services', 'Services.dc.html'],
+      ['Pigeon Division', 'PigeonDivision.dc.html'],
+      ['Gallery', 'Gallery.dc.html'],
+      ['Reviews', 'Reviews.dc.html'],
+      ['Service Area', 'ServiceArea.dc.html'],
+      ['About', 'About.dc.html'],
+      ['Free Quote', 'Quote.dc.html'],
+    ];
+    return {
+      navItems: items.map(([label, href]) => ({
+        label, href,
+        current: label === active ? 'page' : undefined,
+        color: label === active ? '#FFFFFF' : '#C9D4E6',
+        underline: label === active ? '#F5B324' : 'transparent',
+      })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

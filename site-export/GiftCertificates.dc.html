@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px; text-align: center;">
+      <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">Gift Certificates</p>
+      <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(48px, 6vw, 76px); line-height: 1; text-transform: uppercase; color: #FFFFFF;">Give someone the gift of time.</h1>
+      <p style="margin: 0 auto; font-size: 20px; color: #C9D4E6; max-width: 54ch;">A plowed driveway for your parents. A washed deck for the friend who never gets to it. Good toward any service we offer.</p>
+    </div>
+  </section>
+  <section style="max-width: 1080px; margin: 0 auto; padding: 80px 24px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+        <div style="border: 2px solid {{ t.border }}; background: {{ t.bg }}; border-radius: 12px; padding: 40px 32px; text-align: center;">
+          <p style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 62px; line-height: 1; color: {{ t.amountColor }};">{{ t.amount }}</p>
+          <p style="margin: 0 0 18px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8BA3;">{{ t.label }}</p>
+          <p style="margin: 0; font-size: 16.5px; color: #3D4756;">{{ t.blurb }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top: 48px; background: #F4F8FB; border: 1px solid #E1E9F2; border-radius: 10px; padding: 32px 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div>
+        <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">How to get one</h2>
+        <p style="margin: 0; font-size: 17.5px; color: #3D4756; max-width: 56ch;">Call the shop and we'll sort it in two minutes. Pay by cash, cheque or Venmo (david schultz@dshandymeninc) — the certificate never expires and works on any service.</p>
+      </div>
+      <a href="tel:+17168030091" style="flex: none; background: #00338D; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #00276B; color: #FFFFFF;">(716) 803-0091</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tiers: [
+        { amount: '$100', label: 'The nudge', blurb: 'A gutter clean-out, a serious chunk of a pressure wash, or the small fix they keep putting off.', border: '#E1E9F2', bg: '#FFFFFF', amountColor: '#1B2A4A' },
+        { amount: '$250', label: 'The season starter', blurb: 'Real headway on seasonal plowing, a full deck wash, or a yard clean-up they will talk about.', border: '#00338D', bg: '#F4F8FB', amountColor: '#00338D' },
+        { amount: '$500', label: 'The big one', blurb: 'A gift that covers a remodel deposit, most of a winter of plowing, or a whole-house wash.', border: '#E1E9F2', bg: '#FFFFFF', amountColor: '#1B2A4A' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

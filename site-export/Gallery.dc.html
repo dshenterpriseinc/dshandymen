@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" active="Gallery" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px;">
+      <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">Gallery</p>
+      <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; text-transform: uppercase; color: #FFFFFF;">Real work. Real crew.</h1>
+      <p style="margin: 0; font-size: 20px; color: #C9D4E6; max-width: 56ch;">Every photo here is a Southtowns job by our own people. These before and after pictures speak for themselves.</p>
+    </div>
+  </section>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 88px;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="6">
+        <button onClick="{{ f.pick }}" aria-pressed="{{ f.pressed }}" style="border: 1.5px solid {{ f.border }}; background: {{ f.bg }}; color: {{ f.color }}; border-radius: 999px; padding: 9px 22px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;">{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+      <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="12">
+        <figure style="margin: 0; border-radius: 8px; overflow: hidden; background: #F4F8FB; border: 1px solid #E1E9F2;">
+          <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+          <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
+            <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: #1B2A4A;">{{ ph.caption }}</span>
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: {{ ph.tagColor }};">{{ ph.tag }}</span>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+  <section style="background: #00338D;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <h2 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Your house could be up here.</h2>
+      <a href="Quote.dc.html" style="background: #FFFFFF; color: #00338D; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #F4F8FB; color: #00276B;">Get a free quote</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { filter: 'All' };
+  PHOTOS = [
+    { src: 'assets/photos/beforeafter-siding-windows-BEFORE.jpg', cat: 'Remodeling', caption: 'Siding & windows', tag: 'Before', alt: 'House before new siding and windows' },
+    { src: 'assets/photos/beforeafter-siding-windows-AFTER.jpg', cat: 'Remodeling', caption: 'Siding & windows', tag: 'After', alt: 'Same house after new siding and windows' },
+    { src: 'assets/photos/kitchen-remodel-01.jpg', cat: 'Pigeon Division', caption: 'Kitchen remodel', tag: 'After', alt: 'Remodeled kitchen' },
+    { src: 'assets/photos/kitchen-remodel-02.jpg', cat: 'Pigeon Division', caption: 'Kitchen remodel', tag: 'After', alt: 'Kitchen remodel detail' },
+    { src: 'assets/photos/kitchen-remodel-03.jpg', cat: 'Pigeon Division', caption: 'Kitchen remodel', tag: 'After', alt: 'Kitchen remodel third angle' },
+    { src: 'assets/photos/tile-backsplash-detail.jpg', cat: 'Pigeon Division', caption: 'Tile backsplash', tag: 'After', alt: 'Tile backsplash detail' },
+    { src: 'assets/photos/bathroom-vanity-remodel.jpg', cat: 'Pigeon Division', caption: 'Bathroom vanity', tag: 'After', alt: 'Bathroom vanity remodel' },
+    { src: 'assets/photos/livingroom-fireplace-AFTER.jpg', cat: 'Pigeon Division', caption: 'Living room', tag: 'After', alt: 'Living room fireplace' },
+    { src: 'assets/photos/diningroom-arched-window.jpg', cat: 'Pigeon Division', caption: 'Dining room', tag: 'After', alt: 'Dining room arched window' },
+    { src: 'assets/photos/basement-finished-01.jpg', cat: 'Remodeling', caption: 'Finished basement', tag: 'After', alt: 'Finished basement' },
+    { src: 'assets/photos/basement-finished-02.jpg', cat: 'Remodeling', caption: 'Finished basement', tag: 'After', alt: 'Finished basement second view' },
+    { src: 'assets/photos/deck-refinished-AFTER.jpg', cat: 'Pressure washing', caption: 'Deck refinish', tag: 'After', alt: 'Refinished deck' },
+    { src: 'assets/gallery/deck-wash-before.jpg', cat: 'Pressure washing', caption: 'Deck wash', tag: 'Before', alt: 'Weathered deck before washing' },
+    { src: 'assets/gallery/deck-wash-after.jpg', cat: 'Pressure washing', caption: 'Deck wash', tag: 'After', alt: 'Deck after pressure washing' },
+    { src: 'assets/gallery/house-washing.jpg', cat: 'Pressure washing', caption: 'House wash', tag: 'During', alt: 'House washing in progress' },
+    { src: 'assets/gallery/sidewalk-1.jpg', cat: 'Pressure washing', caption: 'Sidewalk wash', tag: 'During', alt: 'Sidewalk washing' },
+    { src: 'assets/gallery/roof-cleaning.jpg', cat: 'Pressure washing', caption: 'Roof cleaning', tag: 'During', alt: 'Roof cleaning' },
+    { src: 'assets/photos/landscaping-mulch-bed.jpg', cat: 'Landscaping', caption: 'Mulch bed', tag: 'After', alt: 'Fresh mulch bed' },
+    { src: 'assets/photos/landscaping-stone-bed.jpg', cat: 'Landscaping', caption: 'Stone bed', tag: 'After', alt: 'Stone landscaping bed' },
+    { src: 'assets/gallery/mower.jpg', cat: 'Landscaping', caption: 'Mowing stripes', tag: 'After', alt: 'Mowing stripes' },
+    { src: 'assets/gallery/mulch-1.jpg', cat: 'Landscaping', caption: 'Planting bed', tag: 'After', alt: 'Planting bed with mulch' },
+    { src: 'assets/gallery/leaves.jpg', cat: 'Landscaping', caption: 'Fall clean-up', tag: 'Before', alt: 'Leaves before fall clean-up' },
+    { src: 'assets/photos/exterior-window-install-inprogress.jpg', cat: 'Remodeling', caption: 'Window install', tag: 'During', alt: 'Window installation in progress' },
+    { src: 'assets/photos/exterior-siding-night-work.jpg', cat: 'Remodeling', caption: 'Siding, after dark', tag: 'During', alt: 'Siding work at night' },
+    { src: 'assets/photos/roof-damage-BEFORE.jpg', cat: 'Remodeling', caption: 'Roof repair', tag: 'Before', alt: 'Roof damage before repair' },
+    { src: 'assets/photos/roof-tearoff-BEFORE.jpg', cat: 'Remodeling', caption: 'Roof tear-off', tag: 'Before', alt: 'Roof tear-off' },
+    { src: 'assets/gallery/patio-1.jpg', cat: 'Sunrooms & patios', caption: 'Patio project', tag: 'After', alt: 'Patio project' },
+    { src: 'assets/gallery/patio-cover.jpg', cat: 'Sunrooms & patios', caption: 'Patio cover', tag: 'After', alt: 'Covered patio' },
+    { src: 'assets/gallery/bar-1.jpg', cat: 'Pigeon Division', caption: 'Custom bar', tag: 'After', alt: 'Custom bar build' },
+    { src: 'assets/gallery/bench.jpg', cat: 'Sunrooms & patios', caption: 'Outdoor bench', tag: 'After', alt: 'Custom outdoor bench' },
+    { src: 'assets/gallery/fb-job-04.jpg', cat: 'Remodeling', caption: 'Job site', tag: 'During', alt: 'Crew job site' },
+    { src: 'assets/gallery/fb-job-05.jpg', cat: 'Remodeling', caption: 'Job site', tag: 'During', alt: 'Job in progress' },
+    { src: 'assets/gallery/fb-job-06.jpg', cat: 'Landscaping', caption: 'Yard work', tag: 'After', alt: 'Yard work' },
+    { src: 'assets/gallery/fb-job-07.jpg', cat: 'Remodeling', caption: 'Job site', tag: 'During', alt: 'Job site' },
+    { src: 'assets/gallery/fb-job-08.jpg', cat: 'Remodeling', caption: 'Job site', tag: 'During', alt: 'Work in progress' },
+    { src: 'assets/photos/truck-branded-lakeside.jpg', cat: 'Remodeling', caption: 'The truck', tag: '—', alt: 'DS Handymen branded truck' },
+  ];
+  renderVals() {
+    const cats = ['All', 'Remodeling', 'Pressure washing', 'Landscaping', 'Pigeon Division', 'Sunrooms & patios'];
+    const cur = this.state.filter;
+    const tagColor = (t) => (t === 'Before' ? '#C60C30' : t === 'After' ? '#00338D' : '#7C8BA3');
+    return {
+      filters: cats.map((label) => ({
+        label,
+        pressed: label === cur ? 'true' : 'false',
+        bg: label === cur ? '#1B2A4A' : 'transparent',
+        color: label === cur ? '#FFFFFF' : '#1B2A4A',
+        border: label === cur ? '#1B2A4A' : '#C2CEDC',
+        pick: () => this.setState({ filter: label }),
+      })),
+      photos: this.PHOTOS.filter((p) => cur === 'All' || p.cat === cur).map((p) => ({ ...p, tagColor: tagColor(p.tag) })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

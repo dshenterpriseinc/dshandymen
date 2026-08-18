@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" active="Service Area" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 0; display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: end;">
+      <div style="padding-bottom: 64px;">
+        <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;"><a href="ServiceArea.dc.html" style="color: #F5B324; text-decoration: none;">Service Area</a> · Orchard Park, NY</p>
+        <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(48px, 5.5vw, 72px); line-height: 1; text-transform: uppercase; color: #FFFFFF; max-width: 16ch;">If it can bury the stadium, it can bury your driveway.</h1>
+        <p style="margin: 0; font-size: 20px; color: #C9D4E6; max-width: 58ch;">Orchard Park gets the storms that make national news. Long rural driveways off Quaker Street, big lots near Chestnut Ridge — exactly the kind of snow our two trucks are built for. And yes, on game day: <span style="color: #C60C30; font-weight: 700;">Go Bills.</span></p>
+      </div>
+      <img src="assets/web/mascot-bear-go-bills.png" alt="The Bear in Bills game-day spirit" width="380" height="380" style="width: 100%; max-width: 360px; height: auto; display: block; justify-self: end;">
+    </div>
+  </section>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 72px 24px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: start;">
+    <div>
+      <h2 style="margin: 0 0 18px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 38px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">What Orchard Park calls us for</h2>
+      <ul style="margin: 0 0 24px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 18px; color: #3D4756;">
+        <li><strong style="color: #1B2A4A;">Seasonal plowing</strong> — long driveways and commercial lots. When the lake aims at Orchard Park, one storm can drop what other towns get in a month.</li>
+        <li><strong style="color: #1B2A4A;">Landscaping</strong> — bigger yards, established beds, weekly mowing with the stripes done right.</li>
+        <li><strong style="color: #1B2A4A;">Remodeling &amp; sunrooms</strong> — three-season rooms and Helios glass are popular out here; the views earn them.</li>
+        <li><strong style="color: #1B2A4A;">Pressure washing</strong> — pool decks, patios and long concrete runs.</li>
+      </ul>
+      <p style="margin: 0; font-size: 18px; color: #3D4756;">Village or the rural edges past Chestnut Ridge — <a href="Quote.dc.html">send photos</a>, get a straight quote.</p>
+    </div>
+    <img src="assets/photos/deck-refinished-AFTER.jpg" alt="Refinished deck at an Orchard Park home" loading="lazy" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px;">
+  </section>
+  <section style="background: #00338D;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <h2 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Orchard Park: beat the storm.</h2>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <a href="Quote.dc.html" style="background: #FFFFFF; color: #00338D; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #F4F8FB; color: #00276B;">Free quote</a>
+        <a href="tel:+17168030091" style="color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255,255,255,0.6); border-radius: 4px;" style-hover="border-color: #FFFFFF; color: #FFFFFF;">(716) 803-0091</a>
+      </div>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+</body>
+</html>

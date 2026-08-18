@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px;">
+      <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">Contact</p>
+      <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; text-transform: uppercase; color: #FFFFFF;">Call the Bear today.</h1>
+      <p style="margin: 0; font-size: 20px; color: #C9D4E6; max-width: 54ch;">One phone number for everything — plowing, washing, fixing, building, and the Pigeon Division.</p>
+    </div>
+  </section>
+  <section style="max-width: 1080px; margin: 0 auto; padding: 72px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+      <div>
+        <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8BA3;">Phone</h2>
+        <a href="tel:+17168030091" style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 44px; color: #00338D; text-decoration: none;">(716) 803-0091</a>
+        <p style="margin: 6px 0 0; color: #3D4756; font-size: 16.5px;">Storm emergency? Call — Dave picks up.</p>
+      </div>
+      <div>
+        <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8BA3;">Email</h2>
+        <a href="mailto:dshandymen@yahoo.com" style="font-size: 20px;">dshandymen@yahoo.com</a>
+      </div>
+      <div>
+        <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8BA3;">The shop</h2>
+        <p style="margin: 0; font-size: 19px;">135 Miriam Avenue, Suite 1<br>Blasdell, NY 14219</p>
+      </div>
+      <div>
+        <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8BA3;">Elsewhere</h2>
+        <p style="margin: 0; font-size: 18px;"><a href="https://facebook.com/dshandymen">facebook.com/dshandymen</a><br>Venmo: david schultz@dshandymeninc</p>
+      </div>
+    </div>
+    <div style="background: #F4F8FB; border: 1px solid #E1E9F2; border-radius: 12px; padding: 36px; text-align: center;">
+      <img src="assets/web/mascot-waving.png" alt="The Bear waving hello" width="260" height="260" style="width: 260px; height: 260px; object-fit: contain; display: block; margin: 0 auto 16px;">
+      <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">Got a job in mind?</h2>
+      <p style="margin: 0 0 20px; font-size: 17px; color: #3D4756;">The quote form takes two minutes and photos make Dave's estimate sharper.</p>
+      <a href="Quote.dc.html" style="display: inline-block; background: #00338D; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 30px; border-radius: 4px;" style-hover="background: #00276B; color: #FFFFFF;">Get a free quote</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+</body>
+</html>

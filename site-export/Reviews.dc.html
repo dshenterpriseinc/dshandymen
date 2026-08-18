@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" active="Reviews" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
+      <div>
+        <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">Reviews</p>
+        <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; text-transform: uppercase; color: #FFFFFF;">Neighbors say it best</h1>
+        <p style="margin: 0; font-size: 20px; color: #C9D4E6;">4.7★ from 13 reviews — every one from a real Southtowns job.</p>
+      </div>
+      <div style="text-align: center; background: rgba(244,248,251,0.06); border: 1px solid rgba(244,248,251,0.16); border-radius: 10px; padding: 28px 40px;">
+        <p style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; color: #F5B324;">4.7★</p>
+        <p style="margin: 6px 0 0; color: #C9D4E6; font-size: 16px;">13 reviews</p>
+      </div>
+    </div>
+  </section>
+  <section style="max-width: 1080px; margin: 0 auto; padding: 72px 24px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+      <sc-for list="{{ reviews }}" as="rv" hint-placeholder-count="6">
+        <figure style="margin: 0; background: #F4F8FB; border-radius: 8px; padding: 26px 28px; border: 1px solid #E1E9F2;">
+          <p style="margin: 0 0 12px; color: #F5B324; letter-spacing: 3px; font-size: 16px;" aria-label="5 stars">★★★★★</p>
+          <blockquote style="margin: 0 0 16px; font-size: 17.5px; color: #0C1620; text-wrap: pretty;">{{ rv.text }}</blockquote>
+          <figcaption style="display: flex; justify-content: space-between; gap: 12px; align-items: baseline;">
+            <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: #1B2A4A;">{{ rv.name }}</span>
+            <span style="font-size: 14px; color: #7C8BA3;">{{ rv.job }}</span>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+    <p style="margin: 28px 0 0; font-size: 14.5px; color: #7C8BA3; font-style: italic;">Quotes condensed from customer feedback — verbatim text to be pulled from Facebook and BBB before launch.</p>
+  </section>
+  <section style="background: #F4F8FB; border-top: 1px solid #E1E9F2;">
+    <div style="max-width: 1080px; margin: 0 auto; padding: 64px 24px; text-align: center;">
+      <h2 style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 42px; letter-spacing: 0.02em; text-transform: uppercase; color: #1B2A4A;">Had us out to your place?</h2>
+      <p style="margin: 0 0 26px; font-size: 19px; color: #3D4756; max-width: 52ch; margin-left: auto; margin-right: auto;">A review is worth more to a small local company than any ad. Two minutes, big deal to us.</p>
+      <a href="https://facebook.com/dshandymen" style="display: inline-block; background: #00338D; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 32px; border-radius: 4px;" style-hover="background: #00276B; color: #FFFFFF;">Leave a review on Facebook</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      reviews: [
+        { name: 'Ben Osborne', job: '[unverified]', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Gary Walters', job: '[unverified]', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Dave Brennan', job: '[unverified]', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+        { name: 'Renee P', job: '[unverified]', text: '[REVIEW PENDING - paste verbatim quote from Google/BBB/Facebook before launch]' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

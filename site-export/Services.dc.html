@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+</helmet>
+<dc-import name="SiteHeader" active="Services" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: #1B2A4A;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 64px;">
+      <p style="margin: 0 0 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: #F5B324;">Services</p>
+      <h1 style="margin: 0 0 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF;">Every season. Every job.</h1>
+      <p style="margin: 0; font-size: 20px; color: #C9D4E6; max-width: 56ch;">Outside work is the Bear's. Design and finish work is the Bird's. Same company, same phone number, same free estimate.</p>
+    </div>
+  </section>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 72px 24px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="7">
+        <a href="{{ svc.href }}" style="text-decoration: none; background: {{ svc.bg }}; border: 1px solid {{ svc.border }}; border-radius: 8px; padding: 26px 26px 0; display: flex; flex-direction: column; gap: 10px; color: #0C1620; overflow: hidden;" style-hover="box-shadow: 0 10px 24px rgba(27,42,74,0.14); color: #0C1620;">
+          <p style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: {{ svc.kicker }};">{{ svc.side }}</p>
+          <h2 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: 0.03em; text-transform: uppercase; color: #1B2A4A;">{{ svc.name }}</h2>
+          <p style="margin: 0; font-size: 16.5px; color: #3D4756; min-height: 72px;">{{ svc.blurb }}</p>
+          <img src="{{ svc.img }}" alt="" width="200" height="200" loading="lazy" style="width: 160px; height: 160px; object-fit: contain; align-self: flex-end; margin-top: auto; display: block;">
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  <section style="background: #00338D;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <h2 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 38px; letter-spacing: 0.02em; text-transform: uppercase; color: #FFFFFF;">Not sure which one you need?</h2>
+      <a href="tel:+17168030091" style="background: #FFFFFF; color: #00338D; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;" style-hover="background: #F4F8FB; color: #00276B;">Call the Bear · (716) 803-0091</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bear" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const bear = { side: "The Bear's side", bg: '#F4F8FB', border: '#E1E9F2', kicker: '#00338D' };
+    const bird = { side: "The Bird's side", bg: '#F6F2ED', border: '#E8DFD4', kicker: '#B5673F' };
+    return {
+      services: [
+        { ...bear, name: 'Snow Plowing', href: 'SnowPlowing.dc.html', img: 'assets/web/mascot-plow-truck.png', blurb: 'Residential driveways and commercial lots. Seasonal contract or one-off. Two trucks on route, out before dawn.' },
+        { ...bear, name: 'Landscaping', href: 'Landscaping.dc.html', img: 'assets/web/mascot-mowing.png', blurb: 'Mow, mulch, plant, trim, rake. Gutter clean-outs and winter tree & shrub protection.' },
+        { ...bear, name: 'Pressure Washing', href: 'PressureWashing.dc.html', img: 'assets/web/mascot-pressure-washing.png', blurb: "Driveways, siding, decks, roofs, sidewalks, pool decks. If it's outside and it's dirty, we can help you out." },
+        { ...bear, name: 'Handyman & Remodeling', href: 'HandymanRemodeling.dc.html', img: 'assets/web/mascot-ladder-drill.png', blurb: 'Windows, basements, kitchens, flooring, drywall, deck refinishing and three-season rooms.' },
+        { ...bear, name: 'House Clearance', href: 'HouseClearance.dc.html', img: 'assets/web/mascot-shovelling.png', blurb: 'Attics, garages and estate clear-outs. It can be overwhelming figuring out where to start — we start.' },
+        { ...bear, name: 'Sunrooms & Patio Enclosures', href: 'Sunrooms.dc.html', img: 'assets/web/mascot-waving.png', blurb: 'Three-season rooms, and trained dealer & installer for Helios retractable glass sunrooms.' },
+        { ...bird, name: 'Pigeon Division', href: 'PigeonDivision.dc.html', img: 'assets/web/mascot-pigeon-blueprint.png', blurb: 'Interior & exterior design and construction: custom design, trim, cabinets, drywall, paint, tile and finish work.' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

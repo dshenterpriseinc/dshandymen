@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/web/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F6F2ED;color:#2B2622;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.6} a{color:#B5673F}a:hover{color:#8F4E2D}</style>
+</helmet>
+<dc-import name="SiteHeader" active="Pigeon Division" hint-size="100%,72px"></dc-import>
+<main>
+  <section style="background: repeating-linear-gradient(0deg, rgba(44,74,107,0.05) 0, rgba(44,74,107,0.05) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(90deg, rgba(44,74,107,0.05) 0, rgba(44,74,107,0.05) 1px, transparent 1px, transparent 32px), #F6F2ED;">
+    <div style="max-width: 1080px; margin: 0 auto; padding: 96px 24px 88px; text-align: center;">
+      <img src="assets/web/logo-pigeon-division.png" alt="The Pigeon Division badge" width="180" height="180" loading="eager" style="width: 180px; height: 180px; object-fit: contain; display: block; margin: 0 auto 10px;">
+      <p style="margin: 0 0 26px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: #8A8078;">A division of DS Handymen, Inc.</p>
+      <h1 style="margin: 0 0 20px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: clamp(46px, 6vw, 74px); line-height: 1.04; letter-spacing: 0.05em; text-transform: uppercase; color: #2C4A6B;">Now introducing the Pigeon Division</h1>
+      <p style="margin: 0 auto; font-size: 20px; font-weight: 300; color: #5C5348; max-width: 52ch;">Interior &amp; exterior design and construction — custom design, trim, cabinets, drywall, paint, tile and finish work.</p>
+    </div>
+  </section>
+  <section style="background: #EFE7DC;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+      <img src="assets/web/mascot-bear-and-bird-duo.png" alt="The Bear and the Bird, side by side" width="560" height="560" loading="lazy" style="width: 100%; max-width: 460px; height: auto; display: block; margin: 0 auto;">
+      <div>
+        <p style="margin: 0 0 16px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: #B5673F;">The partnership</p>
+        <blockquote style="margin: 0 0 20px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 34px; line-height: 1.22; color: #2C4A6B; letter-spacing: 0.01em;">"The Bear and the Bird work together to bring you expanded Interior and Exterior Design and Construction services."</blockquote>
+        <p style="margin: 0; font-size: 18px; font-weight: 300; color: #5C5348; max-width: 50ch;">Same company, same phone number, same free estimate — with a designer's eye on everything you'll see and touch when the work is done.</p>
+      </div>
+    </div>
+  </section>
+  <section style="max-width: 900px; margin: 0 auto; padding: 96px 24px 72px;">
+    <p style="margin: 0 0 16px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: #B5673F;">Who leads it</p>
+    <h2 style="margin: 0 0 22px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 46px; letter-spacing: 0.04em; text-transform: uppercase; color: #2C4A6B;">Nichole Pigeon</h2>
+    <p style="margin: 0 0 18px; font-size: 19px; font-weight: 300; color: #4A423A; max-width: 62ch;">After years of collaborating, DS Handymen, Inc. welcomed Nichole Pigeon and her crew to lead an expanded interior and exterior construction division. A graduate of the Rochester Institute of Technology (RIT) Design School, Nichole carries an outstanding reputation for the pride she takes in her work.</p>
+    <p style="margin: 0 0 40px; font-size: 19px; font-weight: 300; color: #4A423A; max-width: 62ch;">Her premium crew brings over 40 years of collective experience to custom design, trim work, cabinets, drywall, paint, tile and finish work — plus exterior projects.</p>
+    <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 12px;">
+      <sc-for list="{{ crafts }}" as="c" hint-placeholder-count="8">
+        <li style="border: 1px solid #C9BCA9; border-radius: 999px; padding: 9px 20px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: #6E655C;">{{ c }}</li>
+      </sc-for>
+    </ul>
+  </section>
+  <section aria-label="Before and after gallery" style="max-width: 1180px; margin: 0 auto; padding: 24px 24px 96px;">
+    <h2 style="margin: 0 0 10px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 46px; letter-spacing: 0.04em; text-transform: uppercase; color: #2C4A6B;">The work</h2>
+    <p style="margin: 0 0 32px; font-size: 19px; font-weight: 300; color: #5C5348; max-width: 56ch;">"These before and after pictures speak for themselves."</p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+        <button onClick="{{ f.pick }}" aria-pressed="{{ f.pressed }}" style="border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: {{ f.color }}; border-radius: 999px; padding: 9px 22px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.35s ease;">{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+      <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="9">
+        <figure style="margin: 0; border-radius: 6px; overflow: hidden; background: #EFE7DC;">
+          <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+          <figcaption style="padding: 12px 16px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: #6E655C;">{{ ph.caption }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+  <section style="background: #2C4A6B;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 72px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div>
+        <h2 style="margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 42px; letter-spacing: 0.04em; text-transform: uppercase; color: #FFFFFF;">Call us for your free estimate today</h2>
+        <p style="margin: 0; font-size: 18px; font-weight: 300; color: #C9D4E6;">Design it, build it, or both. Let's get the proportions right first.</p>
+      </div>
+      <a href="tel:+17168030091" style="background: #B5673F; color: #FFFFFF; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 32px; border-radius: 4px;" style-hover="background: #8F4E2D; color: #FFFFFF;">(716) 803-0091</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+<x-import component-from-global-scope="chat-widget" from="./chat-widget.js" persona="bird" hint-size="0px,0px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { filter: 'All' };
+  PHOTOS = [
+    { src: 'assets/photos/kitchen-remodel-01.jpg', cat: 'Kitchens', caption: 'Kitchen remodel · after', alt: 'Remodeled kitchen with new cabinets' },
+    { src: 'assets/photos/kitchen-remodel-02.jpg', cat: 'Kitchens', caption: 'Kitchen remodel · detail', alt: 'Kitchen remodel, second angle' },
+    { src: 'assets/photos/kitchen-remodel-03.jpg', cat: 'Kitchens', caption: 'Kitchen remodel · finished', alt: 'Kitchen remodel, third angle' },
+    { src: 'assets/photos/tile-backsplash-detail.jpg', cat: 'Tile', caption: 'Backsplash · tile detail', alt: 'Tile backsplash detail' },
+    { src: 'assets/photos/bathroom-vanity-remodel.jpg', cat: 'Baths', caption: 'Bathroom vanity · after', alt: 'Remodeled bathroom vanity' },
+    { src: 'assets/photos/livingroom-fireplace-AFTER.jpg', cat: 'Living spaces', caption: 'Living room · after', alt: 'Living room with finished fireplace surround' },
+    { src: 'assets/photos/diningroom-arched-window.jpg', cat: 'Living spaces', caption: 'Dining room · arched window trim', alt: 'Dining room with arched window' },
+    { src: 'assets/photos/basement-finished-01.jpg', cat: 'Living spaces', caption: 'Finished basement', alt: 'Finished basement' },
+    { src: 'assets/photos/basement-finished-02.jpg', cat: 'Living spaces', caption: 'Finished basement · second view', alt: 'Finished basement, another angle' },
+    { src: 'assets/gallery/fb-remodel-01.jpg', cat: 'Living spaces', caption: 'Interior finish work', alt: 'Interior remodel finish work' },
+    { src: 'assets/gallery/fb-remodel-02.jpg', cat: 'Living spaces', caption: 'Interior finish work', alt: 'Interior remodel in progress' },
+    { src: 'assets/gallery/fb-remodel-03.jpg', cat: 'Trim & paint', caption: 'Trim & paint', alt: 'Trim and paint work' },
+    { src: 'assets/gallery/fb-remodel-04.jpg', cat: 'Trim & paint', caption: 'Trim & paint', alt: 'Painted and trimmed room' },
+    { src: 'assets/gallery/fb-remodel-05.jpg', cat: 'Trim & paint', caption: 'Finish carpentry', alt: 'Finish carpentry detail' },
+    { src: 'assets/gallery/fb-remodel-06.jpg', cat: 'Living spaces', caption: 'Interior remodel', alt: 'Interior remodel' },
+    { src: 'assets/gallery/bar-1.jpg', cat: 'Living spaces', caption: 'Custom bar build', alt: 'Custom-built bar' },
+    { src: 'assets/gallery/bar-2.jpg', cat: 'Living spaces', caption: 'Custom bar · finished', alt: 'Finished custom bar' },
+    { src: 'assets/gallery/fb-job-01.jpg', cat: 'Exterior', caption: 'Exterior project', alt: 'Exterior construction project' },
+    { src: 'assets/gallery/fb-job-02.jpg', cat: 'Exterior', caption: 'Exterior project', alt: 'Exterior project work' },
+    { src: 'assets/gallery/fb-job-03.jpg', cat: 'Exterior', caption: 'Exterior project', alt: 'Exterior project' },
+  ];
+  renderVals() {
+    const cats = ['All', 'Kitchens', 'Baths', 'Tile', 'Trim & paint', 'Living spaces', 'Exterior'];
+    const cur = this.state.filter;
+    return {
+      crafts: ['Custom design', 'Trim work', 'Cabinets', 'Drywall', 'Paint', 'Tile', 'Finish work', 'Exterior projects'],
+      filters: cats.map((label) => ({
+        label,
+        pressed: label === cur ? 'true' : 'false',
+        bg: label === cur ? '#B5673F' : 'transparent',
+        color: label === cur ? '#FFFFFF' : '#6E655C',
+        border: label === cur ? '#B5673F' : '#C9BCA9',
+        pick: () => this.setState({ filter: label }),
+      })),
+      photos: this.PHOTOS.filter((p) => cur === 'All' || p.cat === cur),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
