@@ -99,8 +99,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   [style*="font-size: 21px"]{font-size:18px !important}
   section[aria-label="Trust"]{font-size:14px !important}
 }
-/* never allow sideways scroll, whatever else happens */
-html,body{max-width:100%;overflow-x:hidden}
+/* Never allow sideways scroll, whatever else happens.
+
+   overflow-x:hidden must go on <html> ALONE. Putting it on <body> as well hands
+   the scroll container to the body element: window.scrollY then freezes at 0,
+   position:sticky stops sticking, scroll restoration breaks and iOS loses
+   momentum scrolling. overflow-x:clip does the same clipping without creating a
+   scroll container at all, so prefer it where it is supported. */
+html{max-width:100%;overflow-x:hidden}
+body{max-width:100%}
+@supports (overflow-x: clip){html{overflow-x:clip}}
 </style>
 </head>
 <body>
