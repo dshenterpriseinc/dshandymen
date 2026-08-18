@@ -394,6 +394,106 @@ def slim_hero_video(s):
     return re.sub(r'<video\b[^>]*>', repl, s)
 
 
+# ---------------------------------------------------------------- 8. honest labels
+# A caption audit against the actual photographs turned up five tiles describing
+# work the picture does not show. On a contractor's portfolio that is not a
+# cosmetic problem - the pressure-washing page was presenting two photographs of
+# a mulch bed as a deck "before and after washing".
+#
+# deck-wash-before/after  are a mulch bed and a barrow of mulch on a driveway
+# bar-1 / bar-2           are one deck, bare then stained - there is no bar
+# fb-job-06               is a kitchen, captioned as yard work
+# fb-job-08               is a lawn regrade, captioned only as "job site"
+#
+# Each entry rewrites text inside the <figure> that references that file, so a
+# caption shared with an unrelated tile elsewhere is left alone.
+FIGURE_FIXES = {
+    "deck-wash-before": [("Weathered deck before washing", "Fresh mulch going down around the beds"),
+                         ("Deck before washing &mdash; grey and weathered",
+                          "Fresh mulch going down around the beds"),
+                         (">Deck wash<", ">Mulch bed<"),
+                         (">Before<", ">During<")],
+    "deck-wash-after":  [("Deck after pressure washing", "Mulch delivered and ready to spread"),
+                         ("Same deck after washing &mdash; wood grain restored",
+                          "Mulch delivered and ready to spread"),
+                         (">Deck wash<", ">Mulch delivered<"),
+                         (">After<", ">During<")],
+    "bar-1":            [("Custom bar build", "Deck build &middot; before stain"),
+                         ("Custom-built bar", "New deck boards down, before stain"),
+                         (">Custom bar<", ">Deck build<"),
+                         (">After<", ">Before stain<")],
+    "bar-2":            [("Finished custom bar", "The same deck once it was stained"),
+                         ("Custom bar &middot; finished", "Deck build &middot; stained")],
+    "fb-job-06":        [('alt="Yard work"', 'alt="Kitchen remodel, cabinets and range"'),
+                         (">Yard work<", ">Kitchen remodel<")],
+    "fb-job-08":        [('alt="Work in progress"', 'alt="Lawn regraded and reseeded"'),
+                         (">Job site<", ">Yard work<")],
+}
+
+
+def fix_figure_labels(s):
+    def repl(m):
+        fig = m.group(0)
+        for name, subs in FIGURE_FIXES.items():
+            if name + "." not in fig:
+                continue
+            for old, new in subs:
+                fig = fig.replace(old, new)
+        return fig
+    return re.sub(r"<figure\b.*?</figure>", repl, s, flags=re.S)
+
+
+# ---------------------------------------------------------------- 9. pressure washing
+# The "Real jobs, real grime" section promised "every photo below is our crew's
+# work" and then showed two photographs of a mulch bed as a deck before and
+# after washing, alongside a clip-art badge among the real photographs.
+#
+# Two genuine shots were sitting unused in the asset folder, and both happen to
+# be better than a pair anyway: each catches the job half finished, so the dirty
+# and the clean are in the same frame.
+PW_SWAPS = [
+    ("assets/gallery/deck-wash-before", "assets/gallery/patio-3",
+     "Concrete patio half washed, the clean half bright against the grime",
+     "Patio, half done"),
+    ("assets/gallery/deck-wash-after", "assets/gallery/pressure-washing",
+     "Washing a wooden fence, the stripe already done showing the bare grain",
+     "Fence, half done"),
+]
+
+
+def fix_pressure_washing(path, s, prefix):
+    if "pressure-washing" not in path.replace(chr(92), "/").split("/docs/")[1]:
+        return s
+    for old, new, alt, cap in PW_SWAPS:
+        if prefix + new + "." in s:
+            continue                        # already swapped on a previous pass
+        for ext in (".webp", ".jpg"):
+            s = s.replace(prefix + old + ext, prefix + new + ext)
+        s = re.sub(r'alt="[^"]*"(?=[^>]*' + re.escape(new) + r'\.jpg)', 'alt="%s"' % alt, s)
+        # the caption sits in the same <figure> as the image we just swapped in
+        def cap_repl(m, _new=new, _cap=cap):
+            fig = m.group(0)
+            if _new + "." not in fig:
+                return fig
+            return re.sub(r"(<figcaption[^>]*>)[^<]*(</figcaption>)",
+                          lambda c: c.group(1) + _cap + c.group(2), fig)
+        s = re.sub(r"<figure\b.*?</figure>", cap_repl, s, flags=re.S)
+
+    # the swapped-in files are a different shape, so the old width/height would
+    # now describe the wrong aspect ratio and reintroduce layout shift
+    for _, new, _, _ in PW_SWAPS:
+        d = dims_for(path, prefix + new + ".jpg")
+        if d:
+            s = re.sub(r'(<img\b[^>]*' + re.escape(new) + r'\.jpg"[^>]*?)width="\d+" height="\d+"',
+                       lambda m, _d=d: m.group(1) + 'width="%d" height="%d"' % _d, s)
+
+    # a clip-art badge does not belong in a strip captioned "every photo below
+    # is our crew's work"
+    s = re.sub(r"<picture>(?:(?!</picture>).)*power-washing(?:(?!</picture>).)*</picture>",
+               "", s, flags=re.S)
+    return s
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -413,8 +513,10 @@ def main():
         s = fix_scrims(s)
         s = add_font_fallbacks(s)
         s = slim_hero_video(s)
+        s = fix_figure_labels(s)
         s = apply_contrast_map(f, s)
         depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
+        s = fix_pressure_washing(f, s, "../"*depth)
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:
@@ -428,6 +530,9 @@ def main():
     tot = miss_d = miss_l = pend = miss_a = 0
     for f in glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True):
         s = io.open(f, encoding="utf-8").read()
+        # the injected stylesheet has a comment mentioning <img>, which the tag
+        # regex below would happily count as a real image missing every attribute
+        s = re.sub("<style[^>]*>.*?</style>|<script[^>]*>.*?</script>", "", s, flags=re.S)
         pend += s.count("REVIEW PENDING")
         for t in re.findall(r'<img\b[^>]*>', s):
             tot += 1

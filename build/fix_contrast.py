@@ -27,7 +27,7 @@ import glob, io as _io, json, os, subprocess, sys
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
-from audit_contrast import COLLECT, BLANK, lum, ratio, samples
+from audit_contrast import COLLECT, BLANK, HIDE_FIXED, lum, ratio, samples
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAP = os.path.join(ROOT, 'build', 'contrast_map.json')
@@ -72,6 +72,7 @@ def collect():
             if not hits:
                 continue
             pg.add_style_tag(content=BLANK)
+            pg.evaluate(HIDE_FIXED)
             pg.wait_for_timeout(120)
             img = Image.open(_io.BytesIO(pg.screenshot(full_page=True))).convert('RGB')
 

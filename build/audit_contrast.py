@@ -64,6 +64,22 @@ BLANK = """*, *::before, *::after {
 }"""
 
 
+# A full-page screenshot paints position:fixed overlays at their viewport spot,
+# so the chat launcher lands on top of whatever happens to be at that scroll
+# offset and reports a false failure against its own artwork. Overlays are not
+# the background of the text they float over - hide them for the capture.
+HIDE_FIXED = """() => {
+  document.querySelectorAll('body *').forEach(el => {
+    if (getComputedStyle(el).position === 'fixed') el.style.visibility = 'hidden';
+  });
+  // the chat launcher is fixed inside a shadow root, out of reach of the query
+  // above; visibility inherits through the shadow boundary, so hide the host
+  document.querySelectorAll('chat-widget, .sc-host-x').forEach(el => {
+    el.style.visibility = 'hidden';
+  });
+}"""
+
+
 def lum(c):
     f = []
     for v in c[:3]:
@@ -106,6 +122,7 @@ def run():
             if not hits:
                 continue
             pg.add_style_tag(content=BLANK)
+            pg.evaluate(HIDE_FIXED)
             pg.wait_for_timeout(120)
             img = Image.open(_io.BytesIO(pg.screenshot(full_page=True))).convert('RGB')
             for h in hits:
