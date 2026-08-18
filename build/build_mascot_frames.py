@@ -29,22 +29,32 @@ from rebuild_mascots import to_alpha, components, cut, SHEETS, SCRATCH   # noqa:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'site-export', 'assets', 'web')
 
-# (sheet, figure index, output name). All three are the sheet's native teal.
+# (sheet, figure index, output name, mirror). All are the sheets' native teal.
+#
+# The Bird has only two distinct poses drawn - the third here is the standing
+# one mirrored. That is not padding: he is drawn in three-quarter profile facing
+# right, which on a bottom-right mascot means facing off the page. Both working
+# poses are therefore flipped to face into the content, and the unflipped
+# original becomes the moment he turns to look the other way.
 FRAMES = [
-    ('concept-sheet-02-service-poses.jpg', 5, 'bear-pose-wave'),
-    ('concept-sheet-01-bear-evolution.jpg', 2, 'bear-pose-stand'),
-    ('concept-sheet-01-bear-evolution.jpg', 3, 'bear-pose-arms'),
+    ('concept-sheet-02-service-poses.jpg', 5, 'bear-pose-wave', False),
+    ('concept-sheet-01-bear-evolution.jpg', 2, 'bear-pose-stand', False),
+    ('concept-sheet-01-bear-evolution.jpg', 3, 'bear-pose-arms', False),
+    ('concept-sheet-05-pigeon-division-and-duo.jpg', 4, 'bird-pose-stand', True),
+    ('concept-sheet-05-pigeon-division-and-duo.jpg', 2, 'bird-pose-tools', True),
+    ('concept-sheet-05-pigeon-division-and-duo.jpg', 4, 'bird-pose-turn', False),
 ]
 
 CANVAS_H = 620          # frame height; the widget scales the whole thing down
 BODY_FRAC = 0.80        # how much of the frame the body itself should occupy
 ERODE = 14              # enough to eat a shovel handle, not enough to eat an arm
+BIRD_ERODE = 7          # he is a smaller figure; 14 would eat his tail
 
 
-def body_box(alpha):
+def body_box(alpha, erode=ERODE):
     """Bounding box of the figure minus thin props, via erosion."""
     m = alpha > 8
-    core = ndimage.binary_erosion(m, np.ones((3, 3), bool), iterations=ERODE)
+    core = ndimage.binary_erosion(m, np.ones((3, 3), bool), iterations=erode)
     if not core.any():
         core = m
     ys, xs = np.where(core)
@@ -53,14 +63,16 @@ def body_box(alpha):
 
 def build():
     made = []
-    for sheet, idx, name in FRAMES:
+    for sheet, idx, name, mirror in FRAMES:
         rgb = Image.open(os.path.join(SHEETS, sheet))
         figs = components(to_alpha(rgb), merge_px=8)
         box, own = figs[idx]
         im = cut(rgb, own, box, pad=0.0)
+        if mirror:
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
         a = np.asarray(im.split()[-1])
 
-        bx0, by0, bx1, by1 = body_box(a)
+        bx0, by0, bx1, by1 = body_box(a, BIRD_ERODE if name.startswith('bird') else ERODE)
         body_h = by1 - by0
         feet = np.where(a.max(axis=1) > 8)[0].max()          # lowest opaque row
         body_cx = (bx0 + bx1) / 2.0

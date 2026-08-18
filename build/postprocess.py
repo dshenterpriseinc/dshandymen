@@ -515,6 +515,52 @@ def to_brand_teal(s):
     return recolour_text(s)
 
 
+# ---------------------------------------------------------------- 12. the Bird's page
+# Design & Remodeling opened on flat cream while every other page on the site
+# opens on photography. The drafting grid was a good instinct and stays; what it
+# lacked was depth and any sight of the actual work above the fold. A photograph
+# of finished trim goes behind the grid under a heavy cream scrim - present
+# enough to give the panel substance, faint enough that it reads as texture
+# rather than a picture competing with the heading.
+
+HERO_GRID_OLD = ('background: repeating-linear-gradient(0deg, rgba(44, 74, 107, 0.05) 0px, '
+                 'rgba(44, 74, 107, 0.05) 1px, transparent 1px, transparent 32px), '
+                 'repeating-linear-gradient(90deg, rgba(44, 74, 107, 0.05) 0px, '
+                 'rgba(44, 74, 107, 0.05) 1px, transparent 1px, transparent 32px), '
+                 'rgb(246, 242, 237);')
+
+HERO_GRID_NEW = (
+    'background:'
+    # the drafting grid, now two weights like real drawing paper
+    ' repeating-linear-gradient(0deg, rgba(44,74,107,.07) 0px, rgba(44,74,107,.07) 1px, transparent 1px, transparent 32px),'
+    ' repeating-linear-gradient(90deg, rgba(44,74,107,.07) 0px, rgba(44,74,107,.07) 1px, transparent 1px, transparent 32px),'
+    ' repeating-linear-gradient(0deg, rgba(44,74,107,.16) 0px, rgba(44,74,107,.16) 1px, transparent 1px, transparent 160px),'
+    ' repeating-linear-gradient(90deg, rgba(44,74,107,.16) 0px, rgba(44,74,107,.16) 1px, transparent 1px, transparent 160px),'
+    # the scrim that keeps the type comfortably readable over the photograph
+    ' linear-gradient(180deg, rgba(246,242,237,.96) 0%, rgba(246,242,237,.93) 45%, rgba(246,242,237,.98) 100%),'
+    ' url(../assets/photos/diningroom-arched-window.webp) center 38%/cover no-repeat,'
+    ' rgb(246, 242, 237);')
+
+WORK_OLD = '<h2 style=\'margin: 0px 0px 6px; font-family: "Barlow Condensed"'
+
+def style_design_page(path, s):
+    if 'design-remodeling' not in path.replace(chr(92), '/'):
+        return s
+    s = s.replace(HERO_GRID_OLD, HERO_GRID_NEW, 1)
+
+    # the gallery floated on bare white, so it read as loose page rather than a
+    # section of its own. A cream band ties it to the division's palette.
+    i = s.find('>The work<')
+    if i > 0:
+        j = s.rfind('<section', 0, i)
+        if j > 0:
+            k = s.find('>', j)
+            tag = s[j:k + 1]
+            if 'background' not in tag:
+                s = s[:j] + '<section style="background: rgb(250, 247, 243);"' + s[j + 8:]
+    return s
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -541,8 +587,12 @@ def main():
         s = add_font_fallbacks(s)
         s = slim_hero_video(s)
         s = fix_figure_labels(s)
-        s = apply_contrast_map(f, s)
+        s = style_design_page(f, s)
         s = to_brand_teal(s)      # last: every colour decision is made by now
+        # after the rotation, not before: the map is measured on the built page,
+        # so its keys are the final colours. Applying it to pre-rotation markup
+        # matched nothing and silently undid every fix it had solved.
+        s = apply_contrast_map(f, s)
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:

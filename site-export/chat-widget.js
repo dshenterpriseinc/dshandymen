@@ -47,11 +47,15 @@ var __DSH_BASE = (function () {
   // pivots, folds his arms, holds, and pivots back. Frames rather than a
   // rendered clip so the animation is exactly the mascot on the cards and in the
   // logo, keeps a real alpha channel, and costs ~100 KB instead of megabytes.
-  var POSES = [
-    U('assets/web/bear-pose-wave.webp'),
-    U('assets/web/bear-pose-stand.webp'),
-    U('assets/web/bear-pose-arms.webp')
-  ];
+  var POSE_SETS = {
+    bear: ['bear-pose-wave', 'bear-pose-stand', 'bear-pose-arms'],
+    bird: ['bird-pose-stand', 'bird-pose-tools', 'bird-pose-turn']
+  };
+  var POSES = function (persona) {
+    return (POSE_SETS[persona] || POSE_SETS.bear).map(function (n) {
+      return U('assets/web/' + n + '.webp');
+    });
+  };
 
   var FIG = function (persona, state) {
     var set = persona === 'bear' ? BEAR_FIG : BIRD_FIG;
@@ -390,9 +394,9 @@ var __DSH_BASE = (function () {
 '  </div>',
 '  <button class="launcher" aria-label="Open chat — ' + p.title + '" aria-expanded="false">',
 '    <span class="figs">',
-'      <img alt="" src="' + POSES[0] + '" fetchpriority="low" decoding="async">',
-'      <img alt="" data-src="' + POSES[1] + '" decoding="async">',
-'      <img alt="" data-src="' + POSES[2] + '" decoding="async">',
+'      <img alt="" src="' + POSES(this.persona)[0] + '" fetchpriority="low" decoding="async">',
+'      <img alt="" data-src="' + POSES(this.persona)[1] + '" decoding="async">',
+'      <img alt="" data-src="' + POSES(this.persona)[2] + '" decoding="async">',
 '    </span>',
 '  </button>',
 '</div>',
@@ -464,6 +468,7 @@ var __DSH_BASE = (function () {
       if (this._dismissed || this.open) return;
       // the later poses are not needed until the loop starts, so they stay off
       // the critical path rather than adding ~70 KB to every page load
+      this._arrived = true;
       this.shadowRoot.querySelectorAll('.figs img[data-src]').forEach(function (im) {
         im.src = im.getAttribute('data-src');
         im.removeAttribute('data-src');
@@ -579,6 +584,7 @@ var __DSH_BASE = (function () {
       st.setProperty('--usr-bg', p.bubbleUser); st.setProperty('--link', p.accent);
       st.setProperty('--chip', p.header);
       this._setAvatar(first ? 'waving' : 'neutral');
+      if (!first) this._setPoses();
       this.$chips.innerHTML = '';
       p.chips.forEach(function (c) {
         var b = document.createElement('button');
@@ -591,6 +597,17 @@ var __DSH_BASE = (function () {
     _setAvatar(state) {
       // the big figure runs its own loop now; only the panel's head reacts to state
       if (this.$headImg) this.$headImg.src = FIG(this.persona, state);
+    }
+
+    _setPoses() {
+      // after a hand-over the launcher must follow, or the Bird's page ends up
+      // with the Bear standing in the corner
+      var set = POSES(this.persona), arrived = this._arrived;
+      this.shadowRoot.querySelectorAll('.figs img').forEach(function (im, i) {
+        if (!set[i]) return;
+        if (i === 0 || arrived) { im.src = set[i]; im.removeAttribute('data-src'); }
+        else im.setAttribute('data-src', set[i]);
+      });
     }
 
     _still(on) { this.$stage.classList.toggle('still', !!on); }

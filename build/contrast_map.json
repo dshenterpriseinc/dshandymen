@@ -15,9 +15,9 @@
  },
  {
   "file": "docs/about/index.html",
-  "style": "font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(124, 139, 163);",
+  "style": "font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+   "rgb(108, 144, 152)": "rgb(93, 123, 130)"
   }
  },
  {
@@ -45,7 +45,7 @@
   "file": "docs/design-remodeling/index.html",
   "style": "margin: 0px 0px 26px; font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(138, 128, 120);",
   "swaps": {
-   "rgb(138, 128, 120)": "rgb(118, 109, 103)"
+   "rgb(138, 128, 120)": "rgb(112, 103, 97)"
   }
  },
  {
@@ -57,9 +57,9 @@
  },
  {
   "file": "docs/gallery/index.html",
-  "style": "font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(124, 139, 163);",
+  "style": "font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(102, 115, 135)"
+   "rgb(108, 144, 152)": "rgb(90, 119, 126)"
   }
  },
  {
@@ -71,9 +71,9 @@
  },
  {
   "file": "docs/gift-certificates/index.html",
-  "style": "margin: 0px 0px 18px; font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(124, 139, 163);",
+  "style": "margin: 0px 0px 18px; font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(102, 115, 135)"
+   "rgb(108, 144, 152)": "rgb(90, 119, 126)"
   }
  },
  {
@@ -92,9 +92,9 @@
  },
  {
   "file": "docs/index.html",
-  "style": "color: rgb(194, 206, 220);",
+  "style": "color: rgb(185, 209, 215);",
   "swaps": {
-   "rgb(194, 206, 220)": "rgb(108, 114, 122)"
+   "rgb(185, 209, 215)": "rgb(103, 116, 120)"
   }
  },
  {
@@ -113,9 +113,9 @@
  },
  {
   "file": "docs/index.html",
-  "style": "margin: 28px 0px 0px; color: rgb(124, 139, 163); font-size: 15.5px;",
+  "style": "margin: 28px 0px 0px; color: rgb(108, 144, 152); font-size: 15.5px;",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(132, 146, 168)"
+   "rgb(108, 144, 152)": "rgb(117, 151, 158)"
   }
  },
  {
@@ -127,9 +127,9 @@
  },
  {
   "file": "docs/pressure-washing/index.html",
-  "style": "font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(124, 139, 163); margin-top: 8px;",
+  "style": "font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(108, 144, 152); margin-top: 8px;",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+   "rgb(108, 144, 152)": "rgb(93, 123, 130)"
   }
  },
  {
@@ -148,9 +148,9 @@
  },
  {
   "file": "docs/quote/index.html",
-  "style": "margin: 0px; font-size: 15px; color: rgb(124, 139, 163);",
+  "style": "margin: 0px; font-size: 15px; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+   "rgb(108, 144, 152)": "rgb(93, 123, 130)"
   }
  },
  {
@@ -162,9 +162,9 @@
  },
  {
   "file": "docs/reviews/index.html",
-  "style": "font-size: 14px; color: rgb(124, 139, 163);",
+  "style": "font-size: 14px; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(102, 115, 135)"
+   "rgb(108, 144, 152)": "rgb(90, 119, 126)"
   }
  },
  {
@@ -176,9 +176,9 @@
  },
  {
   "file": "docs/reviews/index.html",
-  "style": "margin: 28px 0px 0px; font-size: 14.5px; color: rgb(124, 139, 163); font-style: italic;",
+  "style": "margin: 28px 0px 0px; font-size: 14.5px; color: rgb(108, 144, 152); font-style: italic;",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+   "rgb(108, 144, 152)": "rgb(93, 123, 130)"
   }
  },
  {
@@ -246,9 +246,9 @@
  },
  {
   "file": "docs/snow-plowing/index.html",
-  "style": "margin: 0px; text-align: center; font-size: 13px; color: rgb(124, 139, 163);",
+  "style": "margin: 0px; text-align: center; font-size: 13px; color: rgb(108, 144, 152);",
   "swaps": {
-   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+   "rgb(108, 144, 152)": "rgb(93, 123, 130)"
   }
  },
  {
