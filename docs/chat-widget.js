@@ -3,9 +3,9 @@
 (function () {
   const PHONE = '(716) 803-0091';
   const PHONE_HREF = 'tel:+17168030091';
-  const BEAR_AV = (s) => `assets/web/chatbot-${s}.png`;
-  const BIRD_AV = (s) => `assets/web/pigeon-chatbot-${s}.png`;
-  const BIRD_FALLBACK = 'assets/web/logo-pigeon-division.png';
+  const BEAR_AV = (s) => `/assets/web/chatbot-${s}.png`;
+  const BIRD_AV = (s) => `/assets/web/pigeon-chatbot-${s}.png`;
+  const BIRD_FALLBACK = '/assets/web/logo-pigeon-division.png';
 
   const PERSONAS = {
     bear: {

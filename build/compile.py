@@ -62,6 +62,7 @@ LINKMAP = {f"{k}.dc.html": ("/" if v[0] == "" else "/" + v[0]) for k, v in PAGES
 LINKMAP["NotFound.dc.html"] = "/404.html"
 
 HOVER_CSS = """
+picture{display:contents}
 /* ---- interaction states (re-created; the design tool bound these in JS) ---- */
 a,button{transition:background-color .18s ease,color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
 a[style*="background: #00338D"]:hover{background:#00276B !important;color:#fff !important}
