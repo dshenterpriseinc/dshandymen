@@ -5,6 +5,19 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
 (function () {
   const PHONE = '(716) 803-0091';
   const PHONE_HREF = 'tel:+17168030091';
+  // full-figure art — the mascot standing, not a cropped head in a circle
+  const BEAR_FIG = {
+    neutral:   __DSH_BASE+'assets/web/mascot-bear-shovel-hero.png',
+    waving:    __DSH_BASE+'assets/web/mascot-waving.png',
+    listening: __DSH_BASE+'assets/web/mascot-bear-shovel-hero.png',
+    delighted: __DSH_BASE+'assets/web/mascot-waving.png',
+    pointing:  __DSH_BASE+'assets/web/mascot-ladder-drill.png',
+    thumbsup:  __DSH_BASE+'assets/web/mascot-waving.png'
+  };
+  const BIRD_FIG = { neutral: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.png' };
+  const FIG = (persona, state) => (persona === 'bear'
+      ? (BEAR_FIG[state] || BEAR_FIG.neutral)
+      : (BIRD_FIG[state] || BIRD_FIG.neutral));
   const BEAR_AV = (s) => __DSH_BASE+`assets/web/chatbot-${s}.png`;
   const BIRD_AV = (s) => __DSH_BASE+`assets/web/pigeon-chatbot-${s}.png`;
   const BIRD_FALLBACK = __DSH_BASE+'assets/web/logo-pigeon-division.png';
@@ -119,21 +132,27 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
 <style>
   :host{all:initial}
   *{box-sizing:border-box;font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif}
-  .launcher{position:fixed;right:22px;bottom:22px;width:64px;height:64px;border-radius:50%;border:3px solid ${p.bg};
-    background:#fff center/cover no-repeat;cursor:pointer;box-shadow:0 6px 20px rgba(12,22,32,.28);z-index:9000;padding:0;
-    transition:transform .2s ease}
-  .launcher:hover{transform:scale(1.06)}
-  .launcher:focus-visible{outline:3px solid ${p.accent};outline-offset:3px}
-  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
-  .breathe{animation:breathe 3.6s ease-in-out infinite}
-  @media(prefers-reduced-motion:reduce){.breathe{animation:none}.launcher:hover{transform:none}}
+  .launcher{position:fixed;right:16px;bottom:10px;width:auto;height:auto;border:0;border-radius:0;
+    background:none;padding:0;cursor:pointer;z-index:9000;line-height:0;
+    filter:drop-shadow(0 12px 20px rgba(12,22,32,.38));transition:transform .25s cubic-bezier(.2,1.2,.4,1)}
+  .launcher img{height:136px;width:auto;display:block;pointer-events:none}
+  .launcher:hover{transform:translateY(-7px) scale(1.05)}
+  .launcher:focus-visible{outline:3px solid ${p.accent};outline-offset:6px;border-radius:12px}
+  .launcher .pip{position:absolute;top:10px;right:4px;width:15px;height:15px;border-radius:50%;
+    background:${p.accent};border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-.7deg)}50%{transform:translateY(-10px) rotate(.7deg)}}
+  @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+  .breathe img{animation:bob 4.2s ease-in-out infinite}
+  .launcher:hover img{animation:wave 1.6s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.breathe img,.launcher:hover img{animation:none}.launcher:hover{transform:none}}
+  .headfig{height:84px;width:auto;margin-bottom:-14px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
   .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0C1620;padding:10px 14px;border-radius:10px;
     box-shadow:0 4px 16px rgba(12,22,32,.22);font-size:15px;z-index:9000;max-width:200px}
   .nudge:after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;background:#fff;transform:translateY(-50%) rotate(45deg)}
   .panel{position:fixed;right:22px;bottom:100px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 130px));
     display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
     background:var(--panel-bg,${p.panel});transition:background .8s ease}
-  .head{display:flex;align-items:center;gap:12px;padding:14px 16px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
+  .head{display:flex;align-items:flex-end;gap:10px;padding:14px 16px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
   .head img{width:44px;height:44px;border-radius:50%;background:#fff;object-fit:cover;flex:none}
   .head .nm{font-weight:700;font-size:17px;line-height:1.1}
   .head .tg{font-size:13px;opacity:.85}
@@ -164,11 +183,11 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
   .hidden{display:none}
 </style>
-<button class="launcher breathe" aria-label="Open chat — ${p.title}" style="background-image:url('${this._av('neutral')}')"></button>
+<button class="launcher breathe" aria-label="Open chat — ${p.title}"><img alt="" src="${FIG(this.persona,'waving')}"><span class="pip"></span></button>
 <div class="nudge hidden" role="status"></div>
 <div class="panel hidden" role="dialog" aria-label="${p.title}">
   <div class="head">
-    <img alt="" src="${this._av('waving')}">
+    <img class="headfig" alt="" src="${FIG(this.persona,'waving')}">
     <div><div class="nm"></div><div class="tg"></div></div>
     <button class="close" aria-label="Close chat">×</button>
   </div>
@@ -186,7 +205,7 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       this.$launcher = $('.launcher'); this.$panel = $('.panel'); this.$msgs = $('.msgs');
       this.$chips = $('.chips'); this.$input = $('input'); this.$nudge = $('.nudge');
       this.$headImg = $('.head img'); this.$nm = $('.nm'); this.$tg = $('.tg');
-      if (this.persona === 'bird') this._birdFallback(this.$launcher, true);
+      
       this.$launcher.addEventListener('click', () => this._toggle(true));
       $('.close').addEventListener('click', () => this._toggle(false));
       $('.send').addEventListener('click', () => this._submit());
@@ -220,8 +239,8 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
     _setAvatar(state) {
       const url = this._av(state);
       this.$headImg.src = url;
-      this.$launcher.style.backgroundImage = `url('${url}')`;
-      if (this.persona === 'bird') { this._birdFallback(this.$headImg, false); this._birdFallback(this.$launcher, true); }
+      var lim = this.$launcher.querySelector('img'); if (lim) lim.src = FIG(this.persona, state);
+      if (this.$headImg) this.$headImg.src = FIG(this.persona, state);
     }
     _showNudge() {
       this.$nudge.textContent = this.persona === 'bear' ? 'Need a quote? Ask me.' : 'Planning a room? Ask me.';

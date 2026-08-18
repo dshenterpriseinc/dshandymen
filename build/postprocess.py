@@ -93,6 +93,59 @@ def fix_images(page_path, s):
         return tag
     return re.sub(r'<img\b[^>]*>', repl, s)
 
+
+# ---------------------------------------------------------------- 3. plain-English labels
+# "Pigeon Division" is the team's name and stays on its own page where it is explained.
+# In navigation it means nothing to a homeowner, so links say what the work actually is.
+NAV_RELABEL = [
+    (">Pigeon Division<", ">Design &amp; Remodeling<"),
+    (">Meet the Pigeon Division →<", ">See design &amp; remodeling →<"),
+]
+
+def relabel_nav(s):
+    for a, b in NAV_RELABEL:
+        s = s.replace(a, b)
+    return s
+
+
+# ---------------------------------------------------------------- 4. service-area map
+MAP_BLOCK = """
+<section aria-label="Service area map" style="background:#FFFFFF">
+  <div style="max-width:1080px;margin:0 auto;padding:64px 24px 8px">
+    <p style="margin:0 0 10px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;
+       letter-spacing:.2em;text-transform:uppercase;color:#00338D">Where we work</p>
+    <h2 style="margin:0 0 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:40px;
+       letter-spacing:.01em;text-transform:uppercase;color:#1B2A4A">Across the Southtowns &amp; Western New York</h2>
+    <p style="margin:0 0 26px;font-size:17.5px;color:#3D4756;max-width:62ch">
+      The shop is on Miriam Avenue in Blasdell, so Hamburg, Blasdell, Orchard Park and Lackawanna are
+      right on the route. We cover most of the greater Buffalo area besides &mdash; if you are near
+      the ring below, just ask.</p>
+    <img src="{PREFIX}assets/web/service-area-map.svg" alt="Map of Western New York showing the DS Handymen service area centred on Blasdell, covering Hamburg, Orchard Park, Lackawanna and the wider greater Buffalo area, with Lake Erie to the west" width="1000" height="780" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #DCE5EF;border-radius:12px;box-shadow:0 6px 22px rgba(27,42,74,.10)">
+    <p style="margin:16px 0 0;font-size:15.5px;color:#5B6779">
+      Not on the map? Call the Bear on <a href="tel:+17168030091" style="color:#00338D;font-weight:600">(716) 803-0091</a> &mdash; if we can get there, we will.</p>
+  </div>
+</section>
+"""
+
+def insert_map(path, s, prefix):
+    if 'Service area map' in s:
+        return s
+    block = MAP_BLOCK.replace('{PREFIX}', prefix)
+    name = path.replace(chr(92), '/').rstrip('/').split('/')
+    is_area_hub = len(name) >= 2 and name[-2] == 'service-area'
+    is_home = name[-1] == 'index.html' and name[-2] == 'docs'
+    if is_area_hub:
+        # straight after the page intro section
+        i = s.find('</section>')
+        if i > 0:
+            return s[:i+10] + block + s[i+10:]
+    elif is_home:
+        # just before the existing town list
+        i = s.find('<section aria-label="Service area"')
+        if i > 0:
+            return s[:i] + block + s[i:]
+    return s
+
 # ---------------------------------------------------------------- run
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
@@ -106,6 +159,9 @@ def main():
                 s = s.replace("</head>", REVIEW_LD + "\n</head>", 1)
         if '<picture>' not in s:
             s = fix_images(f, s)
+        s = relabel_nav(s)
+        depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
+        s = insert_map(f, s, '../'*depth)
         if 'Responsive layer' not in s:
             s = s.replace("</head>", "<style>picture{display:contents}\n" + css + "</style>\n</head>", 1)
         if s != orig:
