@@ -1,5 +1,7 @@
 # Final step: point dshandymen.com at GitHub Pages
 
+> 🟢 **Live:** https://dshenterpriseinc.github.io/dshandymen/
+
 **The site is built, deployed and serving.** Every route returns 200 from GitHub's servers.
 The only thing left is DNS — the domain still points at the old forwarding host.
 

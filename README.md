@@ -8,30 +8,38 @@ sunrooms · and the **Pigeon Division** (interior & exterior design and finish w
 
 ---
 
-## ✅ Status: BUILT, DEPLOYED, VERIFIED — awaiting DNS
+## 🟢 LIVE
 
-Live on GitHub Pages from `main` → `/docs`. All 21 routes verified 200 on GitHub's servers.
+### **https://dshenterpriseinc.github.io/dshandymen/**
 
-**One step remains, and it needs your GoDaddy login:** point `dshandymen.com` at GitHub
-(four A records + a www CNAME + remove Domain Forwarding), then tick **Enforce HTTPS**.
-Full instructions in **`DNS-SETUP.md`**. Until then the deployment is only reachable by
-resolving directly to GitHub, because the domain still answers with the old forwarding IPs.
+Served by GitHub Pages from `main` → `/docs` over HTTPS with a valid GitHub certificate.
+All 25 routes and assets verified 200.
 
-### Verified
+**To move it to dshandymen.com:** point the DNS (see `DNS-SETUP.md`), then
+`git mv docs/CNAME.pending docs/CNAME`, push, and tick **Enforce HTTPS**.
+Every path on the site is relative, so the identical build serves correctly from either
+address — no rebuild required.
+
+### Verified live
 | | |
 |---|---|
-| Routes | 21/21 → 200 · 0 broken internal links |
+| Routes | 25/25 → 200 · 0 broken links · 0 broken images |
+| HTTPS | valid certificate, TLS verify 0, ~90ms response |
 | Structured data | 49 JSON-LD blocks, all valid (LocalBusiness · Service · BreadcrumbList · Review) |
 | Reviews | 4 verbatim, sourced from Google/BBB, each labelled with its source |
 | Responsive | 375px → **0px** overflow · 768px → 2-col · 1440px → 3-col |
-| First paint | ~187 KB (39 html + 54 eager img + 25 js + 69 poster) |
-| JS budget | 25 KB of 100 KB |
+| First paint | ~187 KB · JS 25 KB of a 100 KB budget |
 | Images | 153 tags, all with width/height + loading; WebP via `<picture>` |
 | Chat | Bear + Bird, handoff verified working on nested pages |
-| A11y | skip link, focus-visible, 44px targets, reduced-motion honoured |
+| A11y | skip link · focus-visible · 44px targets · reduced-motion honoured |
 
-`site-export/` is the design **source**; `docs/` is the compiled site.
-Rebuild: `python build/compile.py`
+## Build
+```bash
+bash build/build.sh      # compile.py + postprocess.py -> docs/
+```
+`site-export/` is the design **source**; `docs/` is the compiled site. The pipeline is
+idempotent — every fix (real reviews, responsive layer, WebP, dimensions, lazy-loading)
+is applied by `postprocess.py`, so rebuilds never silently regress.
 
 ## Layout
 | Path | What |
