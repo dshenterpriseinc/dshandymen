@@ -8,17 +8,14 @@ sunrooms · and the **Pigeon Division** (interior & exterior design and finish w
 
 ---
 
-## ⚠️ Current status: NOT YET DEPLOYABLE
+## ✅ Status: LIVE on GitHub Pages
 
-`site-export/` is the Claude Design output. It is **not** static HTML and must not be served
-as-is. See `site-export/README-EXPORT.md`.
+Built from `main` → `/docs`. All 21 routes serve 200. **One step remains:** point
+`dshandymen.com` DNS at GitHub — see **`DNS-SETUP.md`**. Until then the deployment is
+reachable only by GitHub's servers, because the domain still resolves to the old forwarding host.
 
-**Two things block launch:**
-1. **Format** — pages are `.dc.html` (Claude Design's component DSL: `<x-dc>`, `<dc-import>`,
-   `{{ }}`, `<sc-for>`, interpreted by a 69 KB `support.js`). Must be compiled to real HTML.
-2. **Reviews** — the export shipped invented quotes attributed to 4 real named people. All 8
-   have been replaced with `[REVIEW PENDING …]` markers. Verbatim text must be sourced from
-   Google/BBB/Facebook before launch, or those reviewers removed.
+The `.dc.html` design export in `site-export/` is the **source**; `docs/` is the compiled,
+deployable site. Rebuild with `python build/compile.py`.
 
 ## Layout
 | Path | What |
