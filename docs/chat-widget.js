@@ -134,7 +134,11 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   *{box-sizing:border-box;font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif}
   .launcher{position:fixed;right:16px;bottom:10px;width:auto;height:auto;border:0;border-radius:0;
     background:none;padding:0;cursor:pointer;z-index:9000;line-height:0;
-    filter:drop-shadow(0 12px 20px rgba(12,22,32,.38));transition:transform .25s cubic-bezier(.2,1.2,.4,1)}
+    filter:drop-shadow(0 12px 20px rgba(12,22,32,.38));
+    transition:transform .25s cubic-bezier(.2,1.2,.4,1),opacity .2s ease}
+  /* the bear IS the launcher, so leaving him standing beside the open panel
+     puts two of him on screen - step him aside while the panel is up */
+  .launcher[aria-expanded="true"]{opacity:0;pointer-events:none;transform:translateY(14px) scale(.9)}
   .launcher img{height:136px;width:auto;display:block;pointer-events:none}
   .launcher:hover{transform:translateY(-7px) scale(1.05)}
   .launcher:focus-visible{outline:3px solid ${p.accent};outline-offset:6px;border-radius:12px}
@@ -155,7 +159,7 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0C1620;padding:10px 14px;border-radius:10px;
     box-shadow:0 4px 16px rgba(12,22,32,.22);font-size:15px;z-index:9000;max-width:200px}
   .nudge:after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;background:#fff;transform:translateY(-50%) rotate(45deg)}
-  .panel{position:fixed;right:22px;bottom:100px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 130px));
+  .panel{position:fixed;right:22px;bottom:22px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 60px));
     display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
     background:var(--panel-bg,${p.panel});transition:background .8s ease}
   .head{display:flex;align-items:flex-end;gap:10px;padding:10px 16px 12px;min-height:74px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
