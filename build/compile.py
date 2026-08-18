@@ -14,32 +14,32 @@ TEL    = "+17168030091"
 
 # page -> (url path, <title>, meta description)
 PAGES = {
- "Home":               ("",                              "DS Handymen, Inc. | Snow Plowing & Home Services | Hamburg & Blasdell NY",
-                        "Snow plowing, pressure washing, landscaping and home repair across Hamburg, Blasdell, Orchard Park and Lackawanna. BBB A+ accredited, fully insured, family run since 2009. Call the Bear at (716) 803-0091."),
+ "Home":               ("",                              "Snow Plowing & Home Services | Hamburg NY | DS Handymen",
+                        "Snow plowing, pressure washing, landscaping and home repair across Hamburg, Blasdell and Orchard Park. BBB A+ accredited, insured, family run since 2009."),
  "Services":           ("services/",                     "Our Services | DS Handymen, Inc. | Southtowns NY",
                         "Snow plowing, landscaping, pressure washing, handyman and remodeling, house clearance and sunrooms across the Buffalo Southtowns. Free estimates."),
  "SnowPlowing":        ("snow-plowing/",                 "Snow Plowing in Hamburg & Blasdell NY | DS Handymen, Inc.",
                         "Residential driveway and commercial lot plowing across the Southtowns. Seasonal contracts or one-off visits, two trucks on route. $20 off for referrals. Get on the list."),
  "Landscaping":        ("landscaping/",                  "Landscaping & Yard Care | Hamburg NY | DS Handymen, Inc.",
                         "Mowing, mulching, planting, trimming, raking and gutter clean-outs across Hamburg, Blasdell, Orchard Park and Lackawanna. Free estimates."),
- "PressureWashing":    ("pressure-washing/",             "Pressure Washing in Hamburg NY | Driveways, Siding & Decks | DS Handymen",
+ "PressureWashing":    ("pressure-washing/",             "Pressure Washing Hamburg NY | Siding & Decks | DS Handymen",
                         "Pressure washing for driveways, siding, decks, roofs, sidewalks and pool decks. If it's outside and it's dirty, we can help you out. Serving the Southtowns."),
  "HandymanRemodeling": ("handyman-remodeling/",          "Handyman & Remodeling | Hamburg & Blasdell NY | DS Handymen, Inc.",
                         "Windows, basements, kitchens, flooring, drywall, decks and three-season rooms. Big jobs, small jobs, we do it all. BBB A+ accredited since 2009."),
  "HouseClearance":     ("house-clearance/",              "House & Estate Clearance | Attics, Garages | DS Handymen, Inc.",
                         "Attic, garage and full estate clear-outs across the Southtowns. It can be overwhelming figuring out where to start - we start. Free estimates."),
- "Sunrooms":           ("sunrooms-patio-enclosures/",    "Sunrooms & Retractable Patio Enclosures | Hamburg NY | DS Handymen",
-                        "Three-season rooms plus Helios retractable glass sunrooms and patio enclosures. Trained dealer and installer serving Western New York."),
- "PigeonDivision":     ("design-remodeling/",            "Design & Remodeling | Kitchens, Trim, Tile & Finish Work | DS Handymen, Inc.",
-                        "Kitchen and bathroom remodels, custom trim, cabinets, tile, paint and finish carpentry across the Buffalo Southtowns. Led by Nichole Pigeon, RIT Design School graduate. A division of DS Handymen, Inc."),
+ "Sunrooms":           ("sunrooms-patio-enclosures/",    "Sunrooms & Patio Enclosures | Hamburg NY | DS Handymen",
+                        "Three-season rooms plus Helios retractable glass sunrooms and patio enclosures. A trained dealer and installer serving Hamburg and Western New York."),
+ "PigeonDivision":     ("design-remodeling/",            "Design & Remodeling | Kitchens, Tile & Trim | DS Handymen",
+                        "Kitchen and bathroom remodels, custom trim, cabinets, tile and finish carpentry across the Buffalo Southtowns. Led by Nichole Pigeon, RIT Design School."),
  "About":              ("about/",                        "About Dave Schultz | DS Handymen, Inc. | Hamburg NY",
                         "Dave Schultz has lived in Hamburg for 50 years and has run DS Handymen since 2009. BBB Accredited with an A+ rating, fully insured, locally owned."),
  "Gallery":            ("gallery/",                      "Before & After Gallery | Real Jobs | DS Handymen, Inc.",
                         "Real before and after photos of kitchens, bathrooms, basements, decks, siding and landscaping completed across the Buffalo Southtowns."),
  "Reviews":            ("reviews/",                      "Customer Reviews | 4.7 Stars | DS Handymen, Inc. Hamburg NY",
                         "What Southtowns homeowners say about DS Handymen, Inc. Rated 4.7 stars, BBB Accredited with an A+ rating since 2021."),
- "ServiceArea":        ("service-area/",                 "Service Area | Hamburg, Blasdell, Orchard Park, Lackawanna | DS Handymen",
-                        "DS Handymen serves Hamburg, Blasdell, Orchard Park, Lackawanna and the wider Buffalo Southtowns. Locally owned and operated."),
+ "ServiceArea":        ("service-area/",                 "Service Area | Hamburg & the Southtowns | DS Handymen",
+                        "DS Handymen serves Hamburg, Blasdell, Orchard Park, Lackawanna and the wider Buffalo Southtowns - see the map of everywhere the trucks reach."),
  "HamburgNY":          ("service-area/hamburg-ny/",      "Handyman & Snow Plowing in Hamburg, NY | DS Handymen, Inc.",
                         "Dave's hometown - 50 years and counting. Snow plowing, landscaping, pressure washing and home repair throughout Hamburg, New York."),
  "BlasdellNY":         ("service-area/blasdell-ny/",     "Handyman & Snow Plowing in Blasdell, NY | DS Handymen, Inc.",
@@ -55,7 +55,7 @@ PAGES = {
  "Contact":            ("contact/",                      "Contact DS Handymen, Inc. | (716) 803-0091 | Blasdell NY",
                         "Call the Bear at (716) 803-0091. DS Handymen, Inc., 135 Miriam Avenue, Suite 1, Blasdell, NY 14219. Free estimates, fully insured."),
  "NotFound":           ("404",                           "Page Not Found | DS Handymen, Inc.",
-                        "That page could not be found. Call the Bear at (716) 803-0091."),
+                        "That page could not be found. Head back to the home page, or call the Bear at (716) 803-0091 and we will point you the right way."),
 }
 
 LINKMAP = {f"{k}.dc.html": ("/" if v[0] == "" else "/" + v[0]) for k, v in PAGES.items()}
@@ -113,7 +113,10 @@ def clean_body(html, prefix):
                 el[attr] = (prefix + t) if t else (prefix if prefix else "./")
             elif v.startswith("assets/"):
                 el[attr] = prefix + v
-    return soup.decode(formatter="html5")
+    # lxml wraps any fragment in its own <html><body>. The page template supplies
+    # those, so decoding the whole soup nests a second pair inside the document.
+    node = soup.body or soup
+    return node.decode_contents(formatter="html5").strip()
 
 def page_styles(head_html):
     """keep the design's own <style> and font <link>, drop the framework placeholder CSS."""
@@ -215,7 +218,7 @@ def main():
             + build_head(name, url, title, desc, prefix) + "\n"
             + styles + "\n<style>" + HOVER_CSS + "</style>\n</head>\n<body>\n"
             + '<a class="skip-link" href="#main">Skip to main content</a>\n'
-            + body
+            + body.rstrip()
             + '\n<script src="' + prefix + 'chat-widget.js" defer></script>\n'
             + '<script src="' + prefix + 'site.js" defer></script>\n'
             + "</body>\n</html>\n"
