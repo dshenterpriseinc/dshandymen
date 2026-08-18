@@ -79,6 +79,11 @@ def fix_images(page_path, s):
         if not ('width=' in tag and 'height=' in tag):
             d = dims_for(page_path, src)
             if d: tag = tag[:-1].rstrip() + ' width="%d" height="%d">' % d
+        # every <img> must carry an alt attribute. These service-card mascots are
+        # decorative - the card already names the service - so alt="" is correct,
+        # but the attribute itself is mandatory for WCAG.
+        if ' alt=' not in tag:
+            tag = tag[:-1].rstrip() + ' alt="">'
         if 'loading=' not in tag:
             tag = tag[:-1].rstrip() + ' loading="%s">' % ('eager' if idx[0] <= 2 else 'lazy')
         if 'decoding=' not in tag:
@@ -146,6 +151,25 @@ def insert_map(path, s, prefix):
             return s[:i] + block + s[i:]
     return s
 
+
+# ---------------------------------------------------------------- 5. design page copy
+# The page led with "Now introducing the Pigeon Division" - a private nickname,
+# in a stale announcement frame (the division launched in Jan 2024). Lead with the
+# work, then introduce the team by name.
+COPY_FIXES = [
+    (">Now introducing the Pigeon Division<", ">Design &amp; Remodeling<"),
+    ("Interior & exterior design and construction &mdash; custom design, trim, cabinets, drywall, paint, tile and finish work.",
+     "Kitchens, bathrooms, custom trim, cabinets, tile, paint and finish carpentry across the Southtowns "
+     "&mdash; by our <strong>Pigeon Division</strong>, led by Nichole Pigeon."),
+    # stale "new division" language elsewhere
+    ("Now... introducing the Pigeon Division!", "The Pigeon Division"),
+]
+
+def fix_copy(s):
+    for a, b in COPY_FIXES:
+        s = s.replace(a, b)
+    return s
+
 # ---------------------------------------------------------------- run
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
@@ -160,6 +184,7 @@ def main():
         if '<picture>' not in s:
             s = fix_images(f, s)
         s = relabel_nav(s)
+        s = fix_copy(s)
         depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
         s = insert_map(f, s, '../'*depth)
         if 'Responsive layer' not in s:
@@ -169,7 +194,7 @@ def main():
     print("  post-processed %d pages" % n)
 
     # report
-    tot = miss_d = miss_l = pend = 0
+    tot = miss_d = miss_l = pend = miss_a = 0
     for f in glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True):
         s = io.open(f, encoding="utf-8").read()
         pend += s.count("REVIEW PENDING")
@@ -177,8 +202,9 @@ def main():
             tot += 1
             if not ('width=' in t and 'height=' in t): miss_d += 1
             if 'loading=' not in t: miss_l += 1
-    print("  imgs %d | missing dims %d | missing loading %d | review placeholders %d"
-          % (tot, miss_d, miss_l, pend))
+            if ' alt=' not in t: miss_a += 1
+    print("  imgs %d | missing dims %d | missing loading %d | missing alt %d | review placeholders %d"
+          % (tot, miss_d, miss_l, miss_a, pend))
 
 if __name__ == "__main__":
     main()
