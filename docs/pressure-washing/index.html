@@ -107,7 +107,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
    momentum scrolling. overflow-x:clip does the same clipping without creating a
    scroll container at all, so prefer it where it is supported. */
 html{max-width:100%;overflow-x:hidden}
-body{max-width:100%}
+/* The design tool's stylesheet carries body{height:100%}, which pins the body
+   box to the viewport while its content runs thousands of pixels past it. A
+   sticky element can only stick inside its containing block, so the header
+   un-stuck about 700px down and scrolled away on every page. */
+body{max-width:100%;height:auto}
 @supports (overflow-x: clip){html{overflow-x:clip}}
 
 /* Tap targets (WCAG 2.5.8). A checkbox is only as tappable as the label that
@@ -145,6 +149,14 @@ img{height:auto}
   size-adjust:67.5%;ascent-override:148.15%;descent-override:29.63%;line-gap-override:0%}
 @font-face{font-family:"Source Sans 3 Fallback";src:local("Arial");
   size-adjust:93%;ascent-override:109.68%;descent-override:43.01%;line-gap-override:0%}
+
+/* Compact sticky header on phones. site.js adds .dsh-compact past 120px of
+   scroll; the nav goes, the badge and the phone number stay. */
+@media (max-width: 760px){
+  header{transition:box-shadow .18s ease}
+  header.dsh-compact nav{display:none !important}
+  header.dsh-compact{box-shadow:0 3px 14px rgba(12,22,32,.3)}
+}
 </style>
 </head>
 <body>

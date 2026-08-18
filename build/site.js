@@ -93,6 +93,24 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
     if (cta) { cta.textContent = s.cta; cta.href = __DSH_BASE + s.href; }
   }
 
+  /* ---------------------------------------------------------------- 2b. compact mobile header */
+  /* The header is sticky, which on a phone meant three rows of nav pinned to the
+     top for the whole visit - 298px, 35% of the viewport, permanently gone.
+     Once the visitor has started reading, drop the nav and keep the bar that
+     matters: the badge and the phone number. */
+  var hdr = document.querySelector('header');
+  if (hdr) {
+    var narrow = window.matchMedia('(max-width: 760px)');
+    var compact = function () {
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      hdr.classList.toggle('dsh-compact', narrow.matches && y > 120);
+    };
+    window.addEventListener('scroll', compact, { passive: true });
+    if (narrow.addEventListener) narrow.addEventListener('change', compact);
+    else if (narrow.addListener) narrow.addListener(compact);
+    compact();
+  }
+
   /* ---------------------------------------------------------------- 3. before / after */
   var ba = document.querySelector('[role="slider"][aria-label="Before and after comparison"]');
   if (ba) {
