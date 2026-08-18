@@ -8,14 +8,30 @@ sunrooms · and the **Pigeon Division** (interior & exterior design and finish w
 
 ---
 
-## ✅ Status: LIVE on GitHub Pages
+## ✅ Status: BUILT, DEPLOYED, VERIFIED — awaiting DNS
 
-Built from `main` → `/docs`. All 21 routes serve 200. **One step remains:** point
-`dshandymen.com` DNS at GitHub — see **`DNS-SETUP.md`**. Until then the deployment is
-reachable only by GitHub's servers, because the domain still resolves to the old forwarding host.
+Live on GitHub Pages from `main` → `/docs`. All 21 routes verified 200 on GitHub's servers.
 
-The `.dc.html` design export in `site-export/` is the **source**; `docs/` is the compiled,
-deployable site. Rebuild with `python build/compile.py`.
+**One step remains, and it needs your GoDaddy login:** point `dshandymen.com` at GitHub
+(four A records + a www CNAME + remove Domain Forwarding), then tick **Enforce HTTPS**.
+Full instructions in **`DNS-SETUP.md`**. Until then the deployment is only reachable by
+resolving directly to GitHub, because the domain still answers with the old forwarding IPs.
+
+### Verified
+| | |
+|---|---|
+| Routes | 21/21 → 200 · 0 broken internal links |
+| Structured data | 49 JSON-LD blocks, all valid (LocalBusiness · Service · BreadcrumbList · Review) |
+| Reviews | 4 verbatim, sourced from Google/BBB, each labelled with its source |
+| Responsive | 375px → **0px** overflow · 768px → 2-col · 1440px → 3-col |
+| First paint | ~187 KB (39 html + 54 eager img + 25 js + 69 poster) |
+| JS budget | 25 KB of 100 KB |
+| Images | 153 tags, all with width/height + loading; WebP via `<picture>` |
+| Chat | Bear + Bird, handoff verified working on nested pages |
+| A11y | skip link, focus-visible, 44px targets, reduced-motion honoured |
+
+`site-export/` is the design **source**; `docs/` is the compiled site.
+Rebuild: `python build/compile.py`
 
 ## Layout
 | Path | What |
