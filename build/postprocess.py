@@ -247,14 +247,14 @@ THANKYOU = """<!DOCTYPE html>
  @media(prefers-reduced-motion:no-preference){img{animation:bob 4s ease-in-out infinite}
    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}}
 </style></head>
-<body><div class="card">
+<body><main class="card">
  <img src="../assets/web/mascot-waving.png" alt="" loading="eager" decoding="async" fetchpriority="high" width="150" height="176">
  <h1>Got it &mdash; thanks.</h1>
  <p>Your request is with Dave. He&rsquo;ll come back to you as soon as he&rsquo;s off the route.<br>
     If it&rsquo;s urgent, just call &mdash; that&rsquo;s always fastest.</p>
  <p><a class="btn" href="tel:+17168030091">Call the Bear &middot; (716) 803-0091</a></p>
  <p><a class="plain" href="../">&larr; Back to the site</a></p>
-</div></body></html>
+</main></body></html>
 """
 
 def write_thankyou():
