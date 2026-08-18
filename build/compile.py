@@ -81,7 +81,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 """
 
-def clean_body(html):
+def rel_prefix(url):
+    """"" -> ""  |  "services/" -> "../"  |  "service-area/hamburg-ny/" -> "../../" """
+    if url in ("", "404"):
+        return ""
+    return "../" * url.rstrip("/").count("/") + "../"
+
+def clean_body(html, prefix):
     soup = BeautifulSoup(html, "lxml")
     # unwrap the framework's own wrappers
     for sel in ["#dc-root", ".sc-host", "x-dc"]:
@@ -103,9 +109,10 @@ def clean_body(html):
             if not v:
                 continue
             if v in LINKMAP:
-                el[attr] = LINKMAP[v]
+                t = LINKMAP[v].lstrip("/")
+                el[attr] = (prefix + t) if t else (prefix if prefix else "./")
             elif v.startswith("assets/"):
-                el[attr] = "/" + v
+                el[attr] = prefix + v
     return soup.decode(formatter="html5")
 
 def page_styles(head_html):
@@ -149,7 +156,7 @@ SERVICE_LD = {
  "PigeonDivision":("Interior and Exterior Design and Construction","Custom design, trim, cabinets, drywall, paint, tile and finish work."),
 }
 
-def build_head(name, url, title, desc):
+def build_head(name, url, title, desc, prefix=""):
     canon = SITE + "/" + url if url != "404" else SITE + "/404.html"
     blocks = ['<script type="application/ld+json">' + LD_LOCAL + "</script>"]
     if name in SERVICE_LD:
@@ -178,8 +185,8 @@ def build_head(name, url, title, desc):
 <meta property="og:url" content="{canon}">
 <meta property="og:image" content="{SITE}/assets/web/og-share.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/assets/web/favicon-32.png">
-<link rel="apple-touch-icon" href="/assets/web/favicon-32.png">
+<link rel="icon" href="{prefix}assets/web/favicon-32.png">
+<link rel="apple-touch-icon" href="{prefix}assets/web/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 """ + "\n".join(blocks)
@@ -200,16 +207,17 @@ def main():
         if not os.path.exists(f):
             print("  !! missing capture:", name); continue
         d = json.load(io.open(f, encoding="utf-8"))
-        body = clean_body(d["body"])
+        prefix = rel_prefix(url)
+        body = clean_body(d["body"], prefix)
         styles = page_styles(d["head"])
         html = (
             "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n"
-            + build_head(name, url, title, desc) + "\n"
+            + build_head(name, url, title, desc, prefix) + "\n"
             + styles + "\n<style>" + HOVER_CSS + "</style>\n</head>\n<body>\n"
             + '<a class="skip-link" href="#main">Skip to main content</a>\n'
             + body
-            + '\n<script src="/chat-widget.js" defer></script>\n'
-            + '<script src="/site.js" defer></script>\n'
+            + '\n<script src="' + prefix + 'chat-widget.js" defer></script>\n'
+            + '<script src="' + prefix + 'site.js" defer></script>\n'
             + "</body>\n</html>\n"
         )
         dest = os.path.join(OUT, "404.html") if url == "404" else os.path.join(OUT, url, "index.html")

@@ -1,6 +1,8 @@
 /* DS Handymen — site behaviour.
    Re-implements the interactivity the design tool bound at runtime, as plain vanilla JS.
    Everything degrades safely: with JS off you still get a complete, readable page. */
+var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.querySelectorAll('script[src*="site.js"]');d=a[a.length-1];}return d?d.src.replace(/[^/]*$/,''):'/';})();
+
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -58,14 +60,14 @@
       v.muted = true; v.defaultMuted = true; v.loop = true;
       v.setAttribute('muted', ''); v.setAttribute('loop', '');
       v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-      v.poster = '/assets/video/hero-' + s.slug + '-poster.jpg';
+      v.poster = __DSH_BASE+'assets/video/hero-' + s.slug + '-poster.jpg';
       if (reduced) {                       // honour reduced motion: poster only
         v.removeAttribute('autoplay'); v.pause();
         v.style.background = 'url(' + v.poster + ') center/cover no-repeat';
       } else {
         v.preload = 'none';
-        var mp4 = '/assets/video/hero-' + s.slug + '.mp4';
-        var webm = '/assets/video/hero-' + s.slug + '.webm';
+        var mp4 = __DSH_BASE+'assets/video/hero-' + s.slug + '.mp4';
+        var webm = __DSH_BASE+'assets/video/hero-' + s.slug + '.webm';
         v.innerHTML = '';
         var s1 = document.createElement('source'); s1.src = webm; s1.type = 'video/webm';
         var s2 = document.createElement('source'); s2.src = mp4; s2.type = 'video/mp4';
@@ -146,7 +148,7 @@
     var origLabel = radioBtn.getAttribute('aria-label');
     radioBtn.addEventListener('click', function () {
       if (!audio) {
-        audio = new Audio('/assets/audio/radio-ad.mp3');
+        audio = new Audio(__DSH_BASE+'assets/audio/radio-ad.mp3');
         audio.addEventListener('ended', function () {
           playing = false; radioBtn.setAttribute('aria-label', origLabel); radioBtn.setAttribute('aria-pressed', 'false');
         });

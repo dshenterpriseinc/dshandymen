@@ -1,11 +1,13 @@
 /* DS Handymen — "Ask the Bear" / "Ask the Bird" scripted assistants with handoff.
    Vanilla web component, sprite-swap avatars, no network calls. */
+var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.querySelectorAll('script[src*="chat-widget"]');d=a[a.length-1];}return d?d.src.replace(/[^/]*$/,''):'/';})();
+
 (function () {
   const PHONE = '(716) 803-0091';
   const PHONE_HREF = 'tel:+17168030091';
-  const BEAR_AV = (s) => `/assets/web/chatbot-${s}.png`;
-  const BIRD_AV = (s) => `/assets/web/pigeon-chatbot-${s}.png`;
-  const BIRD_FALLBACK = '/assets/web/logo-pigeon-division.png';
+  const BEAR_AV = (s) => __DSH_BASE+`assets/web/chatbot-${s}.png`;
+  const BIRD_AV = (s) => __DSH_BASE+`assets/web/pigeon-chatbot-${s}.png`;
+  const BIRD_FALLBACK = __DSH_BASE+'assets/web/logo-pigeon-division.png';
 
   const PERSONAS = {
     bear: {
