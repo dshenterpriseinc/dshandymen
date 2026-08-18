@@ -263,6 +263,77 @@ def write_thankyou():
     io.open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(THANKYOU)
 
 # ---------------------------------------------------------------- run
+# ---------------------------------------------------------------- contrast
+# Three of these are structural rather than palette tweaks, so they live here as
+# named fixes rather than in the generated map.
+
+def scope_footer_links(s):
+    """Stop the footer's link colour leaking onto the whole page.
+
+    The footer component shipped its own <helmet> block with a bare `a{...}`
+    rule - pale blue links, correct against the near-black footer. Capture lost
+    the framework's scoping, so it emitted last and won the cascade for every
+    link on the page: body links rendered at 2.18:1 on white and stopped looking
+    like links at all.
+    """
+    return s.replace("body{margin:0} a{color:#9FB1CC}a:hover{color:#FFFFFF}",
+                     "body{margin:0} footer a{color:#9FB1CC}footer a:hover{color:#FFFFFF}")
+
+
+def fix_terracotta(s):
+    """White on the Pigeon Division terracotta was 4.22:1. Nudge it to 4.5."""
+    return s.replace("rgb(181, 103, 63)", "rgb(168, 95, 58)")
+
+
+# The sunrooms hero is white type over a bright patio photo; the original scrim
+# faded to 15% at the top, leaving the eyebrow at 1.79:1 and the headline at
+# 2.09:1. Deepen it - the photo still reads, the type becomes legible.
+SCRIM_FIXES = [
+    ("linear-gradient(to top, rgba(12, 22, 32, 0.88) 0%, rgba(12, 22, 32, 0.35) 55%, "
+     "rgba(12, 22, 32, 0.15) 100%)",
+     "linear-gradient(to top, rgba(12, 22, 32, 0.93) 0%, rgba(12, 22, 32, 0.78) 45%, "
+     "rgba(12, 22, 32, 0.62) 100%)"),
+]
+
+
+def fix_scrims(s):
+    for old, new in SCRIM_FIXES:
+        s = s.replace(old, new)
+    return s
+
+
+_CMAP = None
+
+
+def apply_contrast_map(path, s):
+    """Apply the palette moves solved by build/fix_contrast.py.
+
+    Keyed on the literal inline style attribute the colour was declared in, so a
+    rebuild reapplies exactly the same swap without needing a browser. Refresh
+    with `python build/fix_contrast.py` after any design change.
+    """
+    global _CMAP
+    if _CMAP is None:
+        f = os.path.join(ROOT, "build", "contrast_map.json")
+        _CMAP = json.load(io.open(f, encoding="utf-8")) if os.path.exists(f) else []
+    rel = path.replace(chr(92), "/").split("/docs/")[1]
+    for entry in _CMAP:
+        if entry["file"] != "docs/" + rel:
+            continue
+        old = entry["style"]
+        new = old
+        for a, b in entry["swaps"].items():
+            new = new.replace(a, b)
+        if new == old:
+            continue
+        # anchor on the whole attribute value: a short style string is often a
+        # substring of a longer one, and an unanchored replace recolours that
+        # element too - which is how the reviews footer ended up at 3.06:1
+        for q in ('"', chr(39)):
+            s = s.replace("style=" + q + old + q, "style=" + q + new + q)
+    return s
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -277,6 +348,10 @@ def main():
             s = fix_images(f, s)
         s = relabel_nav(s)
         s = fix_copy(s)
+        s = scope_footer_links(s)
+        s = fix_terracotta(s)
+        s = fix_scrims(s)
+        s = apply_contrast_map(f, s)
         depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)

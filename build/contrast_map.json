@@ -1,0 +1,261 @@
+[
+ {
+  "file": "docs/404.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/about/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/about/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+  }
+ },
+ {
+  "file": "docs/contact/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/design-remodeling/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/design-remodeling/index.html",
+  "style": "margin: 0px 0px 16px; font-family: \"Barlow Condensed\", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(168, 95, 58);",
+  "swaps": {
+   "rgb(168, 95, 58)": "rgb(154, 87, 53)"
+  }
+ },
+ {
+  "file": "docs/design-remodeling/index.html",
+  "style": "margin: 0px 0px 26px; font-family: \"Barlow Condensed\", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(138, 128, 120);",
+  "swaps": {
+   "rgb(138, 128, 120)": "rgb(118, 109, 103)"
+  }
+ },
+ {
+  "file": "docs/gallery/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/gallery/index.html",
+  "style": "font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(102, 115, 135)"
+  }
+ },
+ {
+  "file": "docs/gift-certificates/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/gift-certificates/index.html",
+  "style": "margin: 0px 0px 18px; font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(102, 115, 135)"
+  }
+ },
+ {
+  "file": "docs/handyman-remodeling/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/house-clearance/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/index.html",
+  "style": "color: rgb(194, 206, 220);",
+  "swaps": {
+   "rgb(194, 206, 220)": "rgb(108, 114, 122)"
+  }
+ },
+ {
+  "file": "docs/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/index.html",
+  "style": "margin: 0px 0px 12px; color: rgb(245, 179, 36); letter-spacing: 3px; font-size: 15px;",
+  "swaps": {
+   "rgb(245, 179, 36)": "rgb(153, 111, 22)"
+  }
+ },
+ {
+  "file": "docs/index.html",
+  "style": "margin: 28px 0px 0px; color: rgb(124, 139, 163); font-size: 15.5px;",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(132, 146, 168)"
+  }
+ },
+ {
+  "file": "docs/landscaping/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/pressure-washing/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(124, 139, 163); margin-top: 8px;",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+  }
+ },
+ {
+  "file": "docs/pressure-washing/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/quote/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/quote/index.html",
+  "style": "margin: 0px; font-size: 15px; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+  }
+ },
+ {
+  "file": "docs/reviews/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/reviews/index.html",
+  "style": "font-size: 14px; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(90, 100, 118)"
+  }
+ },
+ {
+  "file": "docs/reviews/index.html",
+  "style": "margin: 0px 0px 12px; color: rgb(245, 179, 36); letter-spacing: 3px; font-size: 16px;",
+  "swaps": {
+   "rgb(245, 179, 36)": "rgb(147, 107, 22)"
+  }
+ },
+ {
+  "file": "docs/reviews/index.html",
+  "style": "margin: 28px 0px 0px; font-size: 14.5px; color: rgb(124, 139, 163); font-style: italic;",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+  }
+ },
+ {
+  "file": "docs/service-area/blasdell-ny/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/service-area/hamburg-ny/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/service-area/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/service-area/lackawanna-ny/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/service-area/orchard-park-ny/index.html",
+  "style": "color: rgb(198, 12, 48); font-weight: 700;",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(209, 57, 86)"
+  }
+ },
+ {
+  "file": "docs/service-area/orchard-park-ny/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/services/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/services/index.html",
+  "style": "margin: 0px; font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(168, 95, 58);",
+  "swaps": {
+   "rgb(168, 95, 58)": "rgb(164, 92, 56)"
+  }
+ },
+ {
+  "file": "docs/snow-plowing/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ },
+ {
+  "file": "docs/snow-plowing/index.html",
+  "style": "margin: 0px; text-align: center; font-size: 13px; color: rgb(124, 139, 163);",
+  "swaps": {
+   "rgb(124, 139, 163)": "rgb(107, 119, 140)"
+  }
+ },
+ {
+  "file": "docs/sunrooms-patio-enclosures/index.html",
+  "style": "font-family: \"Barlow Condensed\", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);",
+  "swaps": {
+   "rgb(198, 12, 48)": "rgb(214, 79, 105)"
+  }
+ }
+]

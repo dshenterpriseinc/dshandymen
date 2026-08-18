@@ -26,13 +26,29 @@ COLLECT = r"""() => {
     if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity < 0.1) return;
     const fg = parse(cs.color);
     if (!fg || (fg.length > 3 && fg[3] < 0.1)) return;
-    const r = el.getBoundingClientRect();
-    if (r.width < 2 || r.height < 2) return;
+    // measure the glyphs themselves, not the element box - a flex row whose first
+    // child is a decorative rule would otherwise be sampled over that rule
+    const rects = [];
+    Array.from(el.childNodes).filter(n => n.nodeType === 3 && n.textContent.trim()).forEach(n => {
+      const rg = document.createRange();
+      rg.selectNodeContents(n);
+      Array.from(rg.getClientRects()).forEach(r => {
+        if (r.width >= 4 && r.height >= 4) rects.push(
+          { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height });
+      });
+    });
+    if (!rects.length) return;
     const px = parseFloat(cs.fontSize), bold = +cs.fontWeight >= 700;
     out.push({
       t: txt.slice(0, 54), fg: fg.slice(0, 3), css: cs.color, px: +px.toFixed(0), bold,
       need: (px >= 24 || (bold && px >= 18.66)) ? 3 : 4.5,
-      x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height
+      style: el.getAttribute('style') || '', tag: el.tagName.toLowerCase(), rects: rects,
+      // colour is inherited, so the element to patch is the nearest self-or-ancestor
+      // that actually declares one inline
+      owner: (() => { for (let n = el; n && n.tagName !== 'BODY'; n = n.parentElement) {
+                        const st = n.getAttribute('style');
+                        if (st && /(^|;)\s*color\s*:/.test(st)) return st;
+                      } return ''; })()
     });
   });
   return out;
@@ -62,16 +78,18 @@ def ratio(a, b):
 
 
 def samples(img, h):
-    """Sample the strip the text actually occupies, across its width."""
+    """Sample the pixels the glyphs actually sit on, across every text rect."""
     W, H = img.size
-    y = int(h['y'] + h['h'] / 2)
-    if not (0 <= y < H):
-        return []
     got = []
-    for frac in (0.02, 0.15, 0.3, 0.5, 0.7, 0.9):
-        x = int(h['x'] + h['w'] * frac)
-        if 0 <= x < W:
-            got.append(img.getpixel((x, y))[:3])
+    for r in h['rects']:
+        for fy in (0.3, 0.55, 0.8):
+            y = int(r['y'] + r['h'] * fy)
+            if not (0 <= y < H):
+                continue
+            for fx in (0.03, 0.2, 0.4, 0.6, 0.8, 0.97):
+                x = int(r['x'] + r['w'] * fx)
+                if 0 <= x < W:
+                    got.append(img.getpixel((x, y))[:3])
     return got
 
 
