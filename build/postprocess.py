@@ -10,6 +10,7 @@ loses it:
   4. Review JSON-LD
 """
 import io, os, re, glob, json
+from brandcolour import recolour_text
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 
@@ -280,7 +281,7 @@ THANKYOU = """<!DOCTYPE html>
 def write_thankyou():
     d = os.path.join(OUT, "thank-you")
     os.makedirs(d, exist_ok=True)
-    io.open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(THANKYOU)
+    io.open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(recolour_text(THANKYOU))
 
 # ---------------------------------------------------------------- run
 # ---------------------------------------------------------------- contrast
@@ -504,12 +505,20 @@ def fix_header_badge(s):
     return s.replace('logo-badge-white-knockout', 'logo-badge-primary')
 
 
+# ---------------------------------------------------------------- 11. brand hue
+# The captures are fixed JSON and came back in navy, so the site cannot simply be
+# re-exported in teal - the rotation has to live in the build. Run last, after
+# every other colour decision including the contrast map, and because it holds
+# relative luminance exactly, each ratio the map solved for survives it.
+
+def to_brand_teal(s):
+    return recolour_text(s)
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
     for f in sorted(glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True)):
-        if 'teal-preview' in f.replace(chr(92), '/'):
-            continue          # hand-built colour preview, not a generated page
         s = io.open(f, encoding="utf-8").read()
         orig = s
         if 'REVIEW PENDING' in s:
@@ -533,6 +542,7 @@ def main():
         s = slim_hero_video(s)
         s = fix_figure_labels(s)
         s = apply_contrast_map(f, s)
+        s = to_brand_teal(s)      # last: every colour decision is made by now
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:
@@ -543,6 +553,19 @@ def main():
             s = s.replace("</head>", "<style>" + head_css + chr(10) + css + "</style>" + chr(10) + "</head>", 1)
         if s != orig:
             io.open(f, "w", encoding="utf-8").write(s); n += 1
+    # site.js holds the seasonal background colours and chat-widget.js a full
+    # persona palette, both in navy. compile.py copies them in fresh every build,
+    # so recolouring the built copies leaves the sources untouched.
+    # The service-area map is generated straight into docs/ by make_map.py with
+    # its own palette constants, and is referenced as an image rather than inlined,
+    # so the page-level rotation never reaches it. Safe to re-run: the brand hue
+    # sits outside the blue window, so a second pass is a no-op.
+    for extra in ('site.js', 'chat-widget.js', os.path.join('assets', 'web', 'service-area-map.svg')):
+        jp = os.path.join(OUT, extra)
+        if os.path.exists(jp):
+            t = io.open(jp, encoding='utf-8').read()
+            io.open(jp, 'w', encoding='utf-8').write(recolour_text(t))
+
     write_thankyou()
     print("  post-processed %d pages" % n)
 

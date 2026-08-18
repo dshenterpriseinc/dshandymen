@@ -14,25 +14,25 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   /* ---------------------------------------------------------------- 2. season engine */
   var SEASONS = {
     'deep-winter': {
-      label: 'Deep Winter', slug: 'winter', bg: '#0C1620', pos: 'center 46%',
+      label: 'Deep Winter', slug: 'winter', bg: '#0A171A', pos: 'center 46%',
       headline: 'Lake effect snow? No problem.',
       sub: "Don't get stuck — get plowed. Two trucks on route across the Southtowns, seasonal contracts or one-off. Dave's out at 4am so you're out by 7.",
       cta: 'Get on the plow list', href: 'snow-plowing/'
     },
     'thaw': {
-      label: 'Thaw', slug: 'thaw', bg: '#1B2A4A', pos: 'center 32%',
+      label: 'Thaw', slug: 'thaw', bg: '#132E35', pos: 'center 32%',
       headline: 'Wash away winter.',
       sub: "Salt stains, grime, a driveway that's seen five months of lake effect. If it's outside and it's dirty, we can help you out.",
       cta: 'Book a pressure wash', href: 'pressure-washing/'
     },
     'green': {
-      label: 'Green', slug: 'green', bg: '#1B2A4A', pos: 'center 38%',
+      label: 'Green', slug: 'green', bg: '#132E35', pos: 'center 38%',
       headline: 'Perfect stripes. Every week.',
       sub: 'Mowing, mulch, planting and trim — plus decks, washing and every fix-it job on the list. Summer is short here. We make it count.',
       cta: 'Book landscaping', href: 'landscaping/'
     },
     'leaf-fall': {
-      label: 'Leaf-Fall', slug: 'leaffall', bg: '#292D33', pos: 'center 28%',
+      label: 'Leaf-Fall', slug: 'leaffall', bg: '#262E30', pos: 'center 28%',
       headline: "We'll clear your way.",
       sub: 'Gutters cleaned, leaves gone, shrubs wrapped — and the smart move: get on the plow list before the first lake-effect band rolls in.',
       cta: 'Beat the first snow', href: 'snow-plowing/'

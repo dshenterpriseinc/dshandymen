@@ -21,9 +21,12 @@ to the navy the brand settled on, in HSV, which keeps every fold and shadow.
     python build/rebuild_mascots.py           # re-cut into site-export/assets/web/
 """
 import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+
+from brandcolour import recolour_image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SHEETS = os.path.join(ROOT, 'assets', '00_NEW_brand_concepts')
@@ -97,77 +100,30 @@ def cut(rgb, own, box, pad=PAD):
     return out
 
 
-def teal_to_navy(im):
-    """Swap the sheet's teal for brand navy, keeping every fold and shadow.
-
-    The mapping is anchored to the sheet's flat teal and the brand's flat navy,
-    not to each figure's own average. Anchoring per image looked reasonable one
-    pose at a time and produced six different blues side by side, because a pose
-    with a lot of shadow pulled its own reference dark.
-    """
-    im = im.convert('RGBA')
-    arr = np.asarray(im).astype(np.float32) / 255.0
-    rgb, a = arr[..., :3], arr[..., 3]
-
-    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
-    d = mx - mn
-    sat = np.where(mx > 1e-6, d / np.maximum(mx, 1e-6), 0.0)
-
-    hue = np.zeros_like(mx)
-    nz = d > 1e-6
-    r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
-    i = nz & (mx == r); hue[i] = ((g - b)[i] / d[i]) % 6
-    i = nz & (mx == g); hue[i] = ((b - r)[i] / d[i]) + 2
-    i = nz & (mx == b); hue[i] = ((r - g)[i] / d[i]) + 4
-    hue = (hue / 6.0) % 1.0
-
-    # the garment: that hue family and actually coloured - not the pale ice-blue
-    # shading on the fur, which sits at a similar hue but far lower saturation
-    sel = (np.abs(((hue - TEAL_HUE + 0.5) % 1.0) - 0.5) < 0.075) & (sat > 0.22) & (a > 0.1)
-    if not sel.any():
-        return im
-
-    h2 = np.full(sel.sum(), NAVY_HSV[0], dtype=np.float32)
-    s2 = np.clip(sat[sel] * (NAVY_HSV[1] / TEAL_HSV[1]), 0, 1)
-    v2 = np.clip(mx[sel] * (NAVY_HSV[2] / TEAL_HSV[2]), 0, 1)
-
-    # HSV -> RGB, vectorised
-    k = np.floor(h2 * 6.0) % 6
-    f = h2 * 6.0 - np.floor(h2 * 6.0)
-    pp = v2 * (1 - s2); qq = v2 * (1 - f * s2); tt = v2 * (1 - (1 - f) * s2)
-    out = np.empty((sel.sum(), 3), dtype=np.float32)
-    for kk, (cr, cg, cb) in enumerate([(v2, tt, pp), (qq, v2, pp), (pp, v2, tt),
-                                       (pp, qq, v2), (tt, pp, v2), (v2, pp, qq)]):
-        m = k == kk
-        out[m, 0], out[m, 1], out[m, 2] = cr[m], cg[m], cb[m]
-
-    rgb[sel] = out
-    arr[..., :3] = rgb
-    return Image.fromarray((np.clip(arr, 0, 1) * 255).astype(np.uint8), 'RGBA')
-
-
-# which figure on which sheet becomes which file. Sheet 02 holds the six service
-# poses (teal); sheet 04 has the hero and the Bills pose already in navy.
+# Which figure on which sheet becomes which file, and whether its garment needs
+# moving onto the brand hue. Sheet 02's poses were drawn in that teal already, so
+# they are taken untouched - the brand landing on teal means this pipeline does
+# less work, not more. Sheet 04's badge is deliberately skipped: that version
+# carries a placeholder phone number, 716-555-0123. The Bills pose keeps its own
+# colours, which are the team's, not ours.
 JOBS = [
-    ('concept-sheet-02-service-poses.jpg', True, [
-        (0, 'mascot-shovelling'),
-        (1, 'mascot-plow-truck'),
-        (2, 'mascot-pressure-washing'),
-        (3, 'mascot-mowing'),
-        (4, 'mascot-ladder-drill'),
-        (5, 'mascot-waving'),
+    ('concept-sheet-02-service-poses.jpg', [
+        (0, 'mascot-shovelling', False),
+        (1, 'mascot-plow-truck', False),
+        (2, 'mascot-pressure-washing', False),
+        (3, 'mascot-mowing', False),
+        (4, 'mascot-ladder-drill', False),
+        (5, 'mascot-waving', False),
     ]),
-    # sheet 04 is already in brand navy. Its badge is deliberately not taken -
-    # that version carries a placeholder phone number, 716-555-0123.
-    ('concept-sheet-04-CORRECTED-deep-navy-palette.jpg', False, [
-        (2, 'mascot-bear-shovel-hero'),
-        (3, 'mascot-bear-go-bills'),
+    ('concept-sheet-04-CORRECTED-deep-navy-palette.jpg', [
+        (2, 'mascot-bear-shovel-hero', True),
+        (3, 'mascot-bear-go-bills', False),
     ]),
-    ('concept-sheet-05-pigeon-division-and-duo.jpg', False, [
-        (1, 'logo-pigeon-division'),
-        (2, 'mascot-pigeon-blueprint'),
-        (3, 'mascot-bear-and-bird-duo'),
-        (4, 'mascot-pigeon-standing'),
+    ('concept-sheet-05-pigeon-division-and-duo.jpg', [
+        (1, 'logo-pigeon-division', True),
+        (2, 'mascot-pigeon-blueprint', True),
+        (3, 'mascot-bear-and-bird-duo', True),
+        (4, 'mascot-pigeon-standing', True),
     ]),
 ]
 
@@ -175,21 +131,21 @@ JOBS = [
 def main():
     debug = '--debug' in sys.argv
     made = []
-    for sheet, recolour, picks in JOBS:
+    for sheet, picks in JOBS:
         rgb = Image.open(os.path.join(SHEETS, sheet))
         mask = to_alpha(rgb)
         figs = components(mask, merge_px=8)
         print('%s -> %d figures found' % (sheet, len(figs)))
         for i, (b, _) in enumerate(figs):
             print('   [%d] %dx%d at %s' % (i, b[2] - b[0], b[3] - b[1], (b[0], b[1])))
-        for idx, name in picks:
+        for idx, name, recolour in picks:
             if idx >= len(figs):
                 print('   !! no figure at index %d for %s' % (idx, name))
                 continue
             box, own = figs[idx]
             im = cut(rgb, own, box)
             if recolour:
-                im = teal_to_navy(im)
+                im = recolour_image(im)
             made.append((name, im))
 
     if debug:

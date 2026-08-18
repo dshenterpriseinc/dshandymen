@@ -30,8 +30,8 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
     bear: {
       name: 'The Bear', title: 'Ask the Bear',
       tag: "Dave's sidekick — outside work",
-      bg: '#1B2A4A', header: '#1B2A4A', accent: '#00338D',
-      panel: '#F4F8FB', bubbleBot: '#FFFFFF', bubbleUser: '#00338D',
+      bg: '#132E35', header: '#132E35', accent: '#00414F',
+      panel: '#F2F9FA', bubbleBot: '#FFFFFF', bubbleUser: '#00414F',
       greet: "Hey — I'm the Bear. Snow, washing, mowing, fixing… what do you need?",
       chips: ['Snow plowing', 'Get a quote', 'Service area', 'Pricing', 'Talk to Dave'],
       speed: 420,
@@ -135,7 +135,7 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   *{box-sizing:border-box;font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif}
   .launcher{position:fixed;right:16px;bottom:10px;width:auto;height:auto;border:0;border-radius:0;
     background:none;padding:0;cursor:pointer;z-index:9000;line-height:0;
-    filter:drop-shadow(0 12px 20px rgba(12,22,32,.38));
+    filter:drop-shadow(0 12px 20px rgba(10, 23, 26, .38));
     transition:transform .25s cubic-bezier(.2,1.2,.4,1),opacity .2s ease}
   /* the bear IS the launcher, so leaving him standing beside the open panel
      puts two of him on screen - step him aside while the panel is up */
@@ -157,11 +157,11 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   .breathe img{animation:bob 4.2s ease-in-out infinite}
   .launcher:hover img{animation:wave 1.6s ease-in-out infinite}
   @media(prefers-reduced-motion:reduce){.breathe img,.launcher:hover img{animation:none}.launcher:hover{transform:none}}
-  .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0C1620;padding:10px 14px;border-radius:10px;
-    box-shadow:0 4px 16px rgba(12,22,32,.22);font-size:15px;z-index:9000;max-width:200px}
+  .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0A171A;padding:10px 14px;border-radius:10px;
+    box-shadow:0 4px 16px rgba(10, 23, 26, .22);font-size:15px;z-index:9000;max-width:200px}
   .nudge:after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;background:#fff;transform:translateY(-50%) rotate(45deg)}
   .panel{position:fixed;right:22px;bottom:22px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 60px));
-    display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
+    display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(10, 23, 26, .35);z-index:9001;
     background:var(--panel-bg,${p.panel});transition:background .8s ease}
   .head{display:flex;align-items:flex-end;gap:10px;padding:12px 16px 14px;min-height:78px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
   /* he stands ON the header, overlapping downward into the messages. A negative
@@ -175,25 +175,25 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   .head button:focus-visible{outline:2px solid #fff;outline-offset:2px}
   .msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
   .m{max-width:85%;padding:9px 13px;border-radius:12px;font-size:15.5px;line-height:1.45;white-space:pre-line}
-  .bot{align-self:flex-start;background:${p.bubbleBot};color:#0C1620;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(12,22,32,.10)}
+  .bot{align-self:flex-start;background:${p.bubbleBot};color:#0A171A;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(10, 23, 26, .10)}
   .usr{align-self:flex-end;color:#fff;border-bottom-right-radius:4px;background:var(--usr-bg,${p.bubbleUser});transition:background .8s ease}
   .m a{color:var(--link,${p.accent});font-weight:600}
-  .sys{align-self:center;font-size:13px;color:#5a6472;font-style:italic;padding:2px 0}
+  .sys{align-self:center;font-size:13px;color:#54666A;font-style:italic;padding:2px 0}
   .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
   .chips button{border:1.5px solid var(--head-bg,${p.header});background:transparent;color:var(--chip,${p.header});
     border-radius:999px;padding:6px 13px;font-size:14px;font-weight:600;cursor:pointer}
   .chips button:hover{background:rgba(0,0,0,.06)}
   .chips button:focus-visible{outline:2px solid var(--link,${p.accent});outline-offset:2px}
-  .foot{padding:10px 16px 14px;border-top:1px solid rgba(12,22,32,.10)}
+  .foot{padding:10px 16px 14px;border-top:1px solid rgba(10, 23, 26, .10)}
   .row{display:flex;gap:8px}
-  input{flex:1;border:1.5px solid rgba(12,22,32,.25);border-radius:8px;padding:9px 12px;font-size:15.5px;background:#fff;color:#0C1620}
+  input{flex:1;border:1.5px solid rgba(10, 23, 26, .25);border-radius:8px;padding:9px 12px;font-size:15.5px;background:#fff;color:#0A171A}
   input:focus-visible{outline:2px solid var(--link,${p.accent});outline-offset:1px}
   .send{border:none;border-radius:8px;padding:9px 16px;font-weight:700;font-size:15px;color:#fff;cursor:pointer;background:var(--usr-bg,${p.bubbleUser})}
-  .send:focus-visible{outline:2px solid #0C1620;outline-offset:2px}
-  .call{display:block;text-align:center;font-size:13.5px;color:#3d4756;margin-top:8px;text-decoration:none}
+  .send:focus-visible{outline:2px solid #0A171A;outline-offset:2px}
+  .call{display:block;text-align:center;font-size:13.5px;color:#37494E;margin-top:8px;text-decoration:none}
   .call strong{color:var(--link,${p.accent})}
   .typing{display:inline-flex;gap:4px;align-items:center}
-  .typing i{width:6px;height:6px;border-radius:50%;background:#8a94a3;display:inline-block;animation:blink 1.2s infinite}
+  .typing i{width:6px;height:6px;border-radius:50%;background:#81979C;display:inline-block;animation:blink 1.2s infinite}
   .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
   @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
   .hidden{display:none}
