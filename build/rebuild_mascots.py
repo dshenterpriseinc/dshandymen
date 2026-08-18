@@ -115,6 +115,12 @@ JOBS = [
         (4, 'mascot-ladder-drill', False),
         (5, 'mascot-waving', False),
     ]),
+    # The emblem badge Dan picked as the primary mark. Sheet 01 is the original
+    # teal sheet, so it needs no recolour - it already matches the mascots, which
+    # are also taken from that teal untouched.
+    ('concept-sheet-01-bear-evolution.jpg', [
+        (1, 'logo-badge-teal', False),
+    ]),
     ('concept-sheet-04-CORRECTED-deep-navy-palette.jpg', [
         (2, 'mascot-bear-shovel-hero', True),
         (3, 'mascot-bear-go-bills', False),

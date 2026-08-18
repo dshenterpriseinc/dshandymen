@@ -36,6 +36,7 @@ MAX_BYTES = 200_000   # no single image is worth more than this
 # need 640, and the png fallback was shipping at half a megabyte.
 SHADOW_CAPS = {
     'logo-badge-primary': 460,
+    'logo-badge-teal': 460,
     'logo-badge-dark': 260,
     'logo-pigeon-division': 420,
     'mascot-bear-shovel-hero': 460,

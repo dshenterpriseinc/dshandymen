@@ -502,7 +502,21 @@ def fix_pressure_washing(path, s, prefix):
 # has clean edges, and carries more contrast against the navy header anyway.
 
 def fix_header_badge(s):
-    return s.replace('logo-badge-white-knockout', 'logo-badge-primary')
+    """Put the emblem badge on every mark.
+
+    The build inherited two different badges - a charcoal-ringed "Home Repair &
+    Snow Services" disc in the header and a monochrome version in the footer -
+    and neither was the mark Dave actually likes. The sheet 01 emblem is: teal
+    shirt, gold bars, tan inner ring, "Snow & Home Services". It needs no
+    recolour, being from the same teal sheet the mascots come from, and its gold
+    keeps it legible on the near-black footer as well as the navy header.
+
+    Runs before fix_images so the <picture> wrapper is built around the name that
+    actually ships - getting that order wrong previously shipped a 499 KB png.
+    """
+    for old_name in ('logo-badge-white-knockout', 'logo-badge-primary', 'logo-badge-dark'):
+        s = s.replace(old_name, 'logo-badge-teal')
+    return s
 
 
 # ---------------------------------------------------------------- 11. brand hue
