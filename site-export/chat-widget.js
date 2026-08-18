@@ -25,9 +25,6 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   const FIG = (persona, state) => (persona === 'bear'
       ? (BEAR_FIG[state] || BEAR_FIG.neutral)
       : (BIRD_FIG[state] || BIRD_FIG.neutral));
-  const BEAR_AV = (s) => __DSH_BASE+`assets/web/chatbot-${s}.png`;
-  const BIRD_AV = (s) => __DSH_BASE+`assets/web/pigeon-chatbot-${s}.png`;
-  const BIRD_FALLBACK = __DSH_BASE+'assets/web/logo-pigeon-division.png';
 
   const PERSONAS = {
     bear: {
@@ -129,9 +126,6 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       }
     }
     disconnectedCallback() { clearTimeout(this._nudgeTimer); }
-    _av(state) {
-      return this.persona === 'bear' ? BEAR_AV(state) : BIRD_AV(state);
-    }
     _p() { return PERSONAS[this.persona]; }
     _render() {
       const p = this._p();
@@ -234,13 +228,6 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       this.$input.addEventListener('input', () => this._setAvatar('listening'));
       this._applyPersona(true);
     }
-    _birdFallback(el, isBg) {
-      // if pigeon-chatbot-* isn't on disk yet, fall back to the division badge
-      const probe = new Image();
-      probe.onerror = () => { if (isBg) el.style.backgroundImage = `url('${BIRD_FALLBACK}')`; else el.src = BIRD_FALLBACK; };
-      probe.src = this._av('neutral');
-      if (!isBg) { el.onerror = () => { el.onerror = null; el.src = BIRD_FALLBACK; }; }
-    }
     _applyPersona(first) {
       const p = this._p();
       this.$nm.textContent = p.name; this.$tg.textContent = p.tag;
@@ -258,10 +245,10 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       });
     }
     _setAvatar(state) {
-      const url = this._av(state);
-      this.$headImg.src = url;
-      var lim = this.$launcher.querySelector('img'); if (lim) lim.src = FIG(this.persona, state);
-      if (this.$headImg) this.$headImg.src = FIG(this.persona, state);
+      const src = FIG(this.persona, state);
+      const lim = this.$launcher.querySelector('img');
+      if (lim) lim.src = src;
+      if (this.$headImg) this.$headImg.src = src;
     }
     _showNudge() {
       this.$nudge.textContent = this.persona === 'bear' ? 'Need a quote? Ask me.' : 'Planning a room? Ask me.';
