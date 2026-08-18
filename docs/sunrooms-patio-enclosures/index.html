@@ -157,6 +157,10 @@ img{height:auto}
   header.dsh-compact nav{display:none !important}
   header.dsh-compact{box-shadow:0 3px 14px rgba(12,22,32,.3)}
 }
+
+/* Service-card mascots. They are letterboxed into a fixed square with
+   object-fit:contain, and at 170px the bear was swimming in card whitespace. */
+img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !important}
 </style>
 </head>
 <body>
@@ -210,7 +214,7 @@ img{height:auto}
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
 <picture><source srcset="../assets/gallery/patio-1-sm.webp 480w, ../assets/gallery/patio-1.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Patio enclosure project" loading="lazy" src="../assets/gallery/patio-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="798" height="388" decoding="async"></picture>
 <picture><source srcset="../assets/gallery/patio-2.webp" type="image/webp"><img alt="Patio and enclosure work" loading="lazy" src="../assets/gallery/patio-2.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="708" height="344" decoding="async"></picture>
-<picture><source srcset="../assets/gallery/patio-3.webp" type="image/webp"><img alt="Finished patio space" loading="lazy" src="../assets/gallery/patio-3.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="708" height="1463" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/patio-3-sm.webp 480w, ../assets/gallery/patio-3.webp 640w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Finished patio space" loading="lazy" src="../assets/gallery/patio-3.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="708" height="1463" decoding="async"></picture>
 <picture><source srcset="../assets/gallery/bench-sm.webp 480w, ../assets/gallery/bench.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Custom outdoor bench" loading="lazy" src="../assets/gallery/bench.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px;" width="798" height="801" decoding="async"></picture>
 </div>
 </div>

@@ -106,3 +106,7 @@ img{height:auto}
   header.dsh-compact nav{display:none !important}
   header.dsh-compact{box-shadow:0 3px 14px rgba(12,22,32,.3)}
 }
+
+/* Service-card mascots. They are letterboxed into a fixed square with
+   object-fit:contain, and at 170px the bear was swimming in card whitespace. */
+img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !important}

@@ -14,7 +14,14 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
     pointing:  __DSH_BASE+'assets/web/mascot-ladder-drill.webp',
     thumbsup:  __DSH_BASE+'assets/web/mascot-waving.webp'
   };
-  const BIRD_FIG = { neutral: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp' };
+  const BIRD_FIG = {
+    neutral:   __DSH_BASE+'assets/web/mascot-pigeon-standing.webp',
+    listening: __DSH_BASE+'assets/web/mascot-pigeon-standing.webp',
+    waving:    __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
+    delighted: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
+    pointing:  __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
+    thumbsup:  __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp'
+  };
   const FIG = (persona, state) => (persona === 'bear'
       ? (BEAR_FIG[state] || BEAR_FIG.neutral)
       : (BIRD_FIG[state] || BIRD_FIG.neutral));
@@ -162,9 +169,12 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   .panel{position:fixed;right:22px;bottom:22px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 60px));
     display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
     background:var(--panel-bg,${p.panel});transition:background .8s ease}
-  .head{display:flex;align-items:flex-end;gap:10px;padding:10px 16px 12px;min-height:74px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
-  .head img{height:88px;width:auto;border-radius:0;background:none;object-fit:contain;flex:none;
-    margin:-18px 0 -14px;filter:drop-shadow(0 5px 10px rgba(0,0,0,.3))}
+  .head{display:flex;align-items:flex-end;gap:10px;padding:12px 16px 14px;min-height:78px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
+  /* he stands ON the header, overlapping downward into the messages. A negative
+     TOP margin would push him past the panel's own overflow:hidden and slice
+     the top of his head off, which is exactly what used to happen. */
+  .head img{height:92px;width:auto;border-radius:0;background:none;object-fit:contain;flex:none;
+    margin:0 0 -16px;filter:drop-shadow(0 5px 10px rgba(0,0,0,.3))}
   .head .nm{font-weight:700;font-size:17px;line-height:1.1}
   .head .tg{font-size:13px;opacity:.85}
   .head button{margin-left:auto;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:4px 6px}
