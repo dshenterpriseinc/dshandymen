@@ -47,9 +47,14 @@ var __DSH_BASE = (function () {
   // pivots, folds his arms, holds, and pivots back. Frames rather than a
   // rendered clip so the animation is exactly the mascot on the cards and in the
   // logo, keeps a real alpha channel, and costs ~100 KB instead of megabytes.
+  // The Bird's tool pose is deliberately out of the loop for now: the only
+  // drawn artwork of her holding anything has her gripping a rolled blueprint
+  // in one wing AND a paintbrush in the other, which reads as an extra pair of
+  // arms. Better a quieter loop than a wrong one. Single-tool poses are being
+  // drawn; add them here as bird-pose-brush / -plans / -tape / -roller.
   var POSE_SETS = {
     bear: ['bear-pose-wave', 'bear-pose-stand', 'bear-pose-arms'],
-    bird: ['bird-pose-stand', 'bird-pose-tools', 'bird-pose-turn']
+    bird: ['bird-pose-stand', 'bird-pose-turn', 'bird-pose-stand']
   };
   var POSES = function (persona) {
     return (POSE_SETS[persona] || POSE_SETS.bear).map(function (n) {
@@ -272,25 +277,27 @@ var __DSH_BASE = (function () {
 '  /* three times the old size on a desktop, tied to viewport height so a short',
 '     laptop screen is not swallowed by a giant bear */',
 '  .figs{position:relative;display:block;height:min(400px,44vh);width:calc(min(400px,44vh) * 0.92);',
-'    transform-origin:50% 100%;animation:pivot 11s ease-in-out infinite}',
+'    transform-origin:50% 100%;animation:pivot 24s ease-in-out infinite}',
 '  .figs img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;',
-'    display:block;pointer-events:none;opacity:0;animation:11s linear infinite}',
+'    display:block;pointer-events:none;opacity:0;animation:24s ease-in-out infinite}',
 '  .figs img:nth-child(1){animation-name:poseA;opacity:1}',
 '  .figs img:nth-child(2){animation-name:poseB}',
 '  .figs img:nth-child(3){animation-name:poseC}',
-'  /* cross-fades, and a squash at each hand-over that reads as him turning on',
-'     the spot. Only opacity and transform, so it stays on the compositor. */',
-'  @keyframes poseA{0%,25%{opacity:1}29%,90%{opacity:0}96%,100%{opacity:1}}',
-'  @keyframes poseB{0%,25%{opacity:0}29%,53%{opacity:1}57%,100%{opacity:0}}',
-'  @keyframes poseC{0%,53%{opacity:0}57%,90%{opacity:1}96%,100%{opacity:0}}',
+'  /* Cross-fades on a 24s cycle: each pose holds about six seconds and takes',
+'     nearly two to hand over. The first pass was 11s with half-second fades,',
+'     which read as flicking between pictures rather than a character moving.',
+'     Only opacity and transform, so it stays on the compositor. */',
+'  @keyframes poseA{0%,27%{opacity:1}35%,92%{opacity:0}100%{opacity:1}}',
+'  @keyframes poseB{0%,27%{opacity:0}35%,60%{opacity:1}68%,100%{opacity:0}}',
+'  @keyframes poseC{0%,60%{opacity:0}68%,92%{opacity:1}100%{opacity:0}}',
 '  @keyframes pivot{',
-'    0%,24%{transform:scaleX(1) translateY(0)}',
-'    27%{transform:scaleX(.80) translateY(-4px)}',
-'    31%,52%{transform:scaleX(1) translateY(0)}',
-'    55%{transform:scaleX(.80) translateY(-4px)}',
-'    59%,89%{transform:scaleX(1) translateY(0)}',
-'    93%{transform:scaleX(.80) translateY(-4px)}',
-'    97%,100%{transform:scaleX(1) translateY(0)}}',
+'    0%,28%{transform:scaleX(1) translateY(0)}',
+'    31%{transform:scaleX(.90) translateY(-3px)}',
+'    34%,61%{transform:scaleX(1) translateY(0)}',
+'    64%{transform:scaleX(.90) translateY(-3px)}',
+'    67%,93%{transform:scaleX(1) translateY(0)}',
+'    96%{transform:scaleX(.90) translateY(-3px)}',
+'    99%,100%{transform:scaleX(1) translateY(0)}}',
 '  /* a tab in the background, or the panel open, has no business burning CPU */',
 '  .stage.still .figs,.stage.still .figs img{animation-play-state:paused}',
 '  .launcher:hover{transform:translateY(-8px) scale(1.03)}',
