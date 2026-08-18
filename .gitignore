@@ -22,3 +22,7 @@ assets/09_commercials/
 .worker.lock
 *.zip
 .thumbnail/
+
+# build intermediates (the compiled site in docs/ IS committed)
+build/captured/
+build/__pycache__/
