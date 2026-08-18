@@ -39,6 +39,12 @@ alt text · one `<h1>` per page · form controls labelled · Season Engine (4 st
 both chat assistants present with Bear↔Bird handoff · only phone anywhere is (716) 803-0091 ·
 rating stated honestly as 4.7★ / 13 · `prefers-reduced-motion` respected
 
+### Hero video — optimised 2026-08-18
+Trimmed to 8s of pure action (branded end cards removed — they read as a mistake behind hero
+copy), audio stripped, re-encoded. **17 MB → 3.0 MB MP4 (-82%)**, with WebM alternates and
+poster frames. Serve: `<video muted autoplay loop playsinline preload="none" poster="…-poster.jpg">`
+with WebM first, MP4 fallback.
+
 ❌ No JSON-LD on any page · no `sitemap.xml`, `robots.txt`, `CNAME` · no Blog or Privacy page ·
 Bird chat avatars not yet bundled (falls back to the division badge)
 
