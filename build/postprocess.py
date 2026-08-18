@@ -494,6 +494,16 @@ def fix_pressure_washing(path, s, prefix):
     return s
 
 
+# ---------------------------------------------------------------- 10. header badge
+# The header logo on all 21 pages was logo-badge-white-knockout, which had been
+# cut from the concept sheet's black panel and kept a slab of that black along
+# one side, plus a clipped ring. The full-colour badge is the actual brand mark,
+# has clean edges, and carries more contrast against the navy header anyway.
+
+def fix_header_badge(s):
+    return s.replace('logo-badge-white-knockout', 'logo-badge-primary')
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -504,6 +514,7 @@ def main():
             s = fix_reviews(f, s)
             if '"@type":"Review"' not in s:
                 s = s.replace("</head>", REVIEW_LD + "\n</head>", 1)
+        s = fix_header_badge(s)   # before fix_images, so the webp twin is found
         if '<picture>' not in s:
             s = fix_images(f, s)
         s = relabel_nav(s)

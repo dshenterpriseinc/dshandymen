@@ -30,7 +30,14 @@ JPEG_Q = 84
 MAX_BYTES = 200_000   # no single image is worth more than this
 
 # loaded by chat-widget.js into a shadow root, so no page measures them
+# Explicit caps. Some are loaded by chat-widget.js into a shadow root, so no
+# page's img list ever measures them. The rest are logos, where the FLOOR meant
+# for photographs is wasteful - a badge that never renders above 220px does not
+# need 640, and the png fallback was shipping at half a megabyte.
 SHADOW_CAPS = {
+    'logo-badge-primary': 460,
+    'logo-badge-dark': 260,
+    'logo-pigeon-division': 420,
     'mascot-bear-shovel-hero': 460,
     'mascot-waving': 460,
     'mascot-ladder-drill': 460,
