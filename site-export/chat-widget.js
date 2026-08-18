@@ -1,315 +1,619 @@
-/* DS Handymen — "Ask the Bear" / "Ask the Bird" scripted assistants with handoff.
-   Vanilla web component, sprite-swap avatars, no network calls. */
-var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.querySelectorAll('script[src*="chat-widget"]');d=a[a.length-1];}return d?d.src.replace(/[^/]*$/,''):'/';})();
+/* DS Handymen - "Ask the Bear" / "Ask the Bird".
+
+   A vanilla web component, no network calls and no dependencies. The bear waits
+   a few seconds, walks on, and says hello in a speech bubble that types itself
+   out; the bubble carries the buttons rather than making people guess that the
+   mascot is clickable.
+
+   Speech in and out are both progressive enhancements. The microphone button is
+   only rendered when the browser actually exposes SpeechRecognition, and the
+   speaker toggle only when speechSynthesis exists, so neither can strand a
+   visitor on a browser that lacks them.
+
+   Colours here are authored in the old navy. postprocess.py rotates the built
+   copy onto the brand hue along with everything else, so there is one place the
+   brand colour is decided and this file is not it. */
+var __DSH_BASE = (function () {
+  var d = document.currentScript;
+  if (!d) { var a = document.querySelectorAll('script[src*="chat-widget"]'); d = a[a.length - 1]; }
+  return d ? d.src.replace(/[^/]*$/, '') : '/';
+})();
 
 (function () {
-  const PHONE = '(716) 803-0091';
-  const PHONE_HREF = 'tel:+17168030091';
-  // full-figure art — the mascot standing, not a cropped head in a circle
-  const BEAR_FIG = {
-    neutral:   __DSH_BASE+'assets/web/mascot-bear-shovel-hero.webp',
-    waving:    __DSH_BASE+'assets/web/mascot-waving.webp',
-    listening: __DSH_BASE+'assets/web/mascot-bear-shovel-hero.webp',
-    delighted: __DSH_BASE+'assets/web/mascot-waving.webp',
-    pointing:  __DSH_BASE+'assets/web/mascot-ladder-drill.webp',
-    thumbsup:  __DSH_BASE+'assets/web/mascot-waving.webp'
-  };
-  const BIRD_FIG = {
-    neutral:   __DSH_BASE+'assets/web/mascot-pigeon-standing.webp',
-    listening: __DSH_BASE+'assets/web/mascot-pigeon-standing.webp',
-    waving:    __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
-    delighted: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
-    pointing:  __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp',
-    thumbsup:  __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp'
-  };
-  const FIG = (persona, state) => (persona === 'bear'
-      ? (BEAR_FIG[state] || BEAR_FIG.neutral)
-      : (BIRD_FIG[state] || BIRD_FIG.neutral));
+  'use strict';
 
-  const PERSONAS = {
+  var PHONE = '(716) 803-0091';
+  var PHONE_HREF = 'tel:+17168030091';
+  var EMAIL = 'dshandymen@yahoo.com';
+  var U = function (p) { return __DSH_BASE + p; };      // real site URLs, not design-tool paths
+
+  var BEAR_FIG = {
+    neutral:   U('assets/web/mascot-bear-shovel-hero.webp'),
+    waving:    U('assets/web/mascot-waving.webp'),
+    listening: U('assets/web/mascot-bear-shovel-hero.webp'),
+    delighted: U('assets/web/mascot-waving.webp'),
+    pointing:  U('assets/web/mascot-ladder-drill.webp'),
+    thumbsup:  U('assets/web/mascot-waving.webp')
+  };
+  var BIRD_FIG = {
+    neutral:   U('assets/web/mascot-pigeon-standing.webp'),
+    listening: U('assets/web/mascot-pigeon-standing.webp'),
+    waving:    U('assets/web/mascot-pigeon-blueprint.webp'),
+    delighted: U('assets/web/mascot-pigeon-blueprint.webp'),
+    pointing:  U('assets/web/mascot-pigeon-blueprint.webp'),
+    thumbsup:  U('assets/web/mascot-pigeon-blueprint.webp')
+  };
+  var FIG = function (persona, state) {
+    var set = persona === 'bear' ? BEAR_FIG : BIRD_FIG;
+    return set[state] || set.neutral;
+  };
+
+  var PERSONAS = {
     bear: {
       name: 'The Bear', title: 'Ask the Bear',
       tag: "Dave's sidekick — outside work",
-      bg: '#1B2A4A', header: '#1B2A4A', accent: '#00338D',
+      header: '#1B2A4A', accent: '#00338D',
       panel: '#F4F8FB', bubbleBot: '#FFFFFF', bubbleUser: '#00338D',
-      greet: "Hey — I'm the Bear. Snow, washing, mowing, fixing… what do you need?",
-      chips: ['Snow plowing', 'Get a quote', 'Service area', 'Pricing', 'Talk to Dave'],
-      speed: 420,
+      hello: "Hey — I'm the Bear. I'm here to help. Ask me anything about plowing, washing, mowing or fixing.",
+      helloShort: "Hey — I'm the Bear. Ask me anything.",
+      greet: "Right then. What do you need doing?",
+      chips: ['Snow plowing', 'Get a quote', 'Pricing', 'Service area', 'Talk to Dave'],
+      voice: /(david|mark|guy|george|daniel|male)/i,
+      pitch: 0.82, rate: 0.98, speed: 420
     },
     bird: {
       name: 'The Bird', title: 'Ask the Bird',
       tag: "Nichole's side — design & finish",
-      bg: '#8A8078', header: '#6E655C', accent: '#B5673F',
+      header: '#6E655C', accent: '#B5673F',
       panel: '#F6F2ED', bubbleBot: '#FFFFFF', bubbleUser: '#B5673F',
-      greet: "Hello — I'm the Bird. Design, trim, tile, cabinets. Where shall we start?",
+      hello: "Hello — I'm the Bird. Kitchens, tile, trim, cabinets. Ask me anything about design work.",
+      helloShort: "Hello — I'm the Bird. Ask me about design.",
+      greet: "Now then. What are we planning?",
       chips: ['Kitchen remodel', 'Tile & backsplash', 'The Pigeon Division', 'Get a quote'],
-      speed: 700,
-    },
+      voice: /(zira|samantha|karen|susan|female|fiona)/i,
+      pitch: 1.12, rate: 1.0, speed: 700
+    }
   };
 
-  // intent: [regex, reply, opts] — opts.handoff switches persona, opts.state sets avatar
-  const BEAR_INTENTS = [
-    [/tile|backsplash|cabinet|colou?r|paint\b|trim|layout|design|look good|kitchen remodel|bathroom remodel|finish work|interior/i,
+  var Q = { link: U('quote/'), label: 'Free quote' };
+
+  /* ---------------------------------------------------------------- knowledge
+     Ordered: the first pattern that matches wins, so the specific questions sit
+     above the general ones. Prices are never guessed - every costing question
+     routes to the quote form or the phone, because that is what Dave actually
+     wants and a made-up number would cost him the job. */
+  var BEAR_KB = [
+    [/tile|backsplash|cabinet|colou?r scheme|paint colou?r|interior design|finish carpentr|kitchen remodel|bathroom remodel|vanit|drywall|trim work|pigeon division|nichole/i,
       "That's the Bird's department — hang on.", { handoff: 'bird' }],
-    [/who are you|what are you|your name/i,
-      "I'm the Bear — Dave Schultz's sidekick. Dave's been fixing, plowing and building around Hamburg for 50 years."],
-    [/area|towns?|where|hamburg|blasdell|orchard park|lackawanna|southtowns/i,
-      'Blasdell, Hamburg, Orchard Park, Lackawanna and the wider Southtowns.'],
-    [/insur|bbb|accredit|licens/i,
-      'Fully insured, and BBB Accredited with an A+ rating since 2021.'],
-    [/how long|since when|years in business|founded|established/i,
-      'Since 2009 — 16 years.'],
-    [/plow.*(cost|price)|(cost|price|charge).*plow/i,
-      `Depends on the driveway. Call ${PHONE} or send a photo through the quote form.`, { link: 'Quote.dc.html', linkLabel: 'Quote form' }],
-    [/plow|driveway|snow/i,
-      'Yes — residential driveways and commercial lots. Seasonal contract or one-off. Two trucks on route.'],
-    [/referral/i, 'Refer another seasonal customer, get $20 off.'],
-    [/pressure|power wash|washing/i,
-      `Driveways, siding, decks, roofs, sidewalks, pool decks. "If it's outside and it's dirty."`],
-    [/sunroom|three.?season|helios|patio enclosure/i,
-      "Three-season rooms, and we're a trained installer for Helios retractable glass sunrooms.", { link: 'Sunrooms.dc.html', linkLabel: 'Sunrooms' }],
-    [/attic|garage|clear|clean.?out|estate|junk|declutter/i,
-      'Yes — house clearance is one of our services.'],
-    [/gutter/i, 'Clean-outs, repairs and replacement.'],
-    [/storm|emergency|urgent|stuck/i, `Call Dave directly at ${PHONE}.`, { call: true }],
-    [/free estimate|estimates?\b/i, 'Yes. Free estimates, always.'],
-    [/how do i book|book|schedule|quote|appointment/i,
-      `Quote form — photos welcome — or call ${PHONE}.`, { link: 'Quote.dc.html', linkLabel: 'Quote form' }],
-    [/pay|venmo|cash|cheque|check\b/i,
-      'Cash, cheque and Venmo — david schultz@dshandymeninc.'],
-    [/gift/i, `$100, $250 or $500, good toward any service. "Give someone the gift of time."`, { link: 'GiftCertificates.dc.html', linkLabel: 'Gift certificates' }],
-    [/discount|veteran|senior|teacher|deal/i,
-      '10% off for Veterans, Seniors and Teachers, plus $20 off for a plowing referral.'],
-    [/bills|buffalo|football/i, "Let's go Buffalo. 🦬"],
-    [/price|pricing|cost|how much/i,
-      `Every job's different, so I never guess prices. Call ${PHONE} or send photos through the quote form.`, { link: 'Quote.dc.html', linkLabel: 'Quote form' }],
-    [/talk to dave|human|person|phone/i, `Best way: call ${PHONE}. Dave picks up.`, { call: true }],
-    [/mow|lawn|landscap|mulch|rake|shrub|tree/i,
-      'Mowing, mulch, planting, trimming, fall raking and winter shrub protection. All of it.'],
+
+    [/who are you|what are you|your name|are you (a )?(bot|robot|real|human|ai)/i,
+      "I'm the Bear, Dave Schultz's sidekick — a helper on this website, not Dave himself. Dave's been fixing, plowing and building around Hamburg for 50 years. For anything I can't answer, call him on " + PHONE + '.', { call: true }],
+
+    [/hours|open|when.*(open|closed)|weekend|sunday|saturday/i,
+      'No fixed shop hours — Dave works around the jobs and the weather. Plow routes start about 4am after a storm. Call ' + PHONE + ' and he picks up.', { call: true }],
+    [/emergenc|urgent|storm|right now|today|asap|stuck|burst|leak/i,
+      'For anything urgent, skip me and call Dave directly on ' + PHONE + '.', { call: true }],
+
+    [/how much.*(plow|driveway)|(plow|driveway).*(cost|price|rate|charge)/i,
+      "Depends on the driveway — length, slope and where the snow can go. Send a photo through the quote form and you'll get a straight number.", { link: Q.link, linkLabel: Q.label }],
+    [/seasonal|contract|per visit|one.?off|per storm/i,
+      'Both. A seasonal contract is one flat price for the whole winter and you never call — you’re on the route. Or one-off per visit when a big storm catches you out.'],
+    [/plow|snow|driveway|salt|shovel/i,
+      'Residential driveways and commercial lots, two trucks on route. Seasonal contract or one-off. Dave is out at 4am so you’re out by 7.'],
+    [/referral|refer a/i, 'Send us a neighbour who signs up for seasonal plowing and you get $20 off.'],
+
+    [/pressure|power.?wash|wash(ing)?\b|grime|moss|algae|siding clean/i,
+      "Driveways, siding, decks, roofs, sidewalks and pool decks. If it's outside and it's dirty, we can help you out."],
+    [/mow|lawn|landscap|mulch|rake|shrub|hedge|tree|planting|leaves|fall clean/i,
+      'Mowing, mulch, planting, trimming, fall raking and winter shrub protection.'],
+    [/gutter/i, 'Gutter clean-outs, repairs and replacement.'],
+    [/roof/i, 'Roof cleaning and repair work, and we de-moss without wrecking the shingles.'],
+    [/deck|fence|patio/i, 'Decks and fences — washing, refinishing, repair and new build.'],
+    [/sunroom|three.?season|helios|patio enclosure|screen room/i,
+      "Three-season rooms, and we're a trained dealer and installer for Helios retractable glass sunrooms.",
+      { link: U('sunrooms-patio-enclosures/'), linkLabel: 'Sunrooms & enclosures' }],
+    [/attic|garage|clear.?out|clean.?out|estate|junk|declutter|hoard|house clearance/i,
+      "House clearance — attics, garages and estate clear-outs. It can be overwhelming working out where to start, so we start."],
+    [/window|basement|floor|remodel|renovat|handyman|repair|fix|install|shelf|door/i,
+      'Windows, basements, kitchens, flooring, drywall, decks and three-season rooms. If it needs doing, the Bear does it.'],
+
+    [/area|towns?|where|hamburg|blasdell|orchard park|lackawanna|southtowns|west seneca|east aurora|eden|boston|angola|springville|buffalo|do you come|travel/i,
+      'Blasdell, Hamburg, Orchard Park and Lackawanna are the core, plus the wider Southtowns and Western New York. Not sure if you’re in range? Worst case we say so.',
+      { link: U('service-area/'), linkLabel: 'Service area map' }],
+    [/address|located|where are you based|shop/i,
+      '135 Miriam Avenue, Suite 1, Blasdell, NY 14219.'],
+
+    [/insur|licens|bonded|bbb|accredit|rating|trust|legit/i,
+      'Fully insured, and BBB Accredited with an A+ rating since 2021. 4.7 stars from 13 reviews.',
+      { link: U('reviews/'), linkLabel: 'Reviews' }],
+    [/review|testimonial|reference|what do people say/i,
+      '4.7 stars from 13 reviews, and every one is a real Southtowns job.', { link: U('reviews/'), linkLabel: 'Reviews' }],
+    [/how long|since when|years in business|founded|established|experience/i,
+      'DS Handymen has been going since November 2009 — 16 years. Dave himself has been at it in Hamburg for 50.'],
+    [/who is dave|about dave|owner/i,
+      "Dave Schultz — 50 years in Hamburg, 16 of them running DS Handymen. He's the one out at 4am when the lake dumps a foot on your driveway.",
+      { link: U('about/'), linkLabel: 'About Dave' }],
+
+    [/free estimate|estimate|survey|come (out|round|over)|look at/i,
+      'Free estimates, always. Send photos through the quote form and Dave gets back to you as soon as he’s off the route.', { link: Q.link, linkLabel: Q.label }],
+    [/book|schedule|appointment|get started|sign up|quote|contact/i,
+      'Quote form is quickest — photos welcome — or call ' + PHONE + '.', { link: Q.link, linkLabel: Q.label }],
+    [/photo|picture|send.*image/i,
+      'Yes please — photos get you a far more accurate number. The quote form takes them.', { link: Q.link, linkLabel: Q.label }],
+    [/email/i, 'You can reach the office at ' + EMAIL + ', though the quote form gets a faster reply.'],
+
+    [/pay|venmo|cash|cheque|check\b|card|credit|invoice|deposit|financ/i,
+      'Cash, cheque or Venmo — david schultz@dshandymeninc.'],
+    [/gift|certificate|voucher|present/i,
+      'Gift certificates in $100, $250 and $500, good toward any service.',
+      { link: U('gift-certificates/'), linkLabel: 'Gift certificates' }],
+    [/discount|veteran|senior|teacher|military|deal|cheap/i,
+      "10% off for Veterans, Seniors and Teachers, and $20 off when you refer someone for plowing."],
+    [/price|pricing|cost|how much|rate|quote me|ballpark|estimate cost/i,
+      "Every job is different so I won't guess a number at you. Send photos through the quote form and you'll get a real one.", { link: Q.link, linkLabel: Q.label }],
+
+    [/gallery|photos of work|see.*work|before.*after/i,
+      'Before-and-afters from real jobs, all our own crew.', { link: U('gallery/'), linkLabel: 'Before & after' }],
+    [/facebook|social|instagram/i, 'We post jobs at facebook.com/dshandymen.'],
+    [/bills|buffalo|football|mafia/i, "Let's go Buffalo."],
+    [/thank|cheers|appreciate|great|awesome|perfect|nice one/i, "Any time. Anything else?"],
+    [/^(hi|hey|hello|yo|good (morning|afternoon|evening))\b/i, 'Hey. What can I help with?'],
+    [/talk to dave|human|real person|speak to someone|phone|call/i,
+      'Best way is to call ' + PHONE + '. Dave picks up.', { call: true }]
   ];
-  const BIRD_INTENTS = [
-    [/plow|snow|wash|gutter|mow|lawn|driveway|clearance|roof|outdoor|outside/i,
+
+  var BIRD_KB = [
+    [/plow|snow|wash|gutter|mow|lawn|driveway|clearance|roof|salt|outside work/i,
       "That's the Bear's side of the house — one moment.", { handoff: 'bear' }],
-    [/who are you|your name/i,
-      "I'm the Bird — Nichole Pigeon's side of the business. I look after design and finish work."],
-    [/what is|pigeon division|division/i,
-      'The design and finish arm of DS Handymen. Nichole is an RIT Design School graduate and the crew has over 40 years of collective experience.'],
-    [/what do you do|services/i,
-      'Custom design, trim, cabinets, drywall, paint, tile and finish work — plus exterior projects.'],
+    [/who are you|your name|are you (a )?(bot|robot|real|human|ai)/i,
+      "I'm the Bird, and I speak for Nichole Pigeon's side of the business — a helper on this website rather than Nichole herself. Design and finish work is what we do."],
+    [/what is|pigeon division|division|who is nichole/i,
+      'The Pigeon Division is the design and finish arm of DS Handymen. Nichole Pigeon is an RIT Design School graduate and the crew has over 40 years of collective experience.',
+      { link: U('design-remodeling/'), linkLabel: 'Design & Remodeling' }],
+    [/what do you do|services|offer/i,
+      'Custom design, trim, cabinets, drywall, paint, tile and finish carpentry — interior and exterior.'],
     [/kitchen/i,
-      "Yes — design through finish. Have a look at the gallery, then let's talk about your space.", { link: 'Gallery.dc.html', linkLabel: 'Gallery' }],
-    [/tile|backsplash/i,
-      'Yes. Material and layout make more difference than people expect — worth getting right.'],
-    [/design only|just design|plans only/i, 'We can design it, build it, or both.'],
-    [/start|begin|quote|estimate|book/i,
-      `Free estimate. Call ${PHONE} or send photos through the quote form.`, { link: 'Quote.dc.html', linkLabel: 'Quote form' }],
-    [/price|cost|how much/i,
-      `It depends on the space and the materials. Send photos through the quote form and we'll talk it through properly.`, { link: 'Quote.dc.html', linkLabel: 'Quote form' }],
-    [/cabinet|trim|drywall|paint|finish/i,
-      'All in our wheelhouse — proportion and prep are most of the job.'],
+      'Kitchens from design through finish. Have a look at the work, then let’s talk about your space.',
+      { link: U('gallery/'), linkLabel: 'See the work' }],
+    [/bathroom|vanit|shower/i, 'Bathrooms too — vanities, tile, lighting and the finish carpentry around them.'],
+    [/tile|backsplash|floor tile/i,
+      'Tile and backsplash, yes. Material and layout make more difference than people expect, so it is worth getting right first time.'],
+    [/cabinet|trim|drywall|paint|finish|moulding|crown/i,
+      'All in our wheelhouse. Proportion and prep are most of the job.'],
+    [/basement|living space|addition|open plan/i, 'Finished basements and living spaces, from layout through to the last coat.'],
+    [/design only|just design|plans only|drawings/i, 'We can design it, build it, or both — whichever suits.'],
+    [/timeline|how long|lead time|when could you/i,
+      'It depends on scope and materials. Send photos through the quote form and we can talk properly about timing.', { link: Q.link, linkLabel: Q.label }],
+    [/price|cost|how much|budget/i,
+      'It depends on the space and the materials, so I won’t guess. Send photos through the quote form and we’ll talk it through.', { link: Q.link, linkLabel: Q.label }],
+    [/start|begin|book|quote|estimate|contact/i,
+      'Free estimate. Call ' + PHONE + ' or send photos through the quote form.', { link: Q.link, linkLabel: Q.label }],
+    [/thank|cheers|appreciate|lovely|great/i, 'A pleasure. Anything else?'],
+    [/^(hi|hey|hello|good (morning|afternoon|evening))\b/i, 'Hello. What are we planning?']
   ];
-  const FALLBACK = {
-    bear: `Good question — that one's for Dave. Call ${PHONE} or use the quote form and he'll set you straight.`,
-    bird: `I'd rather Nichole answer that one properly. Call ${PHONE} or send it through the quote form.`,
+
+  var FALLBACK = {
+    bear: "That one's for Dave rather than me. Call " + PHONE + ' or send it through the quote form and he’ll set you straight.',
+    bird: "I'd rather Nichole answered that one properly. Call " + PHONE + ' or send it through the quote form.'
   };
-  const CHIP_TEXT = { 'Snow plowing': 'Do you plow driveways?', 'Get a quote': 'How do I book?', 'Service area': 'What areas do you serve?', 'Pricing': 'How much does it cost?', 'Talk to Dave': 'Can I talk to Dave?', 'Kitchen remodel': 'Do you do kitchen remodels?', 'Tile & backsplash': 'Do you do tile and backsplash?', 'The Pigeon Division': 'What is the Pigeon Division?' };
+
+  var CHIP_TEXT = {
+    'Snow plowing': 'Do you plow driveways?',
+    'Get a quote': 'How do I book a job?',
+    'Pricing': 'How much does it cost?',
+    'Service area': 'What areas do you serve?',
+    'Talk to Dave': 'Can I talk to Dave?',
+    'Kitchen remodel': 'Do you do kitchen remodels?',
+    'Tile & backsplash': 'Do you do tile and backsplash?',
+    'The Pigeon Division': 'What is the Pigeon Division?'
+  };
+
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var SS = window.speechSynthesis;
+  var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
 
   class ChatWidget extends HTMLElement {
     connectedCallback() {
-      if (this._built) return; this._built = true;
+      if (this._built) return;
+      this._built = true;
       this.persona = this.getAttribute('persona') === 'bird' ? 'bird' : 'bear';
       this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.voiceOn = false;
+      try { this.voiceOn = localStorage.getItem('dsh-voice') === 'on'; } catch (e) {}
       this.attachShadow({ mode: 'open' });
       this._render();
-      if (!this.reduced) {
-        this._nudgeTimer = setTimeout(() => { if (!this.open) this._showNudge(); }, 20000);
-      }
+      // he waits, then walks on. Long enough not to jump the page load, short
+      // enough that anyone still reading sees him arrive.
+      this._entrance = setTimeout(function (self) {
+        return function () { self._arrive(); };
+      }(this), this.reduced ? 400 : 3600);
     }
-    disconnectedCallback() { clearTimeout(this._nudgeTimer); }
+
+    disconnectedCallback() {
+      clearTimeout(this._entrance); clearTimeout(this._typer); clearTimeout(this._fold);
+      if (SS) { try { SS.cancel(); } catch (e) {} }
+    }
+
     _p() { return PERSONAS[this.persona]; }
+
     _render() {
-      const p = this._p();
-      this.shadowRoot.innerHTML = `
-<style>
-  :host{all:initial}
-  *{box-sizing:border-box;font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif}
-  .launcher{position:fixed;right:16px;bottom:10px;width:auto;height:auto;border:0;border-radius:0;
-    background:none;padding:0;cursor:pointer;z-index:9000;line-height:0;
-    filter:drop-shadow(0 12px 20px rgba(12,22,32,.38));
-    transition:transform .25s cubic-bezier(.2,1.2,.4,1),opacity .2s ease}
-  /* the bear IS the launcher, so leaving him standing beside the open panel
-     puts two of him on screen - step him aside while the panel is up */
-  .launcher[aria-expanded="true"]{opacity:0;pointer-events:none;transform:translateY(14px) scale(.9)}
-  .launcher img{height:136px;width:auto;display:block;pointer-events:none}
-  .launcher:hover{transform:translateY(-7px) scale(1.05)}
-  .launcher:focus-visible{outline:3px solid ${p.accent};outline-offset:6px;border-radius:12px}
-  .launcher .pip{position:absolute;top:10px;right:4px;width:15px;height:15px;border-radius:50%;
-    background:${p.accent};border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
-  @media(max-width:640px){
-    .launcher img{height:92px}
-    .launcher{right:10px;bottom:6px}
-    .launcher .pip{width:12px;height:12px;top:6px;right:2px}
-    .nudge{right:auto;left:12px;bottom:104px;max-width:calc(100vw - 130px)}
-    .head img{height:70px;margin:-14px 0 -10px}
-  }
-  @keyframes bob{0%,100%{transform:translateY(0) rotate(-.7deg)}50%{transform:translateY(-10px) rotate(.7deg)}}
-  @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
-  .breathe img{animation:bob 4.2s ease-in-out infinite}
-  .launcher:hover img{animation:wave 1.6s ease-in-out infinite}
-  @media(prefers-reduced-motion:reduce){.breathe img,.launcher:hover img{animation:none}.launcher:hover{transform:none}}
-  .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0C1620;padding:10px 14px;border-radius:10px;
-    box-shadow:0 4px 16px rgba(12,22,32,.22);font-size:15px;z-index:9000;max-width:200px}
-  .nudge:after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;background:#fff;transform:translateY(-50%) rotate(45deg)}
-  .panel{position:fixed;right:22px;bottom:22px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 60px));
-    display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
-    background:var(--panel-bg,${p.panel});transition:background .8s ease}
-  .head{display:flex;align-items:flex-end;gap:10px;padding:12px 16px 14px;min-height:78px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
-  /* he stands ON the header, overlapping downward into the messages. A negative
-     TOP margin would push him past the panel's own overflow:hidden and slice
-     the top of his head off, which is exactly what used to happen. */
-  .head img{height:92px;width:auto;border-radius:0;background:none;object-fit:contain;flex:none;
-    margin:0 0 -16px;filter:drop-shadow(0 5px 10px rgba(0,0,0,.3))}
-  .head .nm{font-weight:700;font-size:17px;line-height:1.1}
-  .head .tg{font-size:13px;opacity:.85}
-  .head button{margin-left:auto;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:4px 6px}
-  .head button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-  .msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
-  .m{max-width:85%;padding:9px 13px;border-radius:12px;font-size:15.5px;line-height:1.45;white-space:pre-line}
-  .bot{align-self:flex-start;background:${p.bubbleBot};color:#0C1620;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(12,22,32,.10)}
-  .usr{align-self:flex-end;color:#fff;border-bottom-right-radius:4px;background:var(--usr-bg,${p.bubbleUser});transition:background .8s ease}
-  .m a{color:var(--link,${p.accent});font-weight:600}
-  .sys{align-self:center;font-size:13px;color:#5a6472;font-style:italic;padding:2px 0}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
-  .chips button{border:1.5px solid var(--head-bg,${p.header});background:transparent;color:var(--chip,${p.header});
-    border-radius:999px;padding:6px 13px;font-size:14px;font-weight:600;cursor:pointer}
-  .chips button:hover{background:rgba(0,0,0,.06)}
-  .chips button:focus-visible{outline:2px solid var(--link,${p.accent});outline-offset:2px}
-  .foot{padding:10px 16px 14px;border-top:1px solid rgba(12,22,32,.10)}
-  .row{display:flex;gap:8px}
-  input{flex:1;border:1.5px solid rgba(12,22,32,.25);border-radius:8px;padding:9px 12px;font-size:15.5px;background:#fff;color:#0C1620}
-  input:focus-visible{outline:2px solid var(--link,${p.accent});outline-offset:1px}
-  .send{border:none;border-radius:8px;padding:9px 16px;font-weight:700;font-size:15px;color:#fff;cursor:pointer;background:var(--usr-bg,${p.bubbleUser})}
-  .send:focus-visible{outline:2px solid #0C1620;outline-offset:2px}
-  .call{display:block;text-align:center;font-size:13.5px;color:#3d4756;margin-top:8px;text-decoration:none}
-  .call strong{color:var(--link,${p.accent})}
-  .typing{display:inline-flex;gap:4px;align-items:center}
-  .typing i{width:6px;height:6px;border-radius:50%;background:#8a94a3;display:inline-block;animation:blink 1.2s infinite}
-  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
-  @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
-  .hidden{display:none}
-</style>
-<button class="launcher breathe" aria-label="Open chat — ${p.title}"><img alt="" src="${FIG(this.persona,'waving')}"><span class="pip"></span></button>
-<div class="nudge hidden" role="status"></div>
-<div class="panel hidden" role="dialog" aria-label="${p.title}">
-  <div class="head">
-    <img class="headfig" alt="" src="${FIG(this.persona,'waving')}">
-    <div><div class="nm"></div><div class="tg"></div></div>
-    <button class="close" aria-label="Close chat">×</button>
-  </div>
-  <div class="msgs" aria-live="polite"></div>
-  <div class="chips"></div>
-  <div class="foot">
-    <div class="row">
-      <input type="text" placeholder="Type a question…" aria-label="Type a question">
-      <button class="send">Send</button>
-    </div>
-    <a class="call" href="${PHONE_HREF}">Rather talk? Call <strong>${PHONE}</strong></a>
-  </div>
-</div>`;
-      const $ = (s) => this.shadowRoot.querySelector(s);
-      this.$launcher = $('.launcher'); this.$panel = $('.panel'); this.$msgs = $('.msgs');
-      this.$chips = $('.chips'); this.$input = $('input'); this.$nudge = $('.nudge');
-      this.$headImg = $('.head img'); this.$nm = $('.nm'); this.$tg = $('.tg');
-      
-      this.$launcher.addEventListener('click', () => this._toggle(true));
-      $('.close').addEventListener('click', () => this._toggle(false));
-      $('.send').addEventListener('click', () => this._submit());
-      this.$input.addEventListener('keydown', (e) => { if (e.key === 'Enter') this._submit(); });
-      this.$input.addEventListener('input', () => this._setAvatar('listening'));
+      var p = this._p();
+      this.shadowRoot.innerHTML = [
+'<style>',
+'  :host{all:initial}',
+'  *{box-sizing:border-box;font-family:"Source Sans 3","Source Sans Pro",system-ui,sans-serif}',
+'  button{font:inherit}',
+'',
+'  /* ---- the mascot ---- */',
+'  .stage{position:fixed;right:14px;bottom:0;z-index:9000;display:flex;align-items:flex-end;gap:10px;',
+'    pointer-events:none;opacity:0;transform:translateY(28px) scale(.96);',
+'    transition:opacity .6s ease,transform .6s cubic-bezier(.2,1.1,.35,1)}',
+'  .stage.in{opacity:1;transform:none}',
+'  .stage.gone{opacity:0;transform:translateY(20px) scale(.94);pointer-events:none}',
+'  .launcher{pointer-events:auto;border:0;background:none;padding:0;cursor:pointer;line-height:0;',
+'    filter:drop-shadow(0 14px 26px rgba(12,22,32,.36));transition:transform .25s cubic-bezier(.2,1.2,.4,1)}',
+'  /* three times the old size on a desktop, tied to viewport height so a short',
+'     laptop screen is not swallowed by a giant bear */',
+'  .launcher img{height:min(400px,44vh);width:auto;display:block;pointer-events:none}',
+'  .launcher:hover{transform:translateY(-8px) scale(1.03)}',
+'  .launcher:focus-visible{outline:3px solid ' + p.accent + ';outline-offset:8px;border-radius:14px}',
+'',
+'  /* ---- speech bubble ---- */',
+'  .hello{pointer-events:auto;position:relative;background:#fff;color:#0C1620;border-radius:16px;',
+'    padding:16px 18px 14px;width:min(320px,calc(100vw - 130px));margin-bottom:52px;',
+'    box-shadow:0 10px 34px rgba(12,22,32,.26);border:1px solid rgba(12,22,32,.08)}',
+'  .hello:after{content:"";position:absolute;right:-9px;bottom:26px;width:18px;height:18px;background:#fff;',
+'    border-right:1px solid rgba(12,22,32,.08);border-top:1px solid rgba(12,22,32,.08);',
+'    transform:rotate(45deg)}',
+'  .hello p{margin:0 0 12px;padding-right:22px;font-size:16.5px;line-height:1.45;min-height:1.45em}',
+'  .caret{display:inline-block;width:2px;height:1.05em;background:' + p.accent + ';',
+'    vertical-align:-2px;margin-left:1px;animation:caret 1s steps(1) infinite}',
+'  @keyframes caret{0%,50%{opacity:1}51%,100%{opacity:0}}',
+'  .hello-cta{display:flex;gap:8px;align-items:stretch}',
+'  .ask{flex:1;min-height:44px;border:none;border-radius:10px;background:' + p.bubbleUser + ';color:#fff;',
+'    font-weight:700;font-size:15.5px;cursor:pointer;padding:0 14px}',
+'  .ask:hover{filter:brightness(1.08)}',
+'  .mic{min-width:44px;min-height:44px;border-radius:10px;border:1.5px solid ' + p.header + ';',
+'    background:#fff;color:' + p.header + ';cursor:pointer;font-size:17px;display:grid;place-items:center}',
+'  .mic[aria-pressed="true"]{background:' + p.bubbleUser + ';color:#fff;border-color:' + p.bubbleUser + '}',
+'  .hello-x{position:absolute;top:6px;right:8px;background:none;border:none;font-size:20px;line-height:1;',
+'    color:#5a6472;cursor:pointer;min-width:32px;min-height:32px}',
+'  .ask:focus-visible,.mic:focus-visible,.hello-x:focus-visible{outline:3px solid ' + p.accent + ';outline-offset:2px}',
+'',
+'  @media(max-width:900px){ .launcher img{height:min(230px,30vh)} .hello{width:min(260px,calc(100vw - 120px))} }',
+'  @media(max-width:640px){',
+'    .stage{right:8px;gap:4px}',
+'    .launcher img{height:150px}',
+'    .hello{width:calc(100vw - 190px);padding:12px 14px;margin-bottom:26px}',
+'    .hello p{font-size:15px;margin-bottom:10px}',
+'  }',
+'  @media(prefers-reduced-motion:reduce){',
+'    .stage,.launcher{transition:none}.launcher:hover{transform:none}.caret{animation:none}',
+'  }',
+'',
+'  /* ---- panel ---- */',
+'  .panel{position:fixed;right:22px;bottom:22px;width:min(390px,calc(100vw - 32px));',
+'    max-height:min(600px,calc(100vh - 60px));display:flex;flex-direction:column;border-radius:14px;',
+'    overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;',
+'    background:var(--panel-bg,' + p.panel + ');transition:background .8s ease}',
+'  .head{display:flex;align-items:flex-end;gap:10px;padding:12px 16px 14px;min-height:78px;color:#fff;',
+'    background:var(--head-bg,' + p.header + ');transition:background .8s ease}',
+'  .head img{height:92px;width:auto;object-fit:contain;flex:none;margin:0 0 -16px;',
+'    filter:drop-shadow(0 5px 10px rgba(0,0,0,.3))}',
+'  .head .nm{font-weight:700;font-size:17px;line-height:1.1}',
+'  .head .tg{font-size:13px;opacity:.85}',
+'  .head .tools{margin-left:auto;display:flex;gap:2px;align-items:center}',
+'  .head .tools button{background:none;border:none;color:#fff;font-size:19px;cursor:pointer;',
+'    line-height:1;min-width:40px;min-height:40px;border-radius:8px}',
+'  .head .tools button[aria-pressed="true"]{background:rgba(255,255,255,.22)}',
+'  .head .tools button:focus-visible{outline:2px solid #fff;outline-offset:2px}',
+'  .msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}',
+'  .m{max-width:85%;padding:9px 13px;border-radius:12px;font-size:15.5px;line-height:1.45;white-space:pre-line}',
+'  .bot{align-self:flex-start;background:' + p.bubbleBot + ';color:#0C1620;border-bottom-left-radius:4px;',
+'    box-shadow:0 1px 3px rgba(12,22,32,.10)}',
+'  .usr{align-self:flex-end;color:#fff;border-bottom-right-radius:4px;',
+'    background:var(--usr-bg,' + p.bubbleUser + ');transition:background .8s ease}',
+'  .m a{color:var(--link,' + p.accent + ');font-weight:600}',
+'  .sys{align-self:center;font-size:13px;color:#4a5462;font-style:italic;padding:2px 0}',
+'  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}',
+'  .chips button{border:1.5px solid var(--head-bg,' + p.header + ');background:transparent;',
+'    color:var(--chip,' + p.header + ');border-radius:999px;padding:8px 14px;font-size:14px;',
+'    font-weight:600;cursor:pointer;min-height:38px}',
+'  .chips button:hover{background:rgba(0,0,0,.06)}',
+'  .chips button:focus-visible{outline:2px solid var(--link,' + p.accent + ');outline-offset:2px}',
+'  .foot{padding:10px 16px 14px;border-top:1px solid rgba(12,22,32,.10)}',
+'  .row{display:flex;gap:8px}',
+'  input{flex:1;min-height:44px;border:1.5px solid rgba(12,22,32,.30);border-radius:8px;padding:9px 12px;',
+'    font-size:16px;background:#fff;color:#0C1620}',
+'  input:focus-visible{outline:2px solid var(--link,' + p.accent + ');outline-offset:1px}',
+'  .send{border:none;border-radius:8px;padding:0 16px;min-height:44px;font-weight:700;font-size:15px;',
+'    color:#fff;cursor:pointer;background:var(--usr-bg,' + p.bubbleUser + ')}',
+'  .pmic{min-width:44px;min-height:44px;border-radius:8px;border:1.5px solid rgba(12,22,32,.30);',
+'    background:#fff;cursor:pointer;font-size:17px;display:grid;place-items:center;color:#0C1620}',
+'  .pmic[aria-pressed="true"]{background:var(--usr-bg,' + p.bubbleUser + ');color:#fff}',
+'  .send:focus-visible,.pmic:focus-visible{outline:2px solid #0C1620;outline-offset:2px}',
+'  .call{display:block;text-align:center;font-size:13.5px;color:#3d4756;margin-top:8px;text-decoration:none}',
+'  .call strong{color:var(--link,' + p.accent + ')}',
+'  .typing{display:inline-flex;gap:4px;align-items:center}',
+'  .typing i{width:6px;height:6px;border-radius:50%;background:#7c8794;display:inline-block;',
+'    animation:blink 1.2s infinite}',
+'  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}',
+'  @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}',
+'  .hidden{display:none}',
+'</style>',
+'<div class="stage">',
+'  <div class="hello" role="group" aria-label="Message from ' + p.name + '">',
+'    <button class="hello-x" aria-label="Dismiss ' + p.name + '">×</button>',
+'    <p class="hello-txt"></p>',
+'    <div class="hello-cta">',
+'      <button class="ask">Ask me a question</button>',
+'    </div>',
+'  </div>',
+'  <button class="launcher" aria-label="Open chat — ' + p.title + '" aria-expanded="false">',
+'    <img alt="" src="' + FIG(this.persona, 'waving') + '">',
+'  </button>',
+'</div>',
+'<div class="panel hidden" role="dialog" aria-label="' + p.title + '" aria-modal="false">',
+'  <div class="head">',
+'    <img alt="" src="' + FIG(this.persona, 'waving') + '">',
+'    <div><div class="nm"></div><div class="tg"></div></div>',
+'    <div class="tools">',
+'      <button class="spk" aria-pressed="false" aria-label="Read answers aloud" title="Read answers aloud">\u{1F50A}</button>',
+'      <button class="close" aria-label="Close chat" title="Close">×</button>',
+'    </div>',
+'  </div>',
+'  <div class="msgs" aria-live="polite"></div>',
+'  <div class="chips"></div>',
+'  <div class="foot">',
+'    <div class="row">',
+'      <input type="text" placeholder="Type your question…" aria-label="Type your question">',
+'      <button class="pmic" aria-pressed="false" aria-label="Ask by voice">\u{1F3A4}</button>',
+'      <button class="send">Send</button>',
+'    </div>',
+'    <a class="call" href="' + PHONE_HREF + '">Rather talk? Call <strong>' + PHONE + '</strong></a>',
+'  </div>',
+'</div>'].join('\n');
+
+      var $ = function (s) { return this.shadowRoot.querySelector(s); }.bind(this);
+      this.$stage = $('.stage'); this.$launcher = $('.launcher'); this.$hello = $('.hello');
+      this.$helloTxt = $('.hello-txt'); this.$panel = $('.panel'); this.$msgs = $('.msgs');
+      this.$chips = $('.chips'); this.$input = $('input'); this.$headImg = $('.head img');
+      this.$nm = $('.nm'); this.$tg = $('.tg'); this.$spk = $('.spk'); this.$pmic = $('.pmic');
+
+      var self = this;
+      this.$launcher.addEventListener('click', function () { self._toggle(true); });
+      $('.ask').addEventListener('click', function () { self._toggle(true); });
+      $('.hello-x').addEventListener('click', function (e) { e.stopPropagation(); self._dismiss(); });
+      $('.close').addEventListener('click', function () { self._toggle(false); });
+      $('.send').addEventListener('click', function () { self._submit(); });
+      this.$input.addEventListener('keydown', function (e) { if (e.key === 'Enter') self._submit(); });
+      this.$input.addEventListener('input', function () { self._setAvatar('listening'); });
+      this.$spk.addEventListener('click', function () { self._toggleVoice(); });
+      this.$pmic.addEventListener('click', function () { self._listen(self.$pmic); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && self.open) self._toggle(false);
+      });
+
+      // speech in and out are enhancements: only offer what the browser has
+      if (SR) {
+        var mic = document.createElement('button');
+        mic.className = 'mic'; mic.type = 'button';
+        mic.setAttribute('aria-pressed', 'false');
+        mic.setAttribute('aria-label', 'Ask by voice');
+        mic.title = 'Ask by voice';
+        mic.textContent = '\u{1F3A4}';
+        mic.addEventListener('click', function () { self._toggle(true); self._listen(self.$pmic); });
+        $('.hello-cta').appendChild(mic);
+      } else {
+        this.$pmic.remove();
+      }
+      if (!SS) this.$spk.remove();
+      else this.$spk.setAttribute('aria-pressed', String(this.voiceOn));
+
       this._applyPersona(true);
     }
+
+    /* ------------------------------------------------------------- entrance */
+    _arrive() {
+      if (this._dismissed || this.open) return;
+      this.$stage.classList.add('in');
+      var p = this._p();
+      // a phone has no room for the long version - it would bury the hero's
+      // call to action behind the bubble for as long as it is up
+      var line = (window.innerWidth < 700 && p.helloShort) ? p.helloShort : p.hello;
+      if (this.reduced) { this.$helloTxt.textContent = line; return; }
+      this._type(this.$helloTxt, line);
+      // he has said his piece - fold the bubble away rather than camp on the
+      // page, and leave the bear himself standing there to be clicked
+      var self = this;
+      this._fold = setTimeout(function () {
+        if (!self.open && !self._dismissed) self.$hello.style.display = 'none';
+      }, 26000);
+    }
+
+    _type(el, text) {
+      var i = 0, self = this;
+      el.textContent = '';
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+      el.appendChild(caret);
+      var step = function () {
+        if (i >= text.length) { caret.remove(); return; }
+        caret.insertAdjacentText('beforebegin', text.charAt(i));
+        i += 1;
+        self._typer = setTimeout(step, text.charAt(i - 1) === ' ' ? 18 : 26);
+      };
+      this._typer = setTimeout(step, 260);
+    }
+
+    _dismiss() {
+      this._dismissed = true;
+      clearTimeout(this._typer);
+      this.$stage.classList.add('gone');
+    }
+
+    /* ---------------------------------------------------------------- voice */
+    _pickVoice() {
+      if (!SS) return null;
+      var all = SS.getVoices() || [];
+      var en = all.filter(function (v) { return /^en(-|_|$)/i.test(v.lang || ''); });
+      if (!en.length) en = all;
+      var want = this._p().voice;
+      var match = en.filter(function (v) { return want.test(v.name || ''); });
+      return (match[0] || en[0] || null);
+    }
+
+    _speak(text) {
+      if (!this.voiceOn || !SS) return;
+      try {
+        SS.cancel();
+        var u = new SpeechSynthesisUtterance(String(text).replace(/\s+/g, ' ').trim());
+        var v = this._pickVoice();
+        if (v) { u.voice = v; u.lang = v.lang; }
+        var p = this._p();
+        u.pitch = p.pitch; u.rate = p.rate; u.volume = 1;
+        SS.speak(u);
+      } catch (e) {}
+    }
+
+    _toggleVoice() {
+      this.voiceOn = !this.voiceOn;
+      this.$spk.setAttribute('aria-pressed', String(this.voiceOn));
+      this.$spk.setAttribute('aria-label', this.voiceOn ? 'Stop reading answers aloud' : 'Read answers aloud');
+      try { localStorage.setItem('dsh-voice', this.voiceOn ? 'on' : 'off'); } catch (e) {}
+      if (!this.voiceOn) { try { SS.cancel(); } catch (e) {} }
+      else this._speak('Voice on. ' + this._p().greet);
+    }
+
+    _listen(btn) {
+      if (!SR || this._rec) return;
+      var self = this;
+      var rec = new SR();
+      this._rec = rec;
+      rec.lang = 'en-US'; rec.interimResults = true; rec.maxAlternatives = 1;
+      var setOn = function (on) {
+        [self.$pmic, self.shadowRoot.querySelector('.mic')].forEach(function (b) {
+          if (b) b.setAttribute('aria-pressed', String(on));
+        });
+      };
+      setOn(true);
+      this._setAvatar('listening');
+      rec.onresult = function (e) {
+        var t = '';
+        for (var i = e.resultIndex; i < e.results.length; i += 1) t += e.results[i][0].transcript;
+        self.$input.value = t;
+        if (e.results[e.results.length - 1].isFinal) { rec.stop(); self._submit(); }
+      };
+      rec.onerror = function () {
+        self._el('sys', 'Didn’t catch that — type it instead?');
+      };
+      rec.onend = function () { setOn(false); self._rec = null; };
+      try { rec.start(); } catch (e) { setOn(false); this._rec = null; }
+    }
+
+    /* ---------------------------------------------------------------- panel */
     _applyPersona(first) {
-      const p = this._p();
+      var p = this._p(), self = this;
       this.$nm.textContent = p.name; this.$tg.textContent = p.tag;
-      const st = this.$panel.style;
+      var st = this.$panel.style;
       st.setProperty('--panel-bg', p.panel); st.setProperty('--head-bg', p.header);
       st.setProperty('--usr-bg', p.bubbleUser); st.setProperty('--link', p.accent);
       st.setProperty('--chip', p.header);
       this._setAvatar(first ? 'waving' : 'neutral');
       this.$chips.innerHTML = '';
-      p.chips.forEach((c) => {
-        const b = document.createElement('button');
-        b.textContent = c;
-        b.addEventListener('click', () => this._ask(CHIP_TEXT[c] || c));
-        this.$chips.appendChild(b);
+      p.chips.forEach(function (c) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.textContent = c;
+        b.addEventListener('click', function () { self._ask(CHIP_TEXT[c] || c); });
+        self.$chips.appendChild(b);
       });
     }
+
     _setAvatar(state) {
-      const src = FIG(this.persona, state);
-      const lim = this.$launcher.querySelector('img');
+      var src = FIG(this.persona, state);
+      var lim = this.$launcher.querySelector('img');
       if (lim) lim.src = src;
       if (this.$headImg) this.$headImg.src = src;
     }
-    _showNudge() {
-      this.$nudge.textContent = this.persona === 'bear' ? 'Need a quote? Ask me.' : 'Planning a room? Ask me.';
-      this.$nudge.classList.remove('hidden');
-      setTimeout(() => this.$nudge.classList.add('hidden'), 8000);
-    }
+
     _toggle(open) {
       this.open = open;
+      clearTimeout(this._entrance); clearTimeout(this._typer);
       this.$panel.classList.toggle('hidden', !open);
       this.$launcher.setAttribute('aria-expanded', String(open));
-      this.$nudge.classList.add('hidden');
+      this.$stage.classList.toggle('gone', open);
       if (open && !this._greeted) {
         this._greeted = true;
         this._bot(this._p().greet, 'waving');
       }
       if (open) this.$input.focus();
+      else { if (SS) { try { SS.cancel(); } catch (e) {} } this.$launcher.focus(); }
     }
-    _el(cls, html) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; this.$msgs.appendChild(d); this.$msgs.scrollTop = this.$msgs.scrollHeight; return d; }
+
+    _el(cls, html) {
+      var d = document.createElement('div');
+      d.className = cls; d.innerHTML = html;
+      this.$msgs.appendChild(d);
+      this.$msgs.scrollTop = this.$msgs.scrollHeight;
+      return d;
+    }
+
     _bot(text, state, opts) {
-      let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-      if (opts && opts.link) html += ` <a href="${opts.link}">${opts.linkLabel} →</a>`;
-      if (opts && opts.call) html += ` <a href="${PHONE_HREF}">Call now</a>`;
+      var html = esc(text);
+      if (opts && opts.link) html += ' <a href="' + opts.link + '">' + esc(opts.linkLabel) + ' →</a>';
+      if (opts && opts.call) html += ' <a href="' + PHONE_HREF + '">Call now</a>';
       this._el('m bot', html);
       this._setAvatar(opts && (opts.link || opts.call) ? 'pointing' : (state || 'delighted'));
+      this._speak(text);
     }
-    _submit() { const v = this.$input.value.trim(); if (!v) return; this.$input.value = ''; this._ask(v); }
+
+    _submit() {
+      var v = this.$input.value.trim();
+      if (!v) return;
+      this.$input.value = '';
+      this._ask(v);
+    }
+
     _ask(text) {
-      this._el('m usr', text.replace(/&/g, '&amp;').replace(/</g, '&lt;'));
-      const intents = this.persona === 'bear' ? BEAR_INTENTS : BIRD_INTENTS;
-      let hit = null;
-      for (const it of intents) { if (it[0].test(text)) { hit = it; break; } }
-      const typing = this._el('m bot', '<span class="typing"><i></i><i></i><i></i></span>');
+      var self = this;
+      this._el('m usr', esc(text));
+      var kb = this.persona === 'bear' ? BEAR_KB : BIRD_KB;
+      var hit = null;
+      for (var i = 0; i < kb.length; i += 1) { if (kb[i][0].test(text)) { hit = kb[i]; break; } }
+      var typing = this._el('m bot', '<span class="typing"><i></i><i></i><i></i></span>');
       this._setAvatar('listening');
-      const delay = this.reduced ? 60 : this._p().speed;
-      setTimeout(() => {
+      setTimeout(function () {
         typing.remove();
-        if (!hit) { this._bot(FALLBACK[this.persona], 'neutral', { link: 'Quote.dc.html', linkLabel: 'Quote form' }); return; }
-        const [, reply, opts] = hit;
-        this._bot(reply, 'delighted', opts);
-        if (opts && opts.handoff) this._handoff(opts.handoff, text);
-      }, delay);
+        if (!hit) { self._bot(FALLBACK[self.persona], 'neutral', { link: Q.link, linkLabel: Q.label }); return; }
+        self._bot(hit[1], 'delighted', hit[2]);
+        if (hit[2] && hit[2].handoff) self._handoff(hit[2].handoff, text);
+      }, this.reduced ? 60 : this._p().speed);
     }
+
     _handoff(to, originalQ) {
-      const delay = this.reduced ? 200 : 1400;
-      setTimeout(() => {
-        this._el('sys', to === 'bird' ? 'The panel warms — the Bird takes over.' : 'The panel cools — the Bear steps back in.');
-        this.persona = to;
-        this._applyPersona(false);
-        const greet = to === 'bird'
-          ? "Hello — the Bird here. I heard the question. Let's take it properly."
-          : "Bear again. Outside stuff — now we're talking.";
-        setTimeout(() => {
-          this._bot(greet, 'waving');
-          // answer the original question in the new persona
-          const intents = to === 'bear' ? BEAR_INTENTS : BIRD_INTENTS;
-          for (const it of intents) {
-            if (!it[2] || !it[2].handoff) { if (it[0].test(originalQ)) { setTimeout(() => this._bot(it[1], 'delighted', it[2]), this.reduced ? 100 : 900); break; } }
+      var self = this;
+      setTimeout(function () {
+        self._el('sys', to === 'bird' ? 'The panel warms — the Bird takes over.'
+                                      : 'The panel cools — the Bear steps back in.');
+        self.persona = to;
+        self._applyPersona(false);
+        setTimeout(function () {
+          self._bot(to === 'bird' ? 'Hello — the Bird here. I heard the question.'
+                                  : 'Bear again. Outside work, now we’re talking.', 'waving');
+          var kb = to === 'bear' ? BEAR_KB : BIRD_KB;
+          for (var i = 0; i < kb.length; i += 1) {
+            var it = kb[i];
+            if (it[2] && it[2].handoff) continue;
+            if (it[0].test(originalQ)) {
+              setTimeout(function (r) { return function () { self._bot(r[1], 'delighted', r[2]); }; }(it),
+                         self.reduced ? 100 : 900);
+              break;
+            }
           }
-        }, this.reduced ? 100 : 700);
-      }, delay);
+        }, self.reduced ? 100 : 700);
+      }, this.reduced ? 200 : 1400);
     }
   }
+
   if (!customElements.get('chat-widget')) customElements.define('chat-widget', ChatWidget);
 })();
