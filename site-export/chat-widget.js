@@ -140,20 +140,27 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   .launcher:focus-visible{outline:3px solid ${p.accent};outline-offset:6px;border-radius:12px}
   .launcher .pip{position:absolute;top:10px;right:4px;width:15px;height:15px;border-radius:50%;
     background:${p.accent};border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+  @media(max-width:640px){
+    .launcher img{height:92px}
+    .launcher{right:10px;bottom:6px}
+    .launcher .pip{width:12px;height:12px;top:6px;right:2px}
+    .nudge{right:auto;left:12px;bottom:104px;max-width:calc(100vw - 130px)}
+    .head img{height:70px;margin:-14px 0 -10px}
+  }
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-.7deg)}50%{transform:translateY(-10px) rotate(.7deg)}}
   @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
   .breathe img{animation:bob 4.2s ease-in-out infinite}
   .launcher:hover img{animation:wave 1.6s ease-in-out infinite}
   @media(prefers-reduced-motion:reduce){.breathe img,.launcher:hover img{animation:none}.launcher:hover{transform:none}}
-  .headfig{height:84px;width:auto;margin-bottom:-14px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
   .nudge{position:fixed;right:96px;bottom:36px;background:#fff;color:#0C1620;padding:10px 14px;border-radius:10px;
     box-shadow:0 4px 16px rgba(12,22,32,.22);font-size:15px;z-index:9000;max-width:200px}
   .nudge:after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;background:#fff;transform:translateY(-50%) rotate(45deg)}
   .panel{position:fixed;right:22px;bottom:100px;width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 130px));
     display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(12,22,32,.35);z-index:9001;
     background:var(--panel-bg,${p.panel});transition:background .8s ease}
-  .head{display:flex;align-items:flex-end;gap:10px;padding:14px 16px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
-  .head img{width:44px;height:44px;border-radius:50%;background:#fff;object-fit:cover;flex:none}
+  .head{display:flex;align-items:flex-end;gap:10px;padding:10px 16px 12px;min-height:74px;color:#fff;background:var(--head-bg,${p.header});transition:background .8s ease}
+  .head img{height:88px;width:auto;border-radius:0;background:none;object-fit:contain;flex:none;
+    margin:-18px 0 -14px;filter:drop-shadow(0 5px 10px rgba(0,0,0,.3))}
   .head .nm{font-weight:700;font-size:17px;line-height:1.1}
   .head .tg{font-size:13px;opacity:.85}
   .head button{margin-left:auto;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:4px 6px}
