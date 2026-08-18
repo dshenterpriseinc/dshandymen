@@ -16,21 +16,21 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/web/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/web/favicon-32.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../assets/fonts/barlow-condensed-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/source-sans-3-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","@id":"https://dshandymen.com/#business","name":"DS Handymen, Inc.","alternateName":"DS Handymen","url":"https://dshandymen.com","telephone":"(716) 803-0091","email":"dshandymen@yahoo.com","logo":"https://dshandymen.com/assets/web/logo-badge-primary.png","image":"https://dshandymen.com/assets/photos/beforeafter-siding-windows-AFTER.jpg","description":"Snow plowing, landscaping, pressure washing, handyman and remodeling services across the Buffalo Southtowns. Family run since 2009.","foundingDate":"2009-11-01","address":{"@type":"PostalAddress","streetAddress":"135 Miriam Avenue, Suite 1","addressLocality":"Blasdell","addressRegion":"NY","postalCode":"14219","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":42.7959,"longitude":-78.8253},"areaServed":[{"@type":"City","name":"Hamburg"},{"@type":"City","name":"Blasdell"},{"@type":"City","name":"Orchard Park"},{"@type":"City","name":"Lackawanna"},{"@type":"City","name":"West Seneca"},{"@type":"City","name":"East Aurora"}],"priceRange":"$$","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"13"},"sameAs":["https://www.facebook.com/dshandymen","https://www.bbb.org/us/ny/blasdell/profile/handyman/ds-handymen-inc-0041-236007251"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Snow Plowing","description":"Residential driveway and commercial lot snow plowing, seasonal contracts or one-off visits.","serviceType":"Snow Plowing","provider":{"@id":"https://dshandymen.com/#business"},"areaServed":[{"@type":"City","name":"Hamburg"},{"@type":"City","name":"Blasdell"},{"@type":"City","name":"Orchard Park"},{"@type":"City","name":"Lackawanna"}],"url":"https://dshandymen.com/snow-plowing/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://dshandymen.com/"},{"@type":"ListItem","position":2,"name":"Snow Plowing in Hamburg & Blasdell NY","item":"https://dshandymen.com/snow-plowing/"}]}</script>
 <style>x-dc{display:none!important}</style>
 <style></style>
 <style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
-<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3','Source Sans 3 Fallback',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
 <style>
   body{margin:0}
   a{color:#00338D}a:hover{color:#1B2A4A}
 </style>
 <style>body{margin:0} footer a{color:#9FB1CC}footer a:hover{color:#FFFFFF}</style>
-<link data-dc-tpl="3" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
 <style>
 picture{display:contents}
 /* ---- interaction states (re-created; the design tool bound these in JS) ---- */
@@ -127,6 +127,24 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
    and the page ran to 13,000px. A plain author rule outranks the hint while
    still losing to any inline height, which is exactly the precedence wanted. */
 img{height:auto}
+
+/* Metric-matched fallbacks. Every page was shifting ~0.25 CLS because the first
+   frames paint before the webfont is usable, and the substitute has different
+   advance widths - enough to wrap the header nav onto a second line and shove
+   the whole document down 36px.
+
+   The percentages are tuned to how each face is actually used, not to a generic
+   sample: Barlow Condensed is display type and is nearly always uppercase, where
+   it runs 67.5% of Arial's width, while a mixed-case sample suggests 77% and
+   leaves the stand-in far too wide. Source Sans 3 carries body copy, so it is
+   matched on mixed case. The ascent and descent overrides are divided through by
+   size-adjust so the line box keeps the real font's height.
+
+   Re-measure with the canvas snippet in BUILD.md if the families ever change. */
+@font-face{font-family:"Barlow Condensed Fallback";src:local("Arial");
+  size-adjust:67.5%;ascent-override:148.15%;descent-override:29.63%;line-gap-override:0%}
+@font-face{font-family:"Source Sans 3 Fallback";src:local("Arial");
+  size-adjust:93%;ascent-override:109.68%;descent-override:43.01%;line-gap-override:0%}
 </style>
 </head>
 <body>
@@ -135,31 +153,31 @@ img{height:auto}
 <div style="max-width: 1240px; margin: 0px auto; display: flex; align-items: center; gap: 28px; padding: 10px 24px;">
 <a href="../" style="display: flex; align-items: center; gap: 12px; text-decoration: none; flex: 0 0 auto;">
 <picture><source srcset="../assets/web/logo-badge-white-knockout.webp" type="image/webp"><img alt="DS Handymen, Inc. &mdash; home" height="52" src="../assets/web/logo-badge-white-knockout.png" style="display: block;" width="52" loading="eager" decoding="async" fetchpriority="high"></picture>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: rgb(255, 255, 255); text-transform: uppercase; line-height: 1;'>DS Handymen<span style="display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; color: rgb(159, 177, 204);">Blasdell &middot; Hamburg, NY</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: rgb(255, 255, 255); text-transform: uppercase; line-height: 1;'>DS Handymen<span style="display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; color: rgb(159, 177, 204);">Blasdell &middot; Hamburg, NY</span></span>
 </a>
 <nav aria-label="Main" style="display: flex; align-items: center; gap: 4px; margin: 0px auto; flex-wrap: wrap; justify-content: center;">
-<a aria-current="page" class="scp3" href="../services/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(255, 255, 255); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid rgb(245, 179, 36);'><span class="sc-interp">Services</span></a>
-<a class="scp3" href="../design-remodeling/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Design &amp; Remodeling</span></a>
-<a class="scp3" href="../gallery/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Gallery</span></a>
-<a class="scp3" href="../reviews/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Reviews</span></a>
-<a class="scp3" href="../service-area/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Service Area</span></a>
-<a class="scp3" href="../about/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">About</span></a>
-<a class="scp3" href="../quote/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Free Quote</span></a>
+<a aria-current="page" class="scp3" href="../services/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(255, 255, 255); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid rgb(245, 179, 36);'><span class="sc-interp">Services</span></a>
+<a class="scp3" href="../design-remodeling/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Design &amp; Remodeling</span></a>
+<a class="scp3" href="../gallery/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Gallery</span></a>
+<a class="scp3" href="../reviews/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Reviews</span></a>
+<a class="scp3" href="../service-area/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Service Area</span></a>
+<a class="scp3" href="../about/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">About</span></a>
+<a class="scp3" href="../quote/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Free Quote</span></a>
 </nav>
 <a class="scp4" href="tel:+17168030091" style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-decoration: none; background: rgb(0, 51, 141); padding: 8px 16px; border-radius: 4px;">
-<span style='font-family: "Source Sans 3", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(159, 177, 204);'>Call the Bear</span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
+<span style='font-family: "Source Sans 3", "Source Sans 3 Fallback", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(159, 177, 204);'>Call the Bear</span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
 </a>
 </div></header><main>
 <section style="background: rgb(12, 22, 32); position: relative; overflow: hidden;">
 <div style="max-width: 1240px; margin: 0px auto; padding: 76px 24px 0px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end;">
 <div style="padding-bottom: 76px;">
-<p style='margin: 0px 0px 12px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(245, 179, 36);'>❄ Snow Plowing &middot; Blasdell &middot; Hamburg &middot; Orchard Park &middot; Lackawanna</p>
-<h1 style='margin: 0px 0px 16px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: clamp(52px, 6vw, 82px); line-height: 0.98; text-transform: uppercase; color: rgb(255, 255, 255); max-width: 12ch;'>Don't get stuck &mdash; get plowed.</h1>
+<p style='margin: 0px 0px 12px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(245, 179, 36);'>❄ Snow Plowing &middot; Blasdell &middot; Hamburg &middot; Orchard Park &middot; Lackawanna</p>
+<h1 style='margin: 0px 0px 16px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: clamp(52px, 6vw, 82px); line-height: 0.98; text-transform: uppercase; color: rgb(255, 255, 255); max-width: 12ch;'>Don't get stuck &mdash; get plowed.</h1>
 <p style="margin: 0px 0px 30px; font-size: 20px; color: rgb(201, 212, 230); max-width: 50ch;">Lake effect snow? No problem. Two trucks on route all winter. Seasonal contract or one-off &mdash; either way, you're out of the driveway by morning.</p>
 <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-<a class="scp0" href="../quote/" style='background: rgb(0, 51, 141); color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Get on the list</a>
-<a class="scp1" href="tel:+17168030091" style='color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 4px;'>(716) 803-0091</a>
+<a class="scp0" href="../quote/" style='background: rgb(0, 51, 141); color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Get on the list</a>
+<a class="scp1" href="tel:+17168030091" style='color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 4px;'>(716) 803-0091</a>
 </div>
 </div>
 <picture><source srcset="../assets/web/mascot-plow-truck.webp" type="image/webp"><img alt="The Bear at the wheel of the plow truck" height="480" src="../assets/web/mascot-plow-truck.png" style="width: 100%; max-width: 460px; height: auto; display: block; justify-self: end;" width="480" loading="eager" decoding="async" fetchpriority="high"></picture>
@@ -171,46 +189,46 @@ img{height:auto}
 <div style="position: absolute; left: 0px; right: 0px; bottom: 0px; height: 0%; background: linear-gradient(rgb(255, 255, 255), rgb(221, 234, 245)); border-top: 3px solid rgb(255, 255, 255); box-shadow: rgba(27, 42, 74, 0.15) 0px -2px 8px; transition: height 0.2s ease-out;"></div>
 <div style="position: absolute; left: 0px; bottom: 12.5%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">6"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">6"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 25%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">12"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">12"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 37.5%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">18"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">18"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 50%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">24"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">24"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 62.5%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">30"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">30"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 75%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">36"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">36"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 87.5%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">42"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">42"</span></span>
 </div>
 <div style="position: absolute; left: 0px; bottom: 100%; width: 100%; display: flex; align-items: center; gap: 4px;">
 <span style="display: inline-block; width: 14px; height: 2px; background: rgb(27, 42, 74);"></span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">48"</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 13px; color: rgb(27, 42, 74);'><span class="sc-interp">48"</span></span>
 </div>
 </div>
-<p style='margin: 10px 0px 0px; text-align: center; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 22px; color: rgb(27, 42, 74);'><span class="sc-interp">0</span>"</p>
+<p style='margin: 10px 0px 0px; text-align: center; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 22px; color: rgb(27, 42, 74);'><span class="sc-interp">0</span>"</p>
 <p style="margin: 0px; text-align: center; font-size: 13px; color: rgb(107, 119, 140);">and counting</p>
 </div>
 <div style="max-width: 720px;">
-<h2 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(27, 42, 74);'>How it works</h2>
+<h2 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(27, 42, 74);'>How it works</h2>
 <p style="margin: 0px 0px 40px; font-size: 18.5px; color: rgb(61, 71, 86);">Keep scrolling &mdash; that stick on the left is what an average Southtowns winter does to a driveway. It's why the plow list fills up by Thanksgiving.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px;">
 <div style="background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242); border-radius: 8px; padding: 28px;">
-<h3 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; color: rgb(27, 42, 74);'>Seasonal contract</h3>
+<h3 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; color: rgb(27, 42, 74);'>Seasonal contract</h3>
 <ul style="margin: 0px; padding: 0px 0px 0px 4px; list-style: none; display: flex; flex-direction: column; gap: 9px; color: rgb(61, 71, 86); font-size: 16.5px;">
 <li>&checkmark; Every storm, all season &mdash; no calling, no waiting</li>
 <li>&checkmark; On the route: cleared before the morning commute</li>
@@ -219,7 +237,7 @@ img{height:auto}
 </ul>
 </div>
 <div style="background: rgb(255, 255, 255); border: 1px solid rgb(225, 233, 242); border-radius: 8px; padding: 28px;">
-<h3 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; color: rgb(27, 42, 74);'>One-off plow</h3>
+<h3 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; color: rgb(27, 42, 74);'>One-off plow</h3>
 <ul style="margin: 0px; padding: 0px 0px 0px 4px; list-style: none; display: flex; flex-direction: column; gap: 9px; color: rgb(61, 71, 86); font-size: 16.5px;">
 <li>&checkmark; Big storm caught you off guard? Call</li>
 <li>&checkmark; Priced per visit, by the driveway</li>
@@ -229,8 +247,8 @@ img{height:auto}
 </div>
 </div>
 <div style="background: rgb(27, 42, 74); border-radius: 10px; padding: 34px 36px; margin-bottom: 48px;">
-<p style='margin: 0px 0px 6px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: rgb(245, 179, 36);'>The referral deal</p>
-<h3 style='margin: 0px 0px 8px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 32px; text-transform: uppercase; color: rgb(255, 255, 255);'>Send us a neighbor, take $20 off</h3>
+<p style='margin: 0px 0px 6px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: rgb(245, 179, 36);'>The referral deal</p>
+<h3 style='margin: 0px 0px 8px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 32px; text-transform: uppercase; color: rgb(255, 255, 255);'>Send us a neighbor, take $20 off</h3>
 <p style="margin: 0px; color: rgb(201, 212, 230); font-size: 17.5px; max-width: 58ch;">Refer another seasonal plowing customer and knock $20 off your own contract. The trucks are on your street anyway &mdash; fill the route, everybody wins.</p>
 </div>
 <p style="margin: 0px 0px 12px; font-size: 18.5px; color: rgb(61, 71, 86);">Snow around here isn't weather, it's identity. Dave's plowed Hamburg driveways for 16 winters &mdash; he knows which corners drift, which culverts flood in the thaw, and exactly how early "early" has to be.</p>
@@ -239,13 +257,13 @@ img{height:auto}
 </section>
 <section style="background: rgb(0, 51, 141);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-<h2 style='margin: 0px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);'>Get on the list.</h2>
+<h2 style='margin: 0px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);'>Get on the list.</h2>
 <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-<a class="scp2" href="../quote/" style='background: rgb(255, 255, 255); color: rgb(0, 51, 141); text-decoration: none; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Free quote</a>
-<a class="scp1" href="tel:+17168030091" style='color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 4px;'>(716) 803-0091</a>
+<a class="scp2" href="../quote/" style='background: rgb(255, 255, 255); color: rgb(0, 51, 141); text-decoration: none; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Free quote</a>
+<a class="scp1" href="tel:+17168030091" style='color: rgb(255, 255, 255); text-decoration: none; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 26px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 4px;'>(716) 803-0091</a>
 </div>
 </div>
-</section></main><footer style='background: rgb(12, 22, 32); color: rgb(201, 212, 230); font-family: "Source Sans 3", sans-serif; font-size: 16px;'>
+</section></main><footer style='background: rgb(12, 22, 32); color: rgb(201, 212, 230); font-family: "Source Sans 3", "Source Sans 3 Fallback", sans-serif; font-size: 16px;'>
 <div style="max-width: 1240px; margin: 0px auto; padding: 56px 24px 40px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.1fr; gap: 40px;">
 <div>
 <picture><source srcset="../assets/web/logo-badge-dark.webp" type="image/webp"><img alt="DS Handymen, Inc." height="96" src="../assets/web/logo-badge-dark.png" style="display: block; margin-bottom: 16px;" width="96" loading="lazy" decoding="async"></picture>
@@ -254,7 +272,7 @@ img{height:auto}
 <p style="margin: 0px; color: rgb(124, 139, 163); font-size: 14px; line-height: 1.5;">Serving Blasdell, Hamburg, Orchard Park, Lackawanna and the wider Southtowns since 2009.</p>
 </div>
 <nav aria-label="Services" style="display: flex; flex-direction: column; gap: 8px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Services</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Services</h2>
 <a href="../snow-plowing/" style="text-decoration: none;">Snow Plowing</a>
 <a href="../landscaping/" style="text-decoration: none;">Landscaping</a>
 <a href="../pressure-washing/" style="text-decoration: none;">Pressure Washing</a>
@@ -264,7 +282,7 @@ img{height:auto}
 <a href="../design-remodeling/" style="text-decoration: none;">Design &amp; Remodeling</a>
 </nav>
 <nav aria-label="Company" style="display: flex; flex-direction: column; gap: 8px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Company</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Company</h2>
 <a href="../about/" style="text-decoration: none;">About Dave</a>
 <a href="../gallery/" style="text-decoration: none;">Before & After</a>
 <a href="../reviews/" style="text-decoration: none;">Reviews</a>
@@ -274,7 +292,7 @@ img{height:auto}
 <a href="../quote/" style="text-decoration: none;">Free Quote</a>
 </nav>
 <div style="display: flex; flex-direction: column; gap: 14px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px;'>Good to know</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px;'>Good to know</h2>
 <p style="margin: 0px; line-height: 1.5;">BBB Accredited, <strong style="color: rgb(255, 255, 255);">A+ rating</strong> &middot; Fully insured &middot; 4.7&starf; from 13 reviews</p>
 <p style="margin: 0px; line-height: 1.5;">Cash &middot; Cheque &middot; Venmo <span style="color: rgb(255, 255, 255);">david schultz@dshandymeninc</span></p>
 <p style="margin: 0px; line-height: 1.5;">10% off Veterans, Seniors & Teachers &middot; $20 off for a plowing referral</p>
@@ -284,7 +302,7 @@ img{height:auto}
 <div style="border-top: 1px solid rgb(36, 52, 78);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; color: rgb(124, 139, 163);">
 <span>&copy; 2026 DS Handymen, Inc. &middot; Est. November 1, 2009 &middot; Blasdell, NY</span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(214, 79, 105);'>Go Bills!</span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);'>Go Bills!</span>
 </div>
 </div></footer><div class="sc-host-x" style="display: contents;"><chat-widget persona="bear"></chat-widget></div>
 <script src="../chat-widget.js" defer></script>

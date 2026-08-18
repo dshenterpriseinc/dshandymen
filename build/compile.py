@@ -128,8 +128,12 @@ def page_styles(head_html):
             continue
         out.append("<style>" + css + "</style>")
     for ln in soup.find_all("link"):
-        if ln.get("rel") and "stylesheet" in ln.get("rel"):
-            out.append(str(ln))
+        if not (ln.get("rel") and "stylesheet" in ln.get("rel")):
+            continue
+        # the fonts are self-hosted now; build_head links them from our origin
+        if "fonts.googleapis.com" in (ln.get("href") or ""):
+            continue
+        out.append(str(ln))
     return "\n".join(out)
 
 LD_LOCAL = json.dumps({
@@ -190,8 +194,9 @@ def build_head(name, url, title, desc, prefix=""):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{prefix}assets/web/favicon-32.png">
 <link rel="apple-touch-icon" href="{prefix}assets/web/favicon-32.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="{prefix}assets/fonts/barlow-condensed-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{prefix}assets/fonts/source-sans-3-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{prefix}assets/fonts.css">
 """ + "\n".join(blocks)
 
 def main():

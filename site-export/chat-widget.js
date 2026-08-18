@@ -7,14 +7,14 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
   const PHONE_HREF = 'tel:+17168030091';
   // full-figure art — the mascot standing, not a cropped head in a circle
   const BEAR_FIG = {
-    neutral:   __DSH_BASE+'assets/web/mascot-bear-shovel-hero.png',
-    waving:    __DSH_BASE+'assets/web/mascot-waving.png',
-    listening: __DSH_BASE+'assets/web/mascot-bear-shovel-hero.png',
-    delighted: __DSH_BASE+'assets/web/mascot-waving.png',
-    pointing:  __DSH_BASE+'assets/web/mascot-ladder-drill.png',
-    thumbsup:  __DSH_BASE+'assets/web/mascot-waving.png'
+    neutral:   __DSH_BASE+'assets/web/mascot-bear-shovel-hero.webp',
+    waving:    __DSH_BASE+'assets/web/mascot-waving.webp',
+    listening: __DSH_BASE+'assets/web/mascot-bear-shovel-hero.webp',
+    delighted: __DSH_BASE+'assets/web/mascot-waving.webp',
+    pointing:  __DSH_BASE+'assets/web/mascot-ladder-drill.webp',
+    thumbsup:  __DSH_BASE+'assets/web/mascot-waving.webp'
   };
-  const BIRD_FIG = { neutral: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.png' };
+  const BIRD_FIG = { neutral: __DSH_BASE+'assets/web/mascot-pigeon-blueprint.webp' };
   const FIG = (persona, state) => (persona === 'bear'
       ? (BEAR_FIG[state] || BEAR_FIG.neutral)
       : (BIRD_FIG[state] || BIRD_FIG.neutral));

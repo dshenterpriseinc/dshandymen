@@ -16,20 +16,20 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/web/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/web/favicon-32.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../assets/fonts/barlow-condensed-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/source-sans-3-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","@id":"https://dshandymen.com/#business","name":"DS Handymen, Inc.","alternateName":"DS Handymen","url":"https://dshandymen.com","telephone":"(716) 803-0091","email":"dshandymen@yahoo.com","logo":"https://dshandymen.com/assets/web/logo-badge-primary.png","image":"https://dshandymen.com/assets/photos/beforeafter-siding-windows-AFTER.jpg","description":"Snow plowing, landscaping, pressure washing, handyman and remodeling services across the Buffalo Southtowns. Family run since 2009.","foundingDate":"2009-11-01","address":{"@type":"PostalAddress","streetAddress":"135 Miriam Avenue, Suite 1","addressLocality":"Blasdell","addressRegion":"NY","postalCode":"14219","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":42.7959,"longitude":-78.8253},"areaServed":[{"@type":"City","name":"Hamburg"},{"@type":"City","name":"Blasdell"},{"@type":"City","name":"Orchard Park"},{"@type":"City","name":"Lackawanna"},{"@type":"City","name":"West Seneca"},{"@type":"City","name":"East Aurora"}],"priceRange":"$$","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"13"},"sameAs":["https://www.facebook.com/dshandymen","https://www.bbb.org/us/ny/blasdell/profile/handyman/ds-handymen-inc-0041-236007251"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://dshandymen.com/"},{"@type":"ListItem","position":2,"name":"Before & After Gallery","item":"https://dshandymen.com/gallery/"}]}</script>
 <style>x-dc{display:none!important}</style>
 <style></style>
 <style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
-<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
+<style>body{margin:0;background:#FFFFFF;color:#0C1620;font-family:'Source Sans 3','Source Sans 3 Fallback',sans-serif;font-size:17.5px;line-height:1.55} a{color:#00338D}a:hover{color:#1B2A4A}</style>
 <style>
   body{margin:0}
   a{color:#00338D}a:hover{color:#1B2A4A}
 </style>
 <style>body{margin:0} footer a{color:#9FB1CC}footer a:hover{color:#FFFFFF}</style>
-<link data-dc-tpl="3" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
 <style>
 picture{display:contents}
 /* ---- interaction states (re-created; the design tool bound these in JS) ---- */
@@ -126,6 +126,24 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
    and the page ran to 13,000px. A plain author rule outranks the hint while
    still losing to any inline height, which is exactly the precedence wanted. */
 img{height:auto}
+
+/* Metric-matched fallbacks. Every page was shifting ~0.25 CLS because the first
+   frames paint before the webfont is usable, and the substitute has different
+   advance widths - enough to wrap the header nav onto a second line and shove
+   the whole document down 36px.
+
+   The percentages are tuned to how each face is actually used, not to a generic
+   sample: Barlow Condensed is display type and is nearly always uppercase, where
+   it runs 67.5% of Arial's width, while a mixed-case sample suggests 77% and
+   leaves the stand-in far too wide. Source Sans 3 carries body copy, so it is
+   matched on mixed case. The ascent and descent overrides are divided through by
+   size-adjust so the line box keeps the real font's height.
+
+   Re-measure with the canvas snippet in BUILD.md if the families ever change. */
+@font-face{font-family:"Barlow Condensed Fallback";src:local("Arial");
+  size-adjust:67.5%;ascent-override:148.15%;descent-override:29.63%;line-gap-override:0%}
+@font-face{font-family:"Source Sans 3 Fallback";src:local("Arial");
+  size-adjust:93%;ascent-override:109.68%;descent-override:43.01%;line-gap-override:0%}
 </style>
 </head>
 <body>
@@ -134,288 +152,288 @@ img{height:auto}
 <div style="max-width: 1240px; margin: 0px auto; display: flex; align-items: center; gap: 28px; padding: 10px 24px;">
 <a href="../" style="display: flex; align-items: center; gap: 12px; text-decoration: none; flex: 0 0 auto;">
 <picture><source srcset="../assets/web/logo-badge-white-knockout.webp" type="image/webp"><img alt="DS Handymen, Inc. &mdash; home" height="52" src="../assets/web/logo-badge-white-knockout.png" style="display: block;" width="52" loading="eager" decoding="async" fetchpriority="high"></picture>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: rgb(255, 255, 255); text-transform: uppercase; line-height: 1;'>DS Handymen<span style="display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; color: rgb(159, 177, 204);">Blasdell &middot; Hamburg, NY</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: rgb(255, 255, 255); text-transform: uppercase; line-height: 1;'>DS Handymen<span style="display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; color: rgb(159, 177, 204);">Blasdell &middot; Hamburg, NY</span></span>
 </a>
 <nav aria-label="Main" style="display: flex; align-items: center; gap: 4px; margin: 0px auto; flex-wrap: wrap; justify-content: center;">
-<a class="scp1" href="../services/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Services</span></a>
-<a class="scp1" href="../design-remodeling/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Design &amp; Remodeling</span></a>
-<a aria-current="page" class="scp1" href="../gallery/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(255, 255, 255); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid rgb(245, 179, 36);'><span class="sc-interp">Gallery</span></a>
-<a class="scp1" href="../reviews/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Reviews</span></a>
-<a class="scp1" href="../service-area/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Service Area</span></a>
-<a class="scp1" href="../about/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">About</span></a>
-<a class="scp1" href="../quote/" style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Free Quote</span></a>
+<a class="scp1" href="../services/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Services</span></a>
+<a class="scp1" href="../design-remodeling/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Design &amp; Remodeling</span></a>
+<a aria-current="page" class="scp1" href="../gallery/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(255, 255, 255); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid rgb(245, 179, 36);'><span class="sc-interp">Gallery</span></a>
+<a class="scp1" href="../reviews/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Reviews</span></a>
+<a class="scp1" href="../service-area/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Service Area</span></a>
+<a class="scp1" href="../about/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">About</span></a>
+<a class="scp1" href="../quote/" style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(201, 212, 230); text-decoration: none; padding: 8px 12px; border-bottom: 2px solid transparent;'><span class="sc-interp">Free Quote</span></a>
 </nav>
 <a class="scp2" href="tel:+17168030091" style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-decoration: none; background: rgb(0, 51, 141); padding: 8px 16px; border-radius: 4px;">
-<span style='font-family: "Source Sans 3", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(159, 177, 204);'>Call the Bear</span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
+<span style='font-family: "Source Sans 3", "Source Sans 3 Fallback", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(159, 177, 204);'>Call the Bear</span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
 </a>
 </div></header><main>
 <section style="background: rgb(27, 42, 74);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 72px 24px 64px;">
-<p style='margin: 0px 0px 12px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(245, 179, 36);'>Gallery</p>
-<h1 style='margin: 0px 0px 14px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 64px; line-height: 1; text-transform: uppercase; color: rgb(255, 255, 255);'>Real work. Real crew.</h1>
+<p style='margin: 0px 0px 12px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(245, 179, 36);'>Gallery</p>
+<h1 style='margin: 0px 0px 14px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 64px; line-height: 1; text-transform: uppercase; color: rgb(255, 255, 255);'>Real work. Real crew.</h1>
 <p style="margin: 0px; font-size: 20px; color: rgb(201, 212, 230); max-width: 56ch;">Every photo here is a Southtowns job by our own people. These before and after pictures speak for themselves.</p>
 </div>
 </section>
 <section style="max-width: 1240px; margin: 0px auto; padding: 56px 24px 88px;">
 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;">
-<button aria-pressed="true" style='border: 1.5px solid rgb(27, 42, 74); background: rgb(27, 42, 74); color: rgb(255, 255, 255); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">All</span></button>
-<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Remodeling</span></button>
-<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Pressure washing</span></button>
-<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Landscaping</span></button>
-<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Design &amp; Remodeling</span></button>
-<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Sunrooms & patios</span></button>
+<button aria-pressed="true" style='border: 1.5px solid rgb(27, 42, 74); background: rgb(27, 42, 74); color: rgb(255, 255, 255); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">All</span></button>
+<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Remodeling</span></button>
+<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Pressure washing</span></button>
+<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Landscaping</span></button>
+<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Design &amp; Remodeling</span></button>
+<button aria-pressed="false" style='border: 1.5px solid rgb(194, 206, 220); background: transparent; color: rgb(27, 42, 74); border-radius: 999px; padding: 9px 22px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;'><span class="sc-interp">Sunrooms & patios</span></button>
 </div>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/beforeafter-siding-windows-BEFORE.webp" type="image/webp"><img alt="House before new siding and windows" loading="lazy" src="../assets/photos/beforeafter-siding-windows-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async" fetchpriority="high"></picture>
+<picture><source srcset="../assets/photos/beforeafter-siding-windows-BEFORE-sm.webp 480w, ../assets/photos/beforeafter-siding-windows-BEFORE-md.webp 900w, ../assets/photos/beforeafter-siding-windows-BEFORE.webp 1600w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="House before new siding and windows" loading="lazy" src="../assets/photos/beforeafter-siding-windows-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async" fetchpriority="high"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding & windows</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding & windows</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/beforeafter-siding-windows-AFTER.webp" type="image/webp"><img alt="Same house after new siding and windows" loading="lazy" src="../assets/photos/beforeafter-siding-windows-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
+<picture><source srcset="../assets/photos/beforeafter-siding-windows-AFTER-sm.webp 480w, ../assets/photos/beforeafter-siding-windows-AFTER-md.webp 900w, ../assets/photos/beforeafter-siding-windows-AFTER.webp 1600w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Same house after new siding and windows" loading="lazy" src="../assets/photos/beforeafter-siding-windows-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="2048" height="1536" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding & windows</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding & windows</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-01.webp" type="image/webp"><img alt="Remodeled kitchen" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-01-sm.webp 480w, ../assets/photos/kitchen-remodel-01.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Remodeled kitchen" loading="lazy" src="../assets/photos/kitchen-remodel-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-02.webp" type="image/webp"><img alt="Kitchen remodel detail" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-02-sm.webp 480w, ../assets/photos/kitchen-remodel-02.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Kitchen remodel detail" loading="lazy" src="../assets/photos/kitchen-remodel-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/kitchen-remodel-03.webp" type="image/webp"><img alt="Kitchen remodel third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/kitchen-remodel-03-sm.webp 480w, ../assets/photos/kitchen-remodel-03.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Kitchen remodel third angle" loading="lazy" src="../assets/photos/kitchen-remodel-03.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Kitchen remodel</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/tile-backsplash-detail.webp" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/tile-backsplash-detail-sm.webp 480w, ../assets/photos/tile-backsplash-detail.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Tile backsplash detail" loading="lazy" src="../assets/photos/tile-backsplash-detail.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Tile backsplash</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Tile backsplash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/bathroom-vanity-remodel.webp" type="image/webp"><img alt="Bathroom vanity remodel" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/bathroom-vanity-remodel-sm.webp 480w, ../assets/photos/bathroom-vanity-remodel.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Bathroom vanity remodel" loading="lazy" src="../assets/photos/bathroom-vanity-remodel.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Bathroom vanity</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Bathroom vanity</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER.webp" type="image/webp"><img alt="Living room fireplace" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/livingroom-fireplace-AFTER-sm.webp 480w, ../assets/photos/livingroom-fireplace-AFTER.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Living room fireplace" loading="lazy" src="../assets/photos/livingroom-fireplace-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Living room</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Living room</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/diningroom-arched-window.webp" type="image/webp"><img alt="Dining room arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/diningroom-arched-window-sm.webp 480w, ../assets/photos/diningroom-arched-window.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Dining room arched window" loading="lazy" src="../assets/photos/diningroom-arched-window.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Dining room</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Dining room</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/basement-finished-01.webp" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-01-sm.webp 480w, ../assets/photos/basement-finished-01.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Finished basement" loading="lazy" src="../assets/photos/basement-finished-01.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/basement-finished-02.webp" type="image/webp"><img alt="Finished basement second view" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/basement-finished-02-sm.webp 480w, ../assets/photos/basement-finished-02.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Finished basement second view" loading="lazy" src="../assets/photos/basement-finished-02.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Finished basement</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/deck-refinished-AFTER.webp" type="image/webp"><img alt="Refinished deck" loading="lazy" src="../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="968" decoding="async"></picture>
+<picture><source srcset="../assets/photos/deck-refinished-AFTER-sm.webp 480w, ../assets/photos/deck-refinished-AFTER-md.webp 900w, ../assets/photos/deck-refinished-AFTER.webp 1292w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Refinished deck" loading="lazy" src="../assets/photos/deck-refinished-AFTER.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="968" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck refinish</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck refinish</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/deck-wash-before.webp" type="image/webp"><img alt="Weathered deck before washing" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-before-sm.webp 480w, ../assets/gallery/deck-wash-before-md.webp 900w, ../assets/gallery/deck-wash-before.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Weathered deck before washing" loading="lazy" src="../assets/gallery/deck-wash-before.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/deck-wash-after.webp" type="image/webp"><img alt="Deck after pressure washing" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/deck-wash-after-sm.webp 480w, ../assets/gallery/deck-wash-after-md.webp 900w, ../assets/gallery/deck-wash-after.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Deck after pressure washing" loading="lazy" src="../assets/gallery/deck-wash-after.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1224" height="1632" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Deck wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/house-washing.webp" type="image/webp"><img alt="House washing in progress" loading="lazy" src="../assets/gallery/house-washing.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="830" height="550" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/house-washing-sm.webp 480w, ../assets/gallery/house-washing.webp 830w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="House washing in progress" loading="lazy" src="../assets/gallery/house-washing.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="830" height="550" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">House wash</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">House wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/sidewalk-1.webp" type="image/webp"><img alt="Sidewalk washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="806" height="1075" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/sidewalk-1-sm.webp 480w, ../assets/gallery/sidewalk-1.webp 806w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Sidewalk washing" loading="lazy" src="../assets/gallery/sidewalk-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="806" height="1075" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Sidewalk wash</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Sidewalk wash</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
 <picture><source srcset="../assets/gallery/roof-cleaning.webp" type="image/webp"><img alt="Roof cleaning" loading="lazy" src="../assets/gallery/roof-cleaning.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="420" height="315" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof cleaning</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof cleaning</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/landscaping-mulch-bed.webp" type="image/webp"><img alt="Fresh mulch bed" loading="lazy" src="../assets/photos/landscaping-mulch-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/landscaping-mulch-bed-sm.webp 480w, ../assets/photos/landscaping-mulch-bed.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Fresh mulch bed" loading="lazy" src="../assets/photos/landscaping-mulch-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Mulch bed</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Mulch bed</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/landscaping-stone-bed.webp" type="image/webp"><img alt="Stone landscaping bed" loading="lazy" src="../assets/photos/landscaping-stone-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/landscaping-stone-bed-sm.webp 480w, ../assets/photos/landscaping-stone-bed.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Stone landscaping bed" loading="lazy" src="../assets/photos/landscaping-stone-bed.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Stone bed</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Stone bed</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/mower.webp" type="image/webp"><img alt="Mowing stripes" loading="lazy" src="../assets/gallery/mower.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="715" height="559" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/mower-sm.webp 480w, ../assets/gallery/mower.webp 715w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Mowing stripes" loading="lazy" src="../assets/gallery/mower.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="715" height="559" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Mowing stripes</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Mowing stripes</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
 <picture><source srcset="../assets/gallery/mulch-1.webp" type="image/webp"><img alt="Planting bed with mulch" loading="lazy" src="../assets/gallery/mulch-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="420" height="404" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Planting bed</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Planting bed</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
 <picture><source srcset="../assets/gallery/leaves.webp" type="image/webp"><img alt="Leaves before fall clean-up" loading="lazy" src="../assets/gallery/leaves.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="275" height="183" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Fall clean-up</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Fall clean-up</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/exterior-window-install-inprogress.webp" type="image/webp"><img alt="Window installation in progress" loading="lazy" src="../assets/photos/exterior-window-install-inprogress.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="969" decoding="async"></picture>
+<picture><source srcset="../assets/photos/exterior-window-install-inprogress-sm.webp 480w, ../assets/photos/exterior-window-install-inprogress-md.webp 900w, ../assets/photos/exterior-window-install-inprogress.webp 1292w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Window installation in progress" loading="lazy" src="../assets/photos/exterior-window-install-inprogress.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="969" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Window install</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Window install</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/exterior-siding-night-work.webp" type="image/webp"><img alt="Siding work at night" loading="lazy" src="../assets/photos/exterior-siding-night-work.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/exterior-siding-night-work-sm.webp 480w, ../assets/photos/exterior-siding-night-work.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Siding work at night" loading="lazy" src="../assets/photos/exterior-siding-night-work.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding, after dark</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Siding, after dark</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/roof-damage-BEFORE.webp" type="image/webp"><img alt="Roof damage before repair" loading="lazy" src="../assets/photos/roof-damage-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/roof-damage-BEFORE-sm.webp 480w, ../assets/photos/roof-damage-BEFORE.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Roof damage before repair" loading="lazy" src="../assets/photos/roof-damage-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof repair</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof repair</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/roof-tearoff-BEFORE.webp" type="image/webp"><img alt="Roof tear-off" loading="lazy" src="../assets/photos/roof-tearoff-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/photos/roof-tearoff-BEFORE-sm.webp 480w, ../assets/photos/roof-tearoff-BEFORE.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Roof tear-off" loading="lazy" src="../assets/photos/roof-tearoff-BEFORE.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof tear-off</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Roof tear-off</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(198, 12, 48);"><span class="sc-interp">Before</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/patio-1.webp" type="image/webp"><img alt="Patio project" loading="lazy" src="../assets/gallery/patio-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="388" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/patio-1-sm.webp 480w, ../assets/gallery/patio-1.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Patio project" loading="lazy" src="../assets/gallery/patio-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="388" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Patio project</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Patio project</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/patio-cover.webp" type="image/webp"><img alt="Covered patio" loading="lazy" src="../assets/gallery/patio-cover.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1200" height="858" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/patio-cover-sm.webp 480w, ../assets/gallery/patio-cover-md.webp 900w, ../assets/gallery/patio-cover.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Covered patio" loading="lazy" src="../assets/gallery/patio-cover.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1200" height="858" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Patio cover</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Patio cover</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
 <picture><source srcset="../assets/gallery/bar-1.webp" type="image/webp"><img alt="Custom bar build" loading="lazy" src="../assets/gallery/bar-1.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="368" height="504" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Custom bar</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Custom bar</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/bench.webp" type="image/webp"><img alt="Custom outdoor bench" loading="lazy" src="../assets/gallery/bench.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="801" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/bench-sm.webp 480w, ../assets/gallery/bench.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Custom outdoor bench" loading="lazy" src="../assets/gallery/bench.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="801" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Outdoor bench</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Outdoor bench</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-04.webp" type="image/webp"><img alt="Crew job site" loading="lazy" src="../assets/gallery/fb-job-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-04-sm.webp 480w, ../assets/gallery/fb-job-04.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Crew job site" loading="lazy" src="../assets/gallery/fb-job-04.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-05.webp" type="image/webp"><img alt="Job in progress" loading="lazy" src="../assets/gallery/fb-job-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-05-sm.webp 480w, ../assets/gallery/fb-job-05.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Job in progress" loading="lazy" src="../assets/gallery/fb-job-05.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-06.webp" type="image/webp"><img alt="Yard work" loading="lazy" src="../assets/gallery/fb-job-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-06-sm.webp 480w, ../assets/gallery/fb-job-06.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Yard work" loading="lazy" src="../assets/gallery/fb-job-06.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Yard work</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Yard work</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 51, 141);"><span class="sc-interp">After</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-07.webp" type="image/webp"><img alt="Job site" loading="lazy" src="../assets/gallery/fb-job-07.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="1064" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-07-sm.webp 480w, ../assets/gallery/fb-job-07.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Job site" loading="lazy" src="../assets/gallery/fb-job-07.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="1064" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/gallery/fb-job-08.webp" type="image/webp"><img alt="Work in progress" loading="lazy" src="../assets/gallery/fb-job-08.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
+<picture><source srcset="../assets/gallery/fb-job-08-sm.webp 480w, ../assets/gallery/fb-job-08.webp 798w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="Work in progress" loading="lazy" src="../assets/gallery/fb-job-08.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="798" height="598" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">Job site</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">During</span></span>
 </figcaption>
 </figure>
 <figure style="margin: 0px; border-radius: 8px; overflow: hidden; background: rgb(244, 248, 251); border: 1px solid rgb(225, 233, 242);">
-<picture><source srcset="../assets/photos/truck-branded-lakeside.webp" type="image/webp"><img alt="DS Handymen branded truck" loading="lazy" src="../assets/photos/truck-branded-lakeside.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="467" decoding="async"></picture>
+<picture><source srcset="../assets/photos/truck-branded-lakeside-sm.webp 480w, ../assets/photos/truck-branded-lakeside-md.webp 900w, ../assets/photos/truck-branded-lakeside.webp 1292w" sizes="(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw" type="image/webp"><img alt="DS Handymen branded truck" loading="lazy" src="../assets/photos/truck-branded-lakeside.jpg" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;" width="1292" height="467" decoding="async"></picture>
 <figcaption style="padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center;">
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">The truck</span></span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(27, 42, 74);'><span class="sc-interp">The truck</span></span>
 <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(102, 115, 135);"><span class="sc-interp">&mdash;</span></span>
 </figcaption>
 </figure>
@@ -423,10 +441,10 @@ img{height:auto}
 </section>
 <section style="background: rgb(0, 51, 141);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 60px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-<h2 style='margin: 0px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);'>Your house could be up here.</h2>
-<a class="scp0" href="../quote/" style='background: rgb(255, 255, 255); color: rgb(0, 51, 141); text-decoration: none; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Get a free quote</a>
+<h2 style='margin: 0px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);'>Your house could be up here.</h2>
+<a class="scp0" href="../quote/" style='background: rgb(255, 255, 255); color: rgb(0, 51, 141); text-decoration: none; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; padding: 15px 30px; border-radius: 4px;'>Get a free quote</a>
 </div>
-</section></main><footer style='background: rgb(12, 22, 32); color: rgb(201, 212, 230); font-family: "Source Sans 3", sans-serif; font-size: 16px;'>
+</section></main><footer style='background: rgb(12, 22, 32); color: rgb(201, 212, 230); font-family: "Source Sans 3", "Source Sans 3 Fallback", sans-serif; font-size: 16px;'>
 <div style="max-width: 1240px; margin: 0px auto; padding: 56px 24px 40px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.1fr; gap: 40px;">
 <div>
 <picture><source srcset="../assets/web/logo-badge-dark.webp" type="image/webp"><img alt="DS Handymen, Inc." height="96" src="../assets/web/logo-badge-dark.png" style="display: block; margin-bottom: 16px;" width="96" loading="lazy" decoding="async"></picture>
@@ -435,7 +453,7 @@ img{height:auto}
 <p style="margin: 0px; color: rgb(124, 139, 163); font-size: 14px; line-height: 1.5;">Serving Blasdell, Hamburg, Orchard Park, Lackawanna and the wider Southtowns since 2009.</p>
 </div>
 <nav aria-label="Services" style="display: flex; flex-direction: column; gap: 8px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Services</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Services</h2>
 <a href="../snow-plowing/" style="text-decoration: none;">Snow Plowing</a>
 <a href="../landscaping/" style="text-decoration: none;">Landscaping</a>
 <a href="../pressure-washing/" style="text-decoration: none;">Pressure Washing</a>
@@ -445,7 +463,7 @@ img{height:auto}
 <a href="../design-remodeling/" style="text-decoration: none;">Design &amp; Remodeling</a>
 </nav>
 <nav aria-label="Company" style="display: flex; flex-direction: column; gap: 8px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Company</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px 0px 6px;'>Company</h2>
 <a href="../about/" style="text-decoration: none;">About Dave</a>
 <a href="../gallery/" style="text-decoration: none;">Before & After</a>
 <a href="../reviews/" style="text-decoration: none;">Reviews</a>
@@ -455,7 +473,7 @@ img{height:auto}
 <a href="../quote/" style="text-decoration: none;">Free Quote</a>
 </nav>
 <div style="display: flex; flex-direction: column; gap: 14px;">
-<h2 style='font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px;'>Good to know</h2>
+<h2 style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255, 255, 255); margin: 0px;'>Good to know</h2>
 <p style="margin: 0px; line-height: 1.5;">BBB Accredited, <strong style="color: rgb(255, 255, 255);">A+ rating</strong> &middot; Fully insured &middot; 4.7&starf; from 13 reviews</p>
 <p style="margin: 0px; line-height: 1.5;">Cash &middot; Cheque &middot; Venmo <span style="color: rgb(255, 255, 255);">david schultz@dshandymeninc</span></p>
 <p style="margin: 0px; line-height: 1.5;">10% off Veterans, Seniors & Teachers &middot; $20 off for a plowing referral</p>
@@ -465,7 +483,7 @@ img{height:auto}
 <div style="border-top: 1px solid rgb(36, 52, 78);">
 <div style="max-width: 1240px; margin: 0px auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; color: rgb(124, 139, 163);">
 <span>&copy; 2026 DS Handymen, Inc. &middot; Est. November 1, 2009 &middot; Blasdell, NY</span>
-<span style='font-family: "Barlow Condensed", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(214, 79, 105);'>Go Bills!</span>
+<span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(198, 12, 48);'>Go Bills!</span>
 </div>
 </div></footer><div class="sc-host-x" style="display: contents;"><chat-widget persona="bear"></chat-widget></div>
 <script src="../chat-widget.js" defer></script>

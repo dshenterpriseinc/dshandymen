@@ -27,6 +27,7 @@ SRC = os.path.join(ROOT, 'site-export')
 FLOOR = 640          # never take a content image below this
 WEBP_Q = 82
 JPEG_Q = 84
+MAX_BYTES = 200_000   # no single image is worth more than this
 
 # loaded by chat-widget.js into a shadow root, so no page measures them
 SHADOW_CAPS = {
@@ -88,7 +89,12 @@ def resave(path, target, dry):
     out = im.resize((target, h), Image.LANCZOS)
     ext = os.path.splitext(path)[1].lower()
     if ext == '.webp':
-        out.save(path, 'WEBP', quality=WEBP_Q, method=6)
+        # a photo of a weathered deck can still land at half a megabyte at q82;
+        # step the quality down until it fits a sane budget for one image
+        for q in (WEBP_Q, 74, 66, 58):
+            out.save(path, 'WEBP', quality=q, method=6)
+            if os.path.getsize(path) <= MAX_BYTES:
+                break
     elif ext in ('.jpg', '.jpeg'):
         out.convert('RGB').save(path, 'JPEG', quality=JPEG_Q, optimize=True, progressive=True)
     elif ext == '.png':

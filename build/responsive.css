@@ -76,3 +76,21 @@ main a[href^="mailto:"]{display:inline-block !important;padding:10px 0 !importan
    and the page ran to 13,000px. A plain author rule outranks the hint while
    still losing to any inline height, which is exactly the precedence wanted. */
 img{height:auto}
+
+/* Metric-matched fallbacks. Every page was shifting ~0.25 CLS because the first
+   frames paint before the webfont is usable, and the substitute has different
+   advance widths - enough to wrap the header nav onto a second line and shove
+   the whole document down 36px.
+
+   The percentages are tuned to how each face is actually used, not to a generic
+   sample: Barlow Condensed is display type and is nearly always uppercase, where
+   it runs 67.5% of Arial's width, while a mixed-case sample suggests 77% and
+   leaves the stand-in far too wide. Source Sans 3 carries body copy, so it is
+   matched on mixed case. The ascent and descent overrides are divided through by
+   size-adjust so the line box keeps the real font's height.
+
+   Re-measure with the canvas snippet in BUILD.md if the families ever change. */
+@font-face{font-family:"Barlow Condensed Fallback";src:local("Arial");
+  size-adjust:67.5%;ascent-override:148.15%;descent-override:29.63%;line-gap-override:0%}
+@font-face{font-family:"Source Sans 3 Fallback";src:local("Arial");
+  size-adjust:93%;ascent-override:109.68%;descent-override:43.01%;line-gap-override:0%}

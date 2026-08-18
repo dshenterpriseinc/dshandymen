@@ -94,6 +94,25 @@ def fix_images(page_path, s):
         if webp != src:
             real = os.path.normpath(os.path.join(os.path.dirname(page_path), webp))
             if os.path.exists(real):
+                # a -sm variant exists only for gallery tiles (see make_thumbs.py).
+                # Offering both lets a 1x screen take the tile-sized file while a
+                # 2x screen still gets the full-resolution one.
+                from PIL import Image as _I
+                cands = []
+                for suffix in ('-sm', '-md'):
+                    v = webp[:-len('.webp')] + suffix + '.webp'
+                    vr = os.path.normpath(os.path.join(os.path.dirname(page_path), v))
+                    if os.path.exists(vr):
+                        cands.append((v, _I.open(vr).width))
+                if cands:
+                    cands.append((webp, _I.open(real).width))
+                    srcset = ', '.join('%s %dw' % c for c in cands)
+                    # tiles are a third of a 1240px container less an 18px gap, so
+                    # 31vw is closer to the truth than 33vw - and overstating it by
+                    # even two pixels makes the browser skip the small file entirely
+                    sizes = '(max-width: 760px) 100vw, (max-width: 1024px) 47vw, 31vw'
+                    return ('<picture><source srcset="%s" sizes="%s" type="image/webp">%s</picture>'
+                            % (srcset, sizes, tag))
                 return '<picture><source srcset="%s" type="image/webp">%s</picture>' % (webp, tag)
         return tag
     return re.sub(r'<img\b[^>]*>', repl, s)
@@ -231,7 +250,8 @@ THANKYOU = """<!DOCTYPE html>
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://dshandymen.com/thank-you/">
 <link rel="icon" href="../assets/web/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" href="../assets/fonts/barlow-condensed-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts.css">
 <style>
  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#1B2A4A;color:#fff;
       font-family:'Source Sans 3',system-ui,sans-serif;font-size:18px;text-align:center;padding:28px}
@@ -248,7 +268,7 @@ THANKYOU = """<!DOCTYPE html>
    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}}
 </style></head>
 <body><main class="card">
- <img src="../assets/web/mascot-waving.png" alt="" loading="eager" decoding="async" fetchpriority="high" width="150" height="176">
+ <img src="../assets/web/mascot-waving.webp" alt="" loading="eager" decoding="async" fetchpriority="high" width="150" height="176">
  <h1>Got it &mdash; thanks.</h1>
  <p>Your request is with Dave. He&rsquo;ll come back to you as soon as he&rsquo;s off the route.<br>
     If it&rsquo;s urgent, just call &mdash; that&rsquo;s always fastest.</p>
@@ -334,6 +354,46 @@ def apply_contrast_map(path, s):
     return s
 
 
+# ---------------------------------------------------------------- 6. font fallbacks
+# The webfonts load with display=swap, which reflowed the whole document when
+# they arrived. Naming a metric-matched stand-in ahead of the generic keeps the
+# first paint on the same baseline grid as the final one. The @font-face rules
+# that define these live in responsive.css.
+FONT_STACKS = [
+    ('"Barlow Condensed", sans-serif', '"Barlow Condensed", "Barlow Condensed Fallback", sans-serif'),
+    ("'Barlow Condensed',sans-serif", "'Barlow Condensed','Barlow Condensed Fallback',sans-serif"),
+    ('"Source Sans 3", sans-serif', '"Source Sans 3", "Source Sans 3 Fallback", sans-serif'),
+    ("'Source Sans 3',sans-serif", "'Source Sans 3','Source Sans 3 Fallback',sans-serif"),
+    ("'Source Sans 3',system-ui,sans-serif", "'Source Sans 3','Source Sans 3 Fallback',system-ui,sans-serif"),
+]
+
+
+def add_font_fallbacks(s):
+    if 'Barlow Condensed Fallback", sans-serif' in s or "Barlow Condensed Fallback',sans-serif" in s:
+        return s
+    for old, new in FONT_STACKS:
+        s = s.replace(old, new)
+    return s
+
+
+# ---------------------------------------------------------------- 7. hero video
+# The markup carried src="...mp4" *and* preload="metadata", so the browser began
+# pulling the mp4 during parse; site.js then swapped in a <source> list and the
+# browser fetched the webm too. Every visitor paid for both encodings - 947 KB on
+# the home page for one decorative background. Dropping the attribute leaves
+# site.js as the single source of truth for which file to fetch.
+
+def slim_hero_video(s):
+    def repl(m):
+        tag = m.group(0)
+        tag = re.sub(r'\s+src="[^"]*"', '', tag)
+        tag = re.sub(r'preload="[^"]*"', 'preload="none"', tag)
+        if 'preload=' not in tag:
+            tag = tag[:-1].rstrip() + ' preload="none">'
+        return tag
+    return re.sub(r'<video\b[^>]*>', repl, s)
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -351,6 +411,8 @@ def main():
         s = scope_footer_links(s)
         s = fix_terracotta(s)
         s = fix_scrims(s)
+        s = add_font_fallbacks(s)
+        s = slim_hero_video(s)
         s = apply_contrast_map(f, s)
         depth = f.replace(chr(92),'/').split('/docs/')[1].count('/')
         s = insert_map(f, s, '../'*depth)
