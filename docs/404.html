@@ -46,6 +46,59 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 </style>
 <style>picture{display:contents}</style>
+<style>/* ---------------------------------------------------------------------------
+   Responsive layer.
+   The design tool emitted every rule as an inline style with fixed grid tracks
+   and no breakpoints, so multi-column sections overflowed on phones (337px of
+   horizontal scroll on a 375px viewport). Inline styles win on specificity, so
+   these overrides are necessarily !important and scoped to media queries.
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px){
+  [style*="grid-template-columns: 1.4fr 1fr 1fr 1.1fr"],
+  [style*="grid-template-columns: repeat(4, 1fr)"]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [style*="grid-template-columns: repeat(3, 1fr)"]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [style*="max-width: 1240px"]{max-width:100% !important}
+}
+@media (max-width: 760px){
+  /* every multi-column grid becomes a single column */
+  [style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+  /* except genuinely tiny icon+text pairs, which stay side by side */
+  [style*="grid-template-columns: 56px 1fr"],
+  [style*="grid-template-columns: auto 1fr"]{grid-template-columns:auto minmax(0,1fr) !important}
+
+  section{padding-left:18px !important;padding-right:18px !important}
+  [style*="padding: 90px 24px"],[style*="padding: 88px 24px"],[style*="padding: 80px 24px"]{padding:52px 18px !important}
+
+  h1{font-size:clamp(34px,9vw,46px) !important;line-height:1.05 !important}
+  h2{font-size:clamp(26px,6.5vw,34px) !important}
+  h3{font-size:clamp(19px,5vw,23px) !important}
+
+  /* header: let the nav wrap instead of pushing the page sideways */
+  header [style*="display: flex"]{flex-wrap:wrap !important;gap:10px !important;row-gap:8px !important}
+  header nav{order:3;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  header nav [style*="display: flex"]{flex-wrap:nowrap !important}
+
+  /* hero */
+  section[aria-label="Seasonal welcome"]{min-height:520px !important}
+
+  /* trust bar reads as a wrapped list rather than one long line */
+  section[aria-label="Trust"] [style*="display: flex"]{flex-wrap:wrap !important;justify-content:center !important;gap:6px 14px !important;font-size:15px !important}
+  section[aria-label="Trust"] span[style*="color: #C2CEDC"],
+  section[aria-label="Trust"] span[style*="color: rgb(194, 206, 220)"]{display:none !important}
+
+  /* stop wide media blowing out the row */
+  img,video,picture>img{max-width:100% !important;height:auto !important}
+
+  /* comfortable tap targets */
+  a[href^="tel:"],button{min-height:44px}
+}
+@media (max-width: 420px){
+  [style*="font-size: 21px"]{font-size:18px !important}
+  section[aria-label="Trust"]{font-size:14px !important}
+}
+/* never allow sideways scroll, whatever else happens */
+html,body{max-width:100%;overflow-x:hidden}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>

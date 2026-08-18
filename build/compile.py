@@ -61,6 +61,8 @@ PAGES = {
 LINKMAP = {f"{k}.dc.html": ("/" if v[0] == "" else "/" + v[0]) for k, v in PAGES.items()}
 LINKMAP["NotFound.dc.html"] = "/404.html"
 
+RESPONSIVE_CSS = io.open(os.path.join(ROOT,"build","responsive.css"),encoding="utf-8").read()
+
 HOVER_CSS = """
 picture{display:contents}
 /* ---- interaction states (re-created; the design tool bound these in JS) ---- */
