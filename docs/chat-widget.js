@@ -35,32 +35,71 @@ var __DSH_BASE = (function () {
     pointing:  U('assets/web/mascot-ladder-drill.webp'),
     thumbsup:  U('assets/web/mascot-waving.webp')
   };
+  // the panel's head figure. Also moved off mascot-pigeon-blueprint, which is the
+  // two-objects-at-once drawing - it was still showing in the header.
   var BIRD_FIG = {
-    neutral:   U('assets/web/mascot-pigeon-standing.webp'),
-    listening: U('assets/web/mascot-pigeon-standing.webp'),
-    waving:    U('assets/web/mascot-pigeon-blueprint.webp'),
-    delighted: U('assets/web/mascot-pigeon-blueprint.webp'),
-    pointing:  U('assets/web/mascot-pigeon-blueprint.webp'),
-    thumbsup:  U('assets/web/mascot-pigeon-blueprint.webp')
+    neutral:   U('assets/web/bird-pose-plans.webp'),
+    listening: U('assets/web/bird-pose-plans.webp'),
+    waving:    U('assets/web/bird-pose-brush.webp'),
+    delighted: U('assets/web/bird-pose-brush.webp'),
+    pointing:  U('assets/web/bird-pose-tape.webp'),
+    thumbsup:  U('assets/web/bird-pose-roller.webp')
   };
   // The animation loop: three real poses of the same character. He waves,
   // pivots, folds his arms, holds, and pivots back. Frames rather than a
   // rendered clip so the animation is exactly the mascot on the cards and in the
   // logo, keeps a real alpha channel, and costs ~100 KB instead of megabytes.
-  // The Bird's tool pose is deliberately out of the loop for now: the only
-  // drawn artwork of her holding anything has her gripping a rolled blueprint
-  // in one wing AND a paintbrush in the other, which reads as an extra pair of
-  // arms. Better a quieter loop than a wrong one. Single-tool poses are being
-  // drawn; add them here as bird-pose-brush / -plans / -tape / -roller.
+  // The Bear's three come from the concept sheets. The Bird's four are generated
+  // art that replaced her one drawn tool pose, which had her gripping a blueprint
+  // in one wing AND a brush in the other - it read as an extra pair of arms.
+  // One tool per pose now, and the loop takes however many poses it is given.
   var POSE_SETS = {
     bear: ['bear-pose-wave', 'bear-pose-stand', 'bear-pose-arms'],
-    bird: ['bird-pose-stand', 'bird-pose-turn', 'bird-pose-stand']
+    bird: ['bird-pose-brush', 'bird-pose-plans', 'bird-pose-tape', 'bird-pose-roller']
   };
   var POSES = function (persona) {
     return (POSE_SETS[persona] || POSE_SETS.bear).map(function (n) {
       return U('assets/web/' + n + '.webp');
     });
   };
+
+  // Six seconds holding each pose, nearly two handing over. Built rather than
+  // hand-written because the Bear runs three poses and the Bird four, and the
+  // percentages have to move with the count.
+  var HOLD = 5.6, FADE = 1.9;
+
+  function poseCss(n) {
+    var cycle = n * (HOLD + FADE);
+    var seg = 100 / n;
+    var f = FADE / cycle * 100;
+    var out = ['  .figs{animation-duration:' + cycle.toFixed(1) + 's}',
+               '  .figs img{animation-duration:' + cycle.toFixed(1) + 's}'];
+    var mids = [];
+    for (var i = 0; i < n; i += 1) {
+      var a = i * seg, b = a + seg - f, c = a + seg;
+      out.push('  .figs img:nth-child(' + (i + 1) + '){animation-name:pose' + i + '}');
+      if (i === 0) {
+        out.push('  @keyframes pose0{0%,' + b.toFixed(2) + '%{opacity:1}' +
+                 c.toFixed(2) + '%,' + (100 - f).toFixed(2) + '%{opacity:0}100%{opacity:1}}');
+      } else {
+        out.push('  @keyframes pose' + i + '{0%,' + (a - f).toFixed(2) + '%{opacity:0}' +
+                 a.toFixed(2) + '%,' + b.toFixed(2) + '%{opacity:1}' +
+                 c.toFixed(2) + '%,100%{opacity:0}}');
+        mids.push(a - f / 2);
+      }
+    }
+    mids.push(100 - f / 2);
+    // a squash at each hand-over, which reads as her turning on the spot
+    var kf = ['0%{transform:scaleX(1)}'];
+    mids.forEach(function (m) {
+      kf.push(Math.max(0.1, m - 2).toFixed(2) + '%{transform:scaleX(1)}');
+      kf.push(m.toFixed(2) + '%{transform:scaleX(.90) translateY(-3px)}');
+      kf.push(Math.min(99.9, m + 2).toFixed(2) + '%{transform:scaleX(1)}');
+    });
+    kf.push('100%{transform:scaleX(1)}');
+    out.push('  @keyframes pivot{' + kf.join('') + '}');
+    return out.join('\n');
+  }
 
   var FIG = function (persona, state) {
     var set = persona === 'bear' ? BEAR_FIG : BIRD_FIG;
@@ -257,6 +296,7 @@ var __DSH_BASE = (function () {
 
     _render() {
       var p = this._p();
+      var poses = POSES(this.persona);
       this.shadowRoot.innerHTML = [
 '<style>',
 '  :host{all:initial}',
@@ -277,27 +317,11 @@ var __DSH_BASE = (function () {
 '  /* three times the old size on a desktop, tied to viewport height so a short',
 '     laptop screen is not swallowed by a giant bear */',
 '  .figs{position:relative;display:block;height:min(400px,44vh);width:calc(min(400px,44vh) * 0.92);',
-'    transform-origin:50% 100%;animation:pivot 24s ease-in-out infinite}',
+'    transform-origin:50% 100%;animation:pivot ease-in-out infinite}',
 '  .figs img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;',
-'    display:block;pointer-events:none;opacity:0;animation:24s ease-in-out infinite}',
-'  .figs img:nth-child(1){animation-name:poseA;opacity:1}',
-'  .figs img:nth-child(2){animation-name:poseB}',
-'  .figs img:nth-child(3){animation-name:poseC}',
-'  /* Cross-fades on a 24s cycle: each pose holds about six seconds and takes',
-'     nearly two to hand over. The first pass was 11s with half-second fades,',
-'     which read as flicking between pictures rather than a character moving.',
-'     Only opacity and transform, so it stays on the compositor. */',
-'  @keyframes poseA{0%,27%{opacity:1}35%,92%{opacity:0}100%{opacity:1}}',
-'  @keyframes poseB{0%,27%{opacity:0}35%,60%{opacity:1}68%,100%{opacity:0}}',
-'  @keyframes poseC{0%,60%{opacity:0}68%,92%{opacity:1}100%{opacity:0}}',
-'  @keyframes pivot{',
-'    0%,28%{transform:scaleX(1) translateY(0)}',
-'    31%{transform:scaleX(.90) translateY(-3px)}',
-'    34%,61%{transform:scaleX(1) translateY(0)}',
-'    64%{transform:scaleX(.90) translateY(-3px)}',
-'    67%,93%{transform:scaleX(1) translateY(0)}',
-'    96%{transform:scaleX(.90) translateY(-3px)}',
-'    99%,100%{transform:scaleX(1) translateY(0)}}',
+'    display:block;pointer-events:none;opacity:0;animation:pose0 ease-in-out infinite}',
+'  .figs img:nth-child(1){opacity:1}',
+poseCss(poses.length),
 '  /* a tab in the background, or the panel open, has no business burning CPU */',
 '  .stage.still .figs,.stage.still .figs img{animation-play-state:paused}',
 '  .launcher:hover{transform:translateY(-8px) scale(1.03)}',
@@ -338,7 +362,7 @@ var __DSH_BASE = (function () {
 '  @media(prefers-reduced-motion:reduce){',
 '    .stage,.launcher{transition:none}.launcher:hover{transform:none}.caret{animation:none}',
 '    .figs,.figs img{animation:none}',
-'    .figs img:nth-child(1){opacity:1}.figs img:nth-child(2),.figs img:nth-child(3){opacity:0}',
+'    .figs img{opacity:0}.figs img:nth-child(1){opacity:1}',
 '  }',
 '',
 '  /* ---- panel ---- */',
@@ -401,9 +425,9 @@ var __DSH_BASE = (function () {
 '  </div>',
 '  <button class="launcher" aria-label="Open chat — ' + p.title + '" aria-expanded="false">',
 '    <span class="figs">',
-'      <img alt="" src="' + POSES(this.persona)[0] + '" fetchpriority="low" decoding="async">',
-'      <img alt="" data-src="' + POSES(this.persona)[1] + '" decoding="async">',
-'      <img alt="" data-src="' + POSES(this.persona)[2] + '" decoding="async">',
+poses.map(function (u, i) {
+  return '      <img alt="" ' + (i ? 'data-src' : 'src') + '="' + u + '" decoding="async">';
+}).join('\n'),
 '    </span>',
 '  </button>',
 '</div>',

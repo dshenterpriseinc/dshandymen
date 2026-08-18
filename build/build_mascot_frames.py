@@ -29,20 +29,25 @@ from rebuild_mascots import to_alpha, components, cut, SHEETS, SCRATCH   # noqa:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'site-export', 'assets', 'web')
 
-# (sheet, figure index, output name, mirror). All are the sheets' native teal.
+# (sheet, figure index, output name, mirror). Sheet paths are relative to the
+# concept-sheet folder unless they contain a slash, in which case they are taken
+# as project-relative.
 #
-# The Bird has only two distinct poses drawn - the third here is the standing
-# one mirrored. That is not padding: he is drawn in three-quarter profile facing
-# right, which on a bottom-right mascot means facing off the page. Both working
-# poses are therefore flipped to face into the content, and the unflipped
-# original becomes the moment he turns to look the other way.
+# The Bird's four tool poses are generated art, not concept-sheet art: the only
+# drawn pose of her holding anything had a blueprint in one wing AND a brush in
+# the other, which read as an extra pair of arms. These replace it - one tool per
+# pose, and she reads female, which the original never did. Everything is
+# mirrored to face into the page, because a bottom-right mascot drawn facing
+# right is facing off the edge of the screen.
 FRAMES = [
     ('concept-sheet-02-service-poses.jpg', 5, 'bear-pose-wave', False),
     ('concept-sheet-01-bear-evolution.jpg', 2, 'bear-pose-stand', False),
     ('concept-sheet-01-bear-evolution.jpg', 3, 'bear-pose-arms', False),
     ('concept-sheet-05-pigeon-division-and-duo.jpg', 4, 'bird-pose-stand', True),
-    ('concept-sheet-05-pigeon-division-and-duo.jpg', 2, 'bird-pose-tools', True),
-    ('concept-sheet-05-pigeon-division-and-duo.jpg', 4, 'bird-pose-turn', False),
+    ('build/gen/pigeon-sheet-v1.jpg', 0, 'bird-pose-brush', True),
+    ('build/gen/pigeon-sheet-v1.jpg', 2, 'bird-pose-plans', True),
+    ('build/gen/pigeon-sheet-v1.jpg', 1, 'bird-pose-tape', True),
+    ('build/gen/pigeon-sheet-v1.jpg', 3, 'bird-pose-roller', True),
 ]
 
 CANVAS_H = 620          # frame height; the widget scales the whole thing down
@@ -64,8 +69,11 @@ def body_box(alpha, erode=ERODE):
 def build():
     made = []
     for sheet, idx, name, mirror in FRAMES:
-        rgb = Image.open(os.path.join(SHEETS, sheet))
-        figs = components(to_alpha(rgb), merge_px=8)
+        path = os.path.join(ROOT, sheet) if '/' in sheet else os.path.join(SHEETS, sheet)
+        rgb = Image.open(path)
+        # the generated sheet sets its figures closer together than the concept
+        # sheets do, so it needs a tighter merge radius to keep them apart
+        figs = components(to_alpha(rgb), merge_px=3 if '/' in sheet else 8)
         box, own = figs[idx]
         im = cut(rgb, own, box, pad=0.0)
         if mirror:

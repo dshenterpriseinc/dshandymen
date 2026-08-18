@@ -561,6 +561,16 @@ def style_design_page(path, s):
     return s
 
 
+# ---------------------------------------------------------------- 13. one tool at a time
+# mascot-pigeon-blueprint is the drawing where the Bird grips a rolled plan in one
+# wing AND a paintbrush in the other. It reads as an extra pair of arms, so it is
+# retired everywhere in favour of the single-tool poses. Runs before fix_images so
+# the <picture> wrapper is built around the name that actually ships.
+
+def retire_two_object_bird(s):
+    return s.replace('mascot-pigeon-blueprint', 'bird-pose-brush')
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -574,6 +584,7 @@ def main():
         depth = f.replace(chr(92), '/').split('/docs/')[1].count('/')
         prefix = '../' * depth
         s = fix_header_badge(s)
+        s = retire_two_object_bird(s)
         # both of these rename image files, and must land before fix_images so
         # the srcset it builds names the new files and only variants that exist
         s = fix_pressure_washing(f, s, prefix)
