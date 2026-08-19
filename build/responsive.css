@@ -126,8 +126,8 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 }
 @media (prefers-reduced-motion:reduce){.hero-vid{display:none}}
 
-/* The Pigeon Division hero is cream, not navy: its heading and body colours are
-   picked for a light ground, so the service pages' dark scrim makes them
+/* Kept for reference: the Design & Remodeling hero was once cream, not navy, and
+   its heading and body colours were picked for a light ground, so the service pages' dark scrim makes them
    illegible. This one keeps the page light and carries the drafting grid above
    the footage, since a section's own background paints beneath its children. */
 .hero-scrim--light{

@@ -106,6 +106,9 @@ def cut(rgb, own, box, pad=PAD):
 # less work, not more. Sheet 04's badge is deliberately skipped: that version
 # carries a placeholder phone number, 716-555-0123. The Bills pose keeps its own
 # colours, which are the team's, not ours.
+# Sheet 05 held the second mascot and the duo drawing. That partnership has
+# ended - Dave's own crew does the interior work - so nothing is cut from it and
+# the sheet stays in assets/ as history only.
 JOBS = [
     ('concept-sheet-02-service-poses.jpg', [
         (0, 'mascot-shovelling', False),
@@ -124,12 +127,6 @@ JOBS = [
     ('concept-sheet-04-CORRECTED-deep-navy-palette.jpg', [
         (2, 'mascot-bear-shovel-hero', True),
         (3, 'mascot-bear-go-bills', False),
-    ]),
-    ('concept-sheet-05-pigeon-division-and-duo.jpg', [
-        (1, 'logo-pigeon-division', True),
-        (2, 'mascot-pigeon-blueprint', True),
-        (3, 'mascot-bear-and-bird-duo', True),
-        (4, 'mascot-pigeon-standing', True),
     ]),
 ]
 

@@ -39,9 +39,9 @@ CLIPS = [
     # clip is not on disk, so the hero simply stays as it was until then
     ('house-clearance',           'house-clearance.mp4', 0.5, 7.0),
     ('services',                  '05B.mp4', 1.0, 7.0),
-    # Dropped in by hand from Gemini - no pigeon footage exists in the scene
-    # library. Encoded the same way as the rest so it matches.
-    ('design-remodeling',         'pigeon-design.mp4', 0.5, 7.0),
+    # 11B is the Bear finishing a wall in a warm, lived-in room - the interior
+    # work the page sells, done by the crew that actually does it now.
+    ('design-remodeling',         '11B.mp4', 0.0, 5.0),
 ]
 
 W = 960             # behind a heavy scrim, so detail beyond this is not seen

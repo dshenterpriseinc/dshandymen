@@ -33,28 +33,23 @@ OUT = os.path.join(ROOT, 'site-export', 'assets', 'web')
 # concept-sheet folder unless they contain a slash, in which case they are taken
 # as project-relative.
 #
-# Sheet 06 is generated art, added because the only drawn pose of the Bird
-# holding anything had a blueprint in one wing AND a brush in the other, which
-# read as an extra pair of arms. One tool per pose now, and she reads female,
-# which the original never did. Its four figures are drawn at a single height,
-# so they stay the same size through the loop by construction rather than by
-# correction. Everything is mirrored to face into the page, because a
-# bottom-right mascot drawn facing right is facing off the edge of the screen.
+# Everything is mirrored to face into the page, because a bottom-right mascot
+# drawn facing right is facing off the edge of the screen.
 FRAMES = [
     ('concept-sheet-02-service-poses.jpg', 5, 'bear-pose-wave', False),
     ('concept-sheet-01-bear-evolution.jpg', 2, 'bear-pose-stand', False),
     ('concept-sheet-01-bear-evolution.jpg', 3, 'bear-pose-arms', False),
-    ('concept-sheet-05-pigeon-division-and-duo.jpg', 4, 'bird-pose-stand', True),
-    ('concept-sheet-06-pigeon-designer-poses.jpg', 0, 'bird-pose-brush', True),
-    ('concept-sheet-06-pigeon-designer-poses.jpg', 1, 'bird-pose-plans', True),
-    ('concept-sheet-06-pigeon-designer-poses.jpg', 2, 'bird-pose-tape', True),
-    ('concept-sheet-06-pigeon-designer-poses.jpg', 3, 'bird-pose-roller', True),
 ]
+
+# bear-pose-arms - hard hat, tool belt, arms folded - is also the card art for
+# the design and remodeling work, so it is re-cut tight to the figure under the
+# mascot naming. Same source, same padding rule as every other card.
+CARD_CUTS = [('bear-pose-arms', 'mascot-tool-belt')]
+CARD_PAD = 0.045
 
 CANVAS_H = 620          # frame height; the widget scales the whole thing down
 BODY_FRAC = 0.80        # how much of the frame the body itself should occupy
 ERODE = 14              # enough to eat a shovel handle, not enough to eat an arm
-BIRD_ERODE = 7          # he is a smaller figure; 14 would eat his tail
 
 
 def body_box(alpha, erode=ERODE):
@@ -81,7 +76,7 @@ def build():
             im = im.transpose(Image.FLIP_LEFT_RIGHT)
         a = np.asarray(im.split()[-1])
 
-        bx0, by0, bx1, by1 = body_box(a, BIRD_ERODE if name.startswith('bird') else ERODE)
+        bx0, by0, bx1, by1 = body_box(a, ERODE)
         body_h = by1 - by0
         feet = np.where(a.max(axis=1) > 8)[0].max()          # lowest opaque row
         body_cx = (bx0 + bx1) / 2.0
@@ -134,7 +129,20 @@ def main():
         im.save(os.path.join(OUT, name + '.webp'), 'WEBP', quality=80, method=6)
         kb = os.path.getsize(os.path.join(OUT, name + '.webp')) // 1024
         print('  %-20s %dx%d  body %dpx  %d KB' % (name, im.width, im.height, bh, kb))
+    card_cuts()
     return 0
+
+
+def card_cuts():
+    from PIL import Image
+    for src, dst in CARD_CUTS:
+        im = Image.open(os.path.join(OUT, src + '.png')).convert('RGBA')
+        b = im.split()[3].getbbox()
+        pad = int(max(b[2] - b[0], b[3] - b[1]) * CARD_PAD)
+        im = im.crop((b[0] - pad, b[1] - pad, b[2] + pad, b[3] + pad))
+        im.save(os.path.join(OUT, dst + '.png'))
+        im.save(os.path.join(OUT, dst + '.webp'), quality=88, method=6)
+        print('  %-22s %dx%d' % (dst, im.width, im.height))
 
 
 if __name__ == '__main__':

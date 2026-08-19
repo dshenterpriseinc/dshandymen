@@ -31,7 +31,7 @@ PAGES = {
  "Sunrooms":           ("sunrooms-patio-enclosures/",    "Sunrooms & Patio Enclosures | Hamburg NY | DS Handymen",
                         "Three-season rooms plus Helios retractable glass sunrooms and patio enclosures. A trained dealer and installer serving Hamburg and Western New York."),
  "PigeonDivision":     ("design-remodeling/",            "Design & Remodeling | Kitchens, Tile & Trim | DS Handymen",
-                        "Kitchen and bathroom remodels, custom trim, cabinets, tile and finish carpentry across the Buffalo Southtowns. Led by Nichole Pigeon, RIT Design School."),
+                        "Kitchen and bathroom remodels, custom trim, cabinets, tile and finish carpentry across the Buffalo Southtowns, by Dave Schultz and his own crew."),
  "About":              ("about/",                        "About Dave Schultz | DS Handymen, Inc. | Hamburg NY",
                         "Dave Schultz has lived in Hamburg for 50 years and has run DS Handymen since 2009. BBB Accredited with an A+ rating, fully insured, locally owned."),
  "Gallery":            ("gallery/",                      "Before & After Gallery | Real Jobs | DS Handymen, Inc.",
@@ -199,13 +199,35 @@ def build_head(name, url, title, desc, prefix=""):
 <link rel="stylesheet" href="{prefix}assets/fonts.css">
 """ + "\n".join(blocks)
 
+RETIRED_ASSETS = (
+    'bird-pose-',
+    'logo-pigeon-division',
+    'mascot-bear-and-bird-duo',
+    'mascot-pigeon-',
+)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     # remove only generated html, never fight the OS over locked asset dirs
     for f in glob.glob(os.path.join(OUT, "**", "*.html"), recursive=True):
         try: os.remove(f)
         except OSError: pass
-    shutil.copytree(os.path.join(SRC, "assets"), os.path.join(OUT, "assets"), dirs_exist_ok=True)
+    # copytree merges, so an asset deleted from site-export would sit in docs/
+    # forever and still ship. Not everything in docs/assets has a source there -
+    # the gallery, the map and the share images are generated straight into
+    # docs/ - so retired art is named rather than diffed. Prefix match, both
+    # extensions.
+    out_assets = os.path.join(OUT, "assets")
+    for root, _dirs, files in os.walk(out_assets):
+        for f in files:
+            if any(f.startswith(r) for r in RETIRED_ASSETS):
+                try:
+                    os.remove(os.path.join(root, f))
+                    print("  pruned " + f)
+                except OSError:
+                    pass
+    shutil.copytree(os.path.join(SRC, "assets"), out_assets, dirs_exist_ok=True)
     shutil.copy(os.path.join(SRC, "chat-widget.js"), os.path.join(OUT, "chat-widget.js"))
     shutil.copy(os.path.join(ROOT, "build", "site.js"), os.path.join(OUT, "site.js"))
 

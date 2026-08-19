@@ -38,11 +38,10 @@ SHADOW_CAPS = {
     'logo-badge-primary': 460,
     'logo-badge-teal': 460,
     'logo-badge-dark': 260,
-    'logo-pigeon-division': 420,
     'mascot-bear-shovel-hero': 460,
     'mascot-waving': 460,
     'mascot-ladder-drill': 460,
-    'mascot-pigeon-blueprint': 460,
+    'mascot-tool-belt': 460,
 }
 
 MEASURE = r"""() => Array.from(document.querySelectorAll('img')).map(im => {

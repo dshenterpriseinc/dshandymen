@@ -177,15 +177,15 @@ def insert_map(path, s, prefix):
 
 # ---------------------------------------------------------------- 5. design page copy
 # The page led with "Now introducing the Pigeon Division" - a private nickname,
-# in a stale announcement frame (the division launched in Jan 2024). Lead with the
-# work, then introduce the team by name.
+# in a stale announcement frame. It leads with the work instead. These entries
+# used to name the division; they no longer can, so the lead credits the crew
+# that actually does the work.
 COPY_FIXES = [
     (">Now introducing the Pigeon Division<", ">Design &amp; Remodeling<"),
     ("Interior & exterior design and construction &mdash; custom design, trim, cabinets, drywall, paint, tile and finish work.",
      "Kitchens, bathrooms, custom trim, cabinets, tile, paint and finish carpentry across the Southtowns "
-     "&mdash; by our <strong>Pigeon Division</strong>, led by Nichole Pigeon."),
-    # stale "new division" language elsewhere
-    ("Now... introducing the Pigeon Division!", "The Pigeon Division"),
+     "&mdash; by Dave and his crew."),
+    ("Now... introducing the Pigeon Division!", "Design &amp; Remodeling"),
     # the ruler is a left-hand rail on desktop but sits above the copy once the
     # grid collapses, so the wording cannot name a direction
     ('that stick on the left is what', 'that stick is what'),
@@ -605,16 +605,6 @@ def style_design_page(path, s):
     return s
 
 
-# ---------------------------------------------------------------- 13. one tool at a time
-# mascot-pigeon-blueprint is the drawing where the Bird grips a rolled plan in one
-# wing AND a paintbrush in the other. It reads as an extra pair of arms, so it is
-# retired everywhere in favour of the single-tool poses. Runs before fix_images so
-# the <picture> wrapper is built around the name that actually ships.
-
-def retire_two_object_bird(s):
-    return s.replace('mascot-pigeon-blueprint', 'bird-pose-brush')
-
-
 # ---------------------------------------------------------------- 14. hero video
 # Each service page gets the clip that matches what it sells, behind its hero,
 # the way the home page already works. Silent and looping - they carry no audio
@@ -717,6 +707,195 @@ def add_mobile_nav(s):
     return s[:i] + MENU_BTN + s[i:]
 
 
+# ---------------------------------------------------------------- 16. the Pigeon Division
+# Dave no longer works with Nichole Pigeon, so the division and both references
+# to a partnership come out entirely - name, credentials, mascot, badge, video
+# and chat persona. The work itself stays: he and his crew do the interior and
+# finish side themselves, so every mention is rewritten to say that rather than
+# deleted, and Design & Remodeling remains a service with its own page.
+#
+# Nichole's RIT credential and her crew's 40 years are hers, not the company's,
+# so those claims are removed rather than reassigned - repointing someone else's
+# qualifications at Dave would be a lie in his shop window.
+
+PIGEON_COPY = [
+    # the eyebrow above the page title. It framed this work as a separate outfit
+    # under the DS Handymen name, which is the whole thing that has ended.
+    ('>A division of DS Handymen, Inc.<', '>Interior work by Dave and his own crew<'),
+    ("Want a designer's eye on the finish? That's the Bird. "
+     '<a href="../design-remodeling/">Meet the Pigeon Division</a>.',
+     "Want a designer's eye on the finish? See "
+     '<a href="../design-remodeling/">Design & Remodeling</a>.'),
+    # ---- home: the two-temperaments block
+    ('aria-label="The Bear and the Bird"', 'aria-label="Inside and out"'),
+    ('>One company, two temperaments<', '>One crew, inside and out<'),
+    ('>The Bear & the Bird work together<', '>Outside the house, and inside it<'),
+    ('<strong style="color: rgb(255, 255, 255);">The Bird</strong> is Nichole Pigeon &mdash; '
+     'RIT Design School graduate leading the Pigeon Division, our interior & exterior design and '
+     'construction arm. Trim, cabinets, tile, paint, finish work.',
+     '<strong style="color: rgb(255, 255, 255);">Inside</strong> it is the same crew. Trim, '
+     'cabinets, tile, paint and finish carpentry &mdash; held to the standard of everything else '
+     'with his name on it.'),
+    ('>Meet the Pigeon Division &rarr;<', '>See design & remodeling &rarr;<'),
+    ('>Meet the Pigeon Division<', '>See design & remodeling<'),
+
+    # ---- about
+    ('&hellip;and the Bird', '&hellip;and inside the house'),
+    ('In recent years the company grew a second temperament: the Pigeon Division, led by Nichole '
+     'Pigeon, an RIT Design School graduate whose crew brings 40+ years of collective experience '
+     'to design, trim, cabinets, tile, paint and finish work.',
+     'In recent years the company grew inwards as well as outwards. Dave and his crew take on '
+     'interior and exterior construction too &mdash; design, trim, cabinets, tile, paint and '
+     'finish work.'),
+    ("The Bear handles the weather. The Bird handles the details. The Bear and the Bird work "
+     "together &mdash; one company, one phone number.",
+     'The Bear handles the weather. The same crew handles the details &mdash; one company, one '
+     'phone number, one standard.'),
+
+    # ---- design & remodeling
+    ('&mdash; by our <strong>Pigeon Division</strong>, led by Nichole Pigeon.',
+     '&mdash; by Dave and his crew.'),
+    ('>The partnership<', '>The standard<'),
+    ('"The Bear and the Bird work together to bring you expanded Interior and Exterior Design and '
+     'Construction services."',
+     '"The same crew that clears your driveway finishes your kitchen."'),
+    ("Same company, same phone number, same free estimate &mdash; with a designer's eye on "
+     "everything you'll see and touch when the work is done.",
+     "Same company, same phone number, same free estimate &mdash; and the same care on everything "
+     "you'll see and touch when the work is done."),
+    ('>Who leads it<', '>Who does it<'),
+    ('>Nichole Pigeon</h2>', '>Dave and his crew</h2>'),
+    ('After years of collaborating, DS Handymen, Inc. welcomed Nichole Pigeon and her crew to lead '
+     'an expanded interior and exterior construction division. A graduate of the Rochester '
+     'Institute of Technology (RIT) Design School, Nichole carries an outstanding reputation for '
+     'the pride she takes in her work.',
+     'DS Handymen has taken on interior and exterior construction alongside the outside work for '
+     'years now. It is the same crew either way &mdash; the one Dave has built up over sixteen '
+     'years in business and fifty in Hamburg.'),
+    ('Her premium crew brings over 40 years of collective experience to custom design, trim work, '
+     'cabinets, drywall, paint, tile and finish work &mdash; plus exterior projects.',
+     'Custom design, trim work, cabinets, drywall, paint, tile and finish work &mdash; plus '
+     'exterior projects. Free estimate, same as everything else.'),
+
+    # ---- services
+    ("Outside work is the Bear's. Design and finish work is the Bird's. Same company, same phone "
+     "number, same free estimate.",
+     'Outside work and inside work &mdash; same crew either way. Same company, same phone number, '
+     'same free estimate.'),
+    # the design card sat opposite the handyman card under the two-sides framing.
+    # Both are interior work now, so the label has to separate them on what a
+    # visitor is actually choosing between: a repair or a remodel.
+    (">The Bird's side<", '>Kitchens &amp; baths<'),
+
+    # ---- handyman & remodeling
+    ('&mdash; with the Pigeon Division on design and finish',
+     '&mdash; design and finish included'),
+
+    # ---- contact
+    ('plowing, washing, fixing, building, and the Pigeon Division',
+     'plowing, washing, fixing, building and remodeling'),
+
+    # ---- quote form. The value is what lands in Dave's inbox, so it has to read
+    # plainly on its own line of an email.
+    ('>Pigeon Division (design & finish)<', '>Design & remodeling<'),
+    ('value="Pigeon Division (design & finish)"', 'value="Design & remodeling"'),
+]
+
+# the duo artwork and the division badge both go; the Bear on a ladder is the
+# honest picture of who does this work now
+PIGEON_ART = [
+    ('mascot-bear-and-bird-duo', 'mascot-ladder-drill'),
+    ('mascot-pigeon-blueprint', 'mascot-tool-belt'),
+    ('mascot-pigeon-standing', 'mascot-tool-belt'),
+    ('bird-pose-brush', 'mascot-tool-belt'),
+    ('bird-pose-plans', 'mascot-tool-belt'),
+    ('bird-pose-tape', 'mascot-tool-belt'),
+    ('bird-pose-roller', 'mascot-tool-belt'),
+    ('bird-pose-stand', 'mascot-tool-belt'),
+    ('bird-pose-tools', 'mascot-tool-belt'),
+    ('bird-pose-turn', 'mascot-tool-belt'),
+    ('alt="The Bird with a paintbrush"', 'alt="Dave and his crew handle the finish work"'),
+    ('alt="The Bird with rolled plans"', 'alt="Dave and his crew handle the finish work"'),
+    ('logo-pigeon-division', 'logo-badge-teal'),
+    ('alt="The Bear and the Bird together"', 'alt="The Bear at work on an interior fit-out"'),
+    ('alt="The Bear and the Bird &mdash; the two sides of DS Handymen"',
+     'alt="The Bear on the ladder, mid fit-out"'),
+    ('alt="The Bear and the Bird, side by side"', 'alt="The Bear on the ladder, mid fit-out"'),
+    ('alt="The Pigeon Division badge"', 'alt="DS Handymen, Inc."'),
+]
+
+
+# Every service card carried the same eyebrow, "The Bear's side". It only ever
+# meant anything against a second side that no longer exists, so six identical
+# labels now say nothing six times. Each card gets the label a visitor scanning
+# the grid would actually use.
+CARD_EYEBROWS = [
+    ('Snow Plowing', 'Winter'),
+    ('Landscaping', 'Spring to fall'),
+    ('Pressure Washing', 'Exterior'),
+    ('Handyman &amp; Remodeling', 'Inside the house'),
+    ('Handyman & Remodeling', 'Inside the house'),
+    ('House Clearance', 'Clear-outs'),
+    ('Sunrooms &amp; Patio Enclosures', 'Helios dealer'),
+    ('Sunrooms & Patio Enclosures', 'Helios dealer'),
+]
+OLD_EYEBROW = ">The Bear's side<"
+
+
+def relabel_service_cards(s):
+    """Rewrite each card eyebrow to match the heading that follows it."""
+    out, i = [], 0
+    while True:
+        j = s.find(OLD_EYEBROW, i)
+        if j < 0:
+            out.append(s[i:])
+            break
+        ahead = s[j:j + 2400]
+        label = None
+        for heading, text in CARD_EYEBROWS:
+            k = ahead.find('>' + heading + '<')
+            if k > 0:
+                label = text
+                break
+        out.append(s[i:j])
+        out.append('>' + label + '<' if label else OLD_EYEBROW)
+        i = j + len(OLD_EYEBROW)
+    return ''.join(out)
+
+
+# The design card on the services grid was drawn in the second mascot's warm
+# palette so it would read as the other outfit's card. It is Dave's own work now
+# and sits in a row of six teal siblings, where a lone beige tile just looks like
+# a mistake. Measured off the House Clearance card next to it.
+#
+# Runs after to_brand_teal, not before: these are the colours on the built page,
+# and a rotation applied afterwards would move only one side of the pair.
+DESIGN_CARD_COLOURS = [
+    ('background: rgb(246, 242, 237)', 'background: rgb(242, 249, 250)'),
+    ('rgb(232, 223, 212)', 'rgb(218, 235, 239)'),
+    ('rgb(164, 92, 56)', 'rgb(0, 65, 79)'),
+]
+
+
+def normalise_design_card(f, s):
+    if 'services' + os.sep + 'index.html' not in f and 'services/index.html' not in f:
+        return s
+    for old, new in DESIGN_CARD_COLOURS:
+        s = s.replace(old, new)
+    return s
+
+
+def retire_pigeon_division(s):
+    for old, new in PIGEON_COPY:
+        s = s.replace(old, new)
+    for old, new in PIGEON_ART:
+        s = s.replace(old, new)
+    # the chat widget on this page is the Bear now, like everywhere else
+    s = s.replace('<chat-widget persona="bird">', '<chat-widget persona="design">')
+    s = relabel_service_cards(s)
+    return s
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -729,8 +908,8 @@ def main():
                 s = s.replace("</head>", REVIEW_LD + "\n</head>", 1)
         depth = f.replace(chr(92), '/').split('/docs/')[1].count('/')
         prefix = '../' * depth
+        s = retire_pigeon_division(s)
         s = fix_header_badge(s)
-        s = retire_two_object_bird(s)
         # both of these rename image files, and must land before fix_images so
         # the srcset it builds names the new files and only variants that exist
         s = fix_pressure_washing(f, s, prefix)
@@ -752,6 +931,9 @@ def main():
         # so its keys are the final colours. Applying it to pre-rotation markup
         # matched nothing and silently undid every fix it had solved.
         s = apply_contrast_map(f, s)
+        # after the contrast map, not before: the map solved that eyebrow against
+        # the beige it used to sit on, and would put the warm colour straight back
+        s = normalise_design_card(f, s)
         s = insert_map(f, s, '../'*depth)
         s = wire_form(f, s, '../'*depth)
         if 'Responsive layer' not in s:

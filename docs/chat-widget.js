@@ -1,4 +1,4 @@
-/* DS Handymen - "Ask the Bear" / "Ask the Bird".
+/* DS Handymen - "Ask the Bear".
 
    A vanilla web component, no network calls and no dependencies. The bear waits
    a few seconds, walks on, and says hello in a speech bubble that types itself
@@ -35,37 +35,19 @@ var __DSH_BASE = (function () {
     pointing:  U('assets/web/mascot-ladder-drill.webp'),
     thumbsup:  U('assets/web/mascot-waving.webp')
   };
-  // the panel's head figure. Also moved off mascot-pigeon-blueprint, which is the
-  // two-objects-at-once drawing - it was still showing in the header.
-  var BIRD_FIG = {
-    neutral:   U('assets/web/bird-pose-plans.webp'),
-    listening: U('assets/web/bird-pose-plans.webp'),
-    waving:    U('assets/web/bird-pose-brush.webp'),
-    delighted: U('assets/web/bird-pose-brush.webp'),
-    pointing:  U('assets/web/bird-pose-tape.webp'),
-    thumbsup:  U('assets/web/bird-pose-roller.webp')
-  };
   // The animation loop: three real poses of the same character. He waves,
   // pivots, folds his arms, holds, and pivots back. Frames rather than a
   // rendered clip so the animation is exactly the mascot on the cards and in the
   // logo, keeps a real alpha channel, and costs ~100 KB instead of megabytes.
-  // The Bear's three come from the concept sheets. The Bird's four are generated
-  // art that replaced her one drawn tool pose, which had her gripping a blueprint
-  // in one wing AND a brush in the other - it read as an extra pair of arms.
-  // One tool per pose now, and the loop takes however many poses it is given.
-  var POSE_SETS = {
-    bear: ['bear-pose-wave', 'bear-pose-stand', 'bear-pose-arms'],
-    bird: ['bird-pose-brush', 'bird-pose-plans', 'bird-pose-tape', 'bird-pose-roller']
-  };
-  var POSES = function (persona) {
-    return (POSE_SETS[persona] || POSE_SETS.bear).map(function (n) {
-      return U('assets/web/' + n + '.webp');
-    });
+  // The three come from the concept sheets, and the loop takes however many
+  // poses it is given.
+  var POSE_SET = ['bear-pose-wave', 'bear-pose-stand', 'bear-pose-arms'];
+  var POSES = function () {
+    return POSE_SET.map(function (n) { return U('assets/web/' + n + '.webp'); });
   };
 
   // Six seconds holding each pose, nearly two handing over. Built rather than
-  // hand-written because the Bear runs three poses and the Bird four, and the
-  // percentages have to move with the count.
+  // hand-written so the percentages move with the pose count.
   var HOLD = 5.6, FADE = 1.9;
 
   function poseCss(n) {
@@ -89,7 +71,7 @@ var __DSH_BASE = (function () {
       }
     }
     mids.push(100 - f / 2);
-    // a squash at each hand-over, which reads as her turning on the spot
+    // a squash at each hand-over, which reads as him turning on the spot
     var kf = ['0%{transform:scaleX(1)}'];
     mids.forEach(function (m) {
       kf.push(Math.max(0.1, m - 2).toFixed(2) + '%{transform:scaleX(1)}');
@@ -101,37 +83,37 @@ var __DSH_BASE = (function () {
     return out.join('\n');
   }
 
-  var FIG = function (persona, state) {
-    var set = persona === 'bear' ? BEAR_FIG : BIRD_FIG;
-    return set[state] || set.neutral;
-  };
+  var FIG = function (state) { return BEAR_FIG[state] || BEAR_FIG.neutral; };
 
   var PERSONAS = {
     bear: {
       name: 'The Bear', title: 'Ask the Bear',
-      tag: "Dave's sidekick — outside work",
+      tag: "Dave's sidekick — anything Dave does",
       header: '#132E35', accent: '#00414F',
       panel: '#F2F9FA', bubbleBot: '#FFFFFF', bubbleUser: '#00414F',
-      hello: "Hey — I'm the Bear. I'm here to help. Ask me anything about plowing, washing, mowing or fixing.",
+      hello: "Hey — I'm the Bear. I'm here to help. Ask me anything about plowing, washing, mowing or remodelling.",
       helloShort: "Hey — I'm the Bear. Ask me anything.",
       greet: "Right then. What do you need doing?",
       chips: ['Snow plowing', 'Get a quote', 'Pricing', 'Service area', 'Talk to Dave'],
       voice: /(david|mark|guy|george|daniel|male)/i,
       pitch: 0.82, rate: 0.98, speed: 420
-    },
-    bird: {
-      name: 'The Bird', title: 'Ask the Bird',
-      tag: "Nichole's side — design & finish",
-      header: '#6E655C', accent: '#B5673F',
-      panel: '#F6F2ED', bubbleBot: '#FFFFFF', bubbleUser: '#B5673F',
-      hello: "Hello — I'm the Bird. Kitchens, tile, trim, cabinets. Ask me anything about design work.",
-      helloShort: "Hello — I'm the Bird. Ask me about design.",
-      greet: "Now then. What are we planning?",
-      chips: ['Kitchen remodel', 'Tile & backsplash', 'The Pigeon Division', 'Get a quote'],
-      voice: /(zira|samantha|karen|susan|female|fiona)/i,
-      pitch: 1.12, rate: 1.0, speed: 700
     }
   };
+
+  // One character. The design side of the business used to have a mascot of its
+  // own; the crew that came with it no longer works here and Dave's own people
+  // do the interior work, so the design pages get the same Bear, in the same
+  // colours, opening on what those visitors actually came to read.
+  PERSONAS.design = (function (b) {
+    var d = {}, k;
+    for (k in b) d[k] = b[k];
+    d.tag = "Dave's sidekick — kitchens, baths & finish work";
+    d.hello = "Hey — I'm the Bear. Kitchens, baths, tile, trim and cabinets. Ask me anything about the inside work.";
+    d.helloShort = "Hey — I'm the Bear. Ask me about the inside work.";
+    d.greet = 'Right then. What are we planning?';
+    d.chips = ['Kitchen remodel', 'Tile & backsplash', 'Who does the work?', 'Get a quote'];
+    return d;
+  }(PERSONAS.bear));
 
   var Q = { link: U('quote/'), label: 'Free quote' };
 
@@ -141,8 +123,23 @@ var __DSH_BASE = (function () {
      routes to the quote form or the phone, because that is what Dave actually
      wants and a made-up number would cost him the job. */
   var BEAR_KB = [
-    [/tile|backsplash|cabinet|colou?r scheme|paint colou?r|interior design|finish carpentr|kitchen remodel|bathroom remodel|vanit|drywall|trim work|pigeon division|nichole/i,
-      "That's the Bird's department — hang on.", { handoff: 'bird' }],
+    [/who does (the |your )?(design|interior|remodel|finish|inside)|do you (do|handle) (the )?design|sub.?contract|in.?house|own crew/i,
+      "Dave and his own crew, start to finish. The same people design it, build it and hand it back — the finish work is not passed to somebody else."],
+    [/kitchen/i,
+      "Kitchens from the first drawing through to the last coat — cabinets, tile, lighting and the trim around them. Have a look at the work, then let's talk about your space.",
+      { link: U('gallery/'), linkLabel: 'See the work' }],
+    [/bathroom|vanit|shower/i,
+      'Bathrooms too — vanities, tile, lighting and the finish carpentry around them.'],
+    [/tile|backsplash/i,
+      'Tile and backsplash, yes. Material and layout make more difference than people expect, so it is worth getting right first time.'],
+    [/cabinet|trim work|moulding|crown|finish carpentr|drywall|paint(ing)?\b/i,
+      'All in our wheelhouse. Proportion and prep are most of the job.'],
+    [/interior design|colou?r scheme|paint colou?r|design only|just design|plans only|drawings/i,
+      'We can design it, build it, or both — whichever suits.',
+      { link: U('design-remodeling/'), linkLabel: 'Design & remodeling' }],
+    [/timeline|lead time|how soon|when could you (start|come)/i,
+      'It depends on scope and materials. Send photos through the quote form and we can talk properly about timing.',
+      { link: Q.link, linkLabel: Q.label }],
 
     [/who are you|what are you|your name|are you (a )?(bot|robot|real|human|ai)/i,
       "I'm the Bear, Dave Schultz's sidekick — a helper on this website, not Dave himself. Dave's been fixing, plowing and building around Hamburg for 50 years. For anything I can't answer, call him on " + PHONE + '.', { call: true }],
@@ -220,40 +217,8 @@ var __DSH_BASE = (function () {
       'Best way is to call ' + PHONE + '. Dave picks up.', { call: true }]
   ];
 
-  var BIRD_KB = [
-    [/plow|snow|wash|gutter|mow|lawn|driveway|clearance|roof|salt|outside work/i,
-      "That's the Bear's side of the house — one moment.", { handoff: 'bear' }],
-    [/who are you|your name|are you (a )?(bot|robot|real|human|ai)/i,
-      "I'm the Bird, and I speak for Nichole Pigeon's side of the business — a helper on this website rather than Nichole herself. Design and finish work is what we do."],
-    [/what is|pigeon division|division|who is nichole/i,
-      'The Pigeon Division is the design and finish arm of DS Handymen. Nichole Pigeon is an RIT Design School graduate and the crew has over 40 years of collective experience.',
-      { link: U('design-remodeling/'), linkLabel: 'Design & Remodeling' }],
-    [/what do you do|services|offer/i,
-      'Custom design, trim, cabinets, drywall, paint, tile and finish carpentry — interior and exterior.'],
-    [/kitchen/i,
-      'Kitchens from design through finish. Have a look at the work, then let’s talk about your space.',
-      { link: U('gallery/'), linkLabel: 'See the work' }],
-    [/bathroom|vanit|shower/i, 'Bathrooms too — vanities, tile, lighting and the finish carpentry around them.'],
-    [/tile|backsplash|floor tile/i,
-      'Tile and backsplash, yes. Material and layout make more difference than people expect, so it is worth getting right first time.'],
-    [/cabinet|trim|drywall|paint|finish|moulding|crown/i,
-      'All in our wheelhouse. Proportion and prep are most of the job.'],
-    [/basement|living space|addition|open plan/i, 'Finished basements and living spaces, from layout through to the last coat.'],
-    [/design only|just design|plans only|drawings/i, 'We can design it, build it, or both — whichever suits.'],
-    [/timeline|how long|lead time|when could you/i,
-      'It depends on scope and materials. Send photos through the quote form and we can talk properly about timing.', { link: Q.link, linkLabel: Q.label }],
-    [/price|cost|how much|budget/i,
-      'It depends on the space and the materials, so I won’t guess. Send photos through the quote form and we’ll talk it through.', { link: Q.link, linkLabel: Q.label }],
-    [/start|begin|book|quote|estimate|contact/i,
-      'Free estimate. Call ' + PHONE + ' or send photos through the quote form.', { link: Q.link, linkLabel: Q.label }],
-    [/thank|cheers|appreciate|lovely|great/i, 'A pleasure. Anything else?'],
-    [/^(hi|hey|hello|good (morning|afternoon|evening))\b/i, 'Hello. What are we planning?']
-  ];
-
-  var FALLBACK = {
-    bear: "That one's for Dave rather than me. Call " + PHONE + ' or send it through the quote form and he’ll set you straight.',
-    bird: "I'd rather Nichole answered that one properly. Call " + PHONE + ' or send it through the quote form.'
-  };
+  var FALLBACK = "That one’s for Dave rather than me. Call " + PHONE +
+    ' or send it through the quote form and he’ll set you straight.';
 
   var CHIP_TEXT = {
     'Snow plowing': 'Do you plow driveways?',
@@ -263,7 +228,7 @@ var __DSH_BASE = (function () {
     'Talk to Dave': 'Can I talk to Dave?',
     'Kitchen remodel': 'Do you do kitchen remodels?',
     'Tile & backsplash': 'Do you do tile and backsplash?',
-    'The Pigeon Division': 'What is the Pigeon Division?'
+    'Who does the work?': 'Who does the design and finish work?'
   };
 
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -274,7 +239,8 @@ var __DSH_BASE = (function () {
     connectedCallback() {
       if (this._built) return;
       this._built = true;
-      this.persona = this.getAttribute('persona') === 'bird' ? 'bird' : 'bear';
+      // the same Bear either way; 'design' only changes what he opens with
+      this.persona = this.getAttribute('persona') === 'design' ? 'design' : 'bear';
       this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       this.voiceOn = false;
       try { this.voiceOn = localStorage.getItem('dsh-voice') === 'on'; } catch (e) {}
@@ -296,7 +262,7 @@ var __DSH_BASE = (function () {
 
     _render() {
       var p = this._p();
-      var poses = POSES(this.persona);
+      var poses = POSES();
       this.shadowRoot.innerHTML = [
 '<style>',
 '  :host{all:initial}',
@@ -441,7 +407,7 @@ poses.map(function (u, i) {
 '</div>',
 '<div class="panel hidden" role="dialog" aria-label="' + p.title + '" aria-modal="false">',
 '  <div class="head">',
-'    <img alt="" src="' + FIG(this.persona, 'waving') + '">',
+'    <img alt="" src="' + FIG('waving') + '">',
 '    <div><div class="nm"></div><div class="tg"></div></div>',
 '    <div class="tools">',
 '      <button class="spk" aria-pressed="false" aria-label="Read answers aloud" title="Read answers aloud">\u{1F50A}</button>',
@@ -623,7 +589,6 @@ poses.map(function (u, i) {
       st.setProperty('--usr-bg', p.bubbleUser); st.setProperty('--link', p.accent);
       st.setProperty('--chip', p.header);
       this._setAvatar(first ? 'waving' : 'neutral');
-      if (!first) this._setPoses();
       this.$chips.innerHTML = '';
       p.chips.forEach(function (c) {
         var b = document.createElement('button');
@@ -635,18 +600,7 @@ poses.map(function (u, i) {
 
     _setAvatar(state) {
       // the big figure runs its own loop now; only the panel's head reacts to state
-      if (this.$headImg) this.$headImg.src = FIG(this.persona, state);
-    }
-
-    _setPoses() {
-      // after a hand-over the launcher must follow, or the Bird's page ends up
-      // with the Bear standing in the corner
-      var set = POSES(this.persona), arrived = this._arrived;
-      this.shadowRoot.querySelectorAll('.figs img').forEach(function (im, i) {
-        if (!set[i]) return;
-        if (i === 0 || arrived) { im.src = set[i]; im.removeAttribute('data-src'); }
-        else im.setAttribute('data-src', set[i]);
-      });
+      if (this.$headImg) this.$headImg.src = FIG(state);
     }
 
     _still(on) { this.$stage.classList.toggle('still', !!on); }
@@ -693,41 +647,16 @@ poses.map(function (u, i) {
     _ask(text) {
       var self = this;
       this._el('m usr', esc(text));
-      var kb = this.persona === 'bear' ? BEAR_KB : BIRD_KB;
+      var kb = BEAR_KB;
       var hit = null;
       for (var i = 0; i < kb.length; i += 1) { if (kb[i][0].test(text)) { hit = kb[i]; break; } }
       var typing = this._el('m bot', '<span class="typing"><i></i><i></i><i></i></span>');
       this._setAvatar('listening');
       setTimeout(function () {
         typing.remove();
-        if (!hit) { self._bot(FALLBACK[self.persona], 'neutral', { link: Q.link, linkLabel: Q.label }); return; }
+        if (!hit) { self._bot(FALLBACK, 'neutral', { link: Q.link, linkLabel: Q.label }); return; }
         self._bot(hit[1], 'delighted', hit[2]);
-        if (hit[2] && hit[2].handoff) self._handoff(hit[2].handoff, text);
       }, this.reduced ? 60 : this._p().speed);
-    }
-
-    _handoff(to, originalQ) {
-      var self = this;
-      setTimeout(function () {
-        self._el('sys', to === 'bird' ? 'The panel warms — the Bird takes over.'
-                                      : 'The panel cools — the Bear steps back in.');
-        self.persona = to;
-        self._applyPersona(false);
-        setTimeout(function () {
-          self._bot(to === 'bird' ? 'Hello — the Bird here. I heard the question.'
-                                  : 'Bear again. Outside work, now we’re talking.', 'waving');
-          var kb = to === 'bear' ? BEAR_KB : BIRD_KB;
-          for (var i = 0; i < kb.length; i += 1) {
-            var it = kb[i];
-            if (it[2] && it[2].handoff) continue;
-            if (it[0].test(originalQ)) {
-              setTimeout(function (r) { return function () { self._bot(r[1], 'delighted', r[2]); }; }(it),
-                         self.reduced ? 100 : 900);
-              break;
-            }
-          }
-        }, self.reduced ? 100 : 700);
-      }, this.reduced ? 200 : 1400);
     }
   }
 

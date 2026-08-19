@@ -1,6 +1,9 @@
 import io, os
 OUT = r"R:/Documents/Claude/Projects/DSHandymen/docs"
-REDIRECTS = {"pigeon-division": "../design-remodeling/"}
+# The design export shipped a /pigeon-division/ URL. Nothing links to it, the
+# site has not gone live on the real domain yet, so there is no inbound traffic
+# to preserve - and the point of the change was that the name goes.
+REDIRECTS = {}
 TPL = """<!DOCTYPE html>
 <html lang="en">
 <head>
