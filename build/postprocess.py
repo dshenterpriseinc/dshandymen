@@ -530,48 +530,72 @@ def to_brand_teal(s):
 
 
 # ---------------------------------------------------------------- 12. the Bird's page
-# Design & Remodeling opened on flat cream while every other page on the site
-# opens on photography. The drafting grid was a good instinct and stays; what it
-# lacked was depth and any sight of the actual work above the fold. A photograph
-# of finished trim goes behind the grid under a heavy cream scrim - present
-# enough to give the panel substance, faint enough that it reads as texture
-# rather than a picture competing with the heading.
+# Design & Remodeling was the odd one out: a centred hero on flat cream while
+# every other page opens left-aligned on dark with footage behind it. Cream also
+# meant the hero video had to sit under a 90% scrim to keep the type legible,
+# which washed the clip out to almost nothing.
+#
+# So the hero now matches the rest of the site - dark ground, headline top left,
+# the standard directional scrim that is heaviest under the text and lightest on
+# the right where the footage can be seen. The drafting grid is not lost; it
+# moves down to the band underneath, which is where it can be a texture rather
+# than something fighting a video.
+#
+# Colours here are the pre-rotation navy values the other service heroes use, so
+# to_brand_teal lands this page on exactly the same teal as its siblings.
 
-HERO_GRID_OLD = ('background: repeating-linear-gradient(0deg, rgba(44, 74, 107, 0.05) 0px, '
-                 'rgba(44, 74, 107, 0.05) 1px, transparent 1px, transparent 32px), '
-                 'repeating-linear-gradient(90deg, rgba(44, 74, 107, 0.05) 0px, '
-                 'rgba(44, 74, 107, 0.05) 1px, transparent 1px, transparent 32px), '
-                 'rgb(246, 242, 237);')
+HERO_FIXES = [
+    # centred cream panel -> left-aligned dark hero
+    ('max-width: 1080px; margin: 0px auto; padding: 96px 24px 88px; text-align: center;',
+     'max-width: 1240px; margin: 0px auto; padding: 84px 24px 76px; text-align: left;'),
+    # the badge leads the column instead of floating centre
+    ('width: 180px; height: 180px; object-fit: contain; display: block; margin: 0px auto 10px;',
+     'width: 118px; height: 118px; object-fit: contain; display: block; margin: 0px 0px 18px;'),
+    # eyebrow, headline and lead take the dark-hero palette
+    ('letter-spacing: 0.24em; text-transform: uppercase; color: rgb(138, 128, 120);',
+     'letter-spacing: 0.24em; text-transform: uppercase; color: rgb(245, 179, 36);'),
+    ('line-height: 1.04; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(44, 74, 107);',
+     'line-height: 1.04; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(255, 255, 255);'),
+    ('margin: 0px auto; font-size: 20px; font-weight: 300; color: rgb(92, 83, 72); max-width: 52ch;',
+     'margin: 0px; font-size: 20px; font-weight: 300; color: rgb(201, 212, 230); max-width: 46ch;'),
+]
 
-HERO_GRID_NEW = (
-    'background:'
-    # the drafting grid, now two weights like real drawing paper
-    ' repeating-linear-gradient(0deg, rgba(44,74,107,.07) 0px, rgba(44,74,107,.07) 1px, transparent 1px, transparent 32px),'
-    ' repeating-linear-gradient(90deg, rgba(44,74,107,.07) 0px, rgba(44,74,107,.07) 1px, transparent 1px, transparent 32px),'
-    ' repeating-linear-gradient(0deg, rgba(44,74,107,.16) 0px, rgba(44,74,107,.16) 1px, transparent 1px, transparent 160px),'
-    ' repeating-linear-gradient(90deg, rgba(44,74,107,.16) 0px, rgba(44,74,107,.16) 1px, transparent 1px, transparent 160px),'
-    # the scrim that keeps the type comfortably readable over the photograph
-    ' linear-gradient(180deg, rgba(246,242,237,.96) 0%, rgba(246,242,237,.93) 45%, rgba(246,242,237,.98) 100%),'
-    ' url(../assets/photos/diningroom-arched-window.webp) center 38%/cover no-repeat,'
-    ' rgb(246, 242, 237);')
+# the drafting grid, moved to the band below the hero
+GRID_BELOW = ('background:'
+              ' repeating-linear-gradient(0deg, rgba(44,74,107,.06) 0px, rgba(44,74,107,.06) 1px, transparent 1px, transparent 32px),'
+              ' repeating-linear-gradient(90deg, rgba(44,74,107,.06) 0px, rgba(44,74,107,.06) 1px, transparent 1px, transparent 32px),'
+              ' repeating-linear-gradient(0deg, rgba(44,74,107,.14) 0px, rgba(44,74,107,.14) 1px, transparent 1px, transparent 160px),'
+              ' repeating-linear-gradient(90deg, rgba(44,74,107,.14) 0px, rgba(44,74,107,.14) 1px, transparent 1px, transparent 160px),'
+              ' rgb(239, 231, 220);')
 
-WORK_OLD = '<h2 style=\'margin: 0px 0px 6px; font-family: "Barlow Condensed"'
 
 def style_design_page(path, s):
     if 'design-remodeling' not in path.replace(chr(92), '/'):
         return s
-    s = s.replace(HERO_GRID_OLD, HERO_GRID_NEW, 1)
 
-    # the gallery floated on bare white, so it read as loose page rather than a
-    # section of its own. A cream band ties it to the division's palette.
+    # hero: plain dark ground. The photograph and the grid both come off - the
+    # video is the background now, and two textures behind one headline is one
+    # too many.
+    i = s.find('<section', s.find('<body>'))
+    j = s.find('>', i)
+    if i > 0 and 'repeating-linear-gradient' in s[i:j]:
+        # keep the positioning add_hero_video established - without it the scrim
+        # resolves against the viewport and greys out the whole page
+        s = s[:i] + '<section style="position:relative;overflow:hidden;background: rgb(12, 22, 32);"' + s[j:]
+
+    for old, new in HERO_FIXES:
+        s = s.replace(old, new, 1)
+
+    # the band below the hero picks up the drafting grid
+    s = s.replace('<section style="background: rgb(239, 231, 220);">',
+                  '<section style="' + GRID_BELOW + '">', 1)
+
+    # the gallery keeps its own cream band so it still reads as a section
     i = s.find('>The work<')
     if i > 0:
         j = s.rfind('<section', 0, i)
-        if j > 0:
-            k = s.find('>', j)
-            tag = s[j:k + 1]
-            if 'background' not in tag:
-                s = s[:j] + '<section style="background: rgb(250, 247, 243);"' + s[j + 8:]
+        if j > 0 and 'background' not in s[j:s.find('>', j) + 1]:
+            s = s[:j] + '<section style="background: rgb(250, 247, 243);"' + s[j + 8:]
     return s
 
 
@@ -650,11 +674,7 @@ def add_hero_video(path, s, prefix):
         at = m.start() + len(fixed)
 
     nxt = re.compile(r'<div\b([^>]*)>').search(s, at)
-    # The Bird's page is a light hero - cream and drafting grid - and the dark
-    # scrim the service pages use buries its type, which is coloured for cream.
-    # It gets a cream scrim that carries the grid on top of the footage instead.
-    scrim = ('<div class="hero-scrim hero-scrim--light"></div>' if page == 'design-remodeling'
-             else '<div class="hero-scrim"></div>')
+    scrim = '<div class="hero-scrim"></div>'
     out = s[:at] + vid + scrim + s[at:]
     if nxt:
         shift = len(vid) + len(scrim)
