@@ -636,6 +636,48 @@ def _vid_tag(prefix, slug):
             ' data-src="%sassets/video/hero-%s.mp4"></video>' % (prefix, slug, prefix, slug))
 
 
+# The sunrooms page sold three-season rooms and Helios retractable glass over a
+# four-up of: a bare concrete slab, a poolside slab, a slab being pressure-washed
+# with the washer and hose in shot, and a cinder-block garden bench. Not one of
+# them showed an enclosure, and the first was captioned "Patio enclosure project".
+#
+# Dave has exactly one photograph of the finished product - patio-cover - and it
+# was being spent as a hero backdrop underneath a video, where it read as a shed
+# in somebody's back yard. It leads the grid instead, full width, and the two
+# honest patio shots follow as what an enclosure gets built on. The pressure
+# washer belongs to another service and the bench to none.
+#
+# Runs before fix_images so the srcset is built around the files that ship.
+SUNROOM_PHOTOS = [
+    ('patio-1', 'patio-cover', 'Covered patio enclosure built by DS Handymen', True),
+    ('patio-2', 'patio-1', 'The concrete patio an enclosure gets built on', False),
+    ('patio-3', 'patio-2', 'Poolside patio, ready for a three-season room', False),
+]
+
+
+def fix_sunroom_photos(f, s):
+    if 'sunrooms-patio-enclosures' not in f.replace(chr(92), '/'):
+        return s
+    s = re.sub(r'<img[^>]*bench[^>]*>', '', s)
+    for old, new, alt, wide in SUNROOM_PHOTOS:
+        w, h = Image.open(os.path.join(ROOT, 'site-export', 'assets', 'gallery', new + '.jpg')).size
+
+        def swap(m, old=old, new=new, alt=alt, wide=wide, w=w, h=h):
+            tag = m.group(0).replace(old + '.', new + '.')
+            tag = re.sub(r'alt="[^"]*"', 'alt="' + alt + '"', tag)
+            tag = re.sub(r'width="\d+"', 'width="%d"' % w, tag)
+            tag = re.sub(r'height="\d+"', 'height="%d"' % h, tag)
+            if wide:
+                if 'style="' in tag:
+                    tag = tag.replace('style="', 'style="grid-column: 1 / -1;', 1)
+                else:
+                    tag = tag[:-1].rstrip() + ' style="grid-column: 1 / -1">'
+            return tag
+
+        s = re.sub(r'<img[^>]*' + old + r'\.[a-z]+[^>]*>', swap, s, count=1)
+    return s
+
+
 def add_hero_video(path, s, prefix):
     rel = path.replace(chr(92), '/').split('/docs/')[1]
     page = rel.split('/')[0]
@@ -652,10 +694,26 @@ def add_hero_video(path, s, prefix):
     open_tag, at = m.group(0), m.end()
     vid = _vid_tag(prefix, slug)
 
-    # the layered kind: drop the video between the photograph and its gradient
+    # The layered kind: the export put a photograph behind the hero with a
+    # gradient over it, from before there was any footage. The video paints at
+    # 55%, so the photograph does not sit behind it - it shows through it, as a
+    # second unrelated scene mixed into the first. On sunrooms that read as a
+    # shed and a back yard behind a three-season room.
+    #
+    # So the photograph goes and the video takes its place, under the gradient
+    # that is already there. The section then needs the dark ink every other
+    # hero sits on: it was relying on the photograph to be its background, and
+    # a 55% video over white washes out instead of darkening.
     pic = re.compile(r'</picture>').search(s, at, at + 4000)
     if pic and 'position: absolute; inset: 0px' in s[at:at + 4000]:
-        return s[:pic.end()] + vid + s[pic.end():]
+        start = s.rfind('<picture', at, pic.start())
+        if start < 0:
+            return s[:pic.end()] + vid + s[pic.end():]
+        s = s[:start] + vid + s[pic.end():]
+        if 'background' not in open_tag and 'style="' in open_tag:
+            fixed = open_tag.replace('style="', 'style="background: rgb(10, 23, 26); ', 1)
+            s = s[:m.start()] + fixed + s[m.end():]
+        return s
 
     # The plain kind: video, scrim, then lift the content above them. The section
     # MUST be a positioning context first - without it the scrim resolves against
@@ -913,6 +971,7 @@ def main():
         # both of these rename image files, and must land before fix_images so
         # the srcset it builds names the new files and only variants that exist
         s = fix_pressure_washing(f, s, prefix)
+        s = fix_sunroom_photos(f, s)
         if '<picture>' not in s:
             s = fix_images(f, s)
         s = add_hero_video(f, s, prefix)

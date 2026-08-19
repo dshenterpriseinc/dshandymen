@@ -180,3 +180,18 @@ What that meant in practice, and what to keep in mind if any of it comes back:
 
 After: 0 contrast failures, 0 a11y issues, heaviest page 1358 KB, worst LCP 204 ms, worst CLS
 0.016, and 0 matches for pigeon|nichole|bird across everything in `docs/`.
+
+## SUNROOMS PAGE (2026-08-18)
+The hero layered a photograph under the video. The video paints at 55%, so the photo did not
+sit behind it - it showed through it, as a second scene mixed into the first. `add_hero_video`
+now removes that photograph on any page shaped like this and gives the section the dark ink the
+other heroes sit on; without it a 55% video composites against white and washes out.
+
+The photo grid on that page showed a bare slab, a poolside slab, a slab being pressure-washed
+with the washer in shot, and a cinder-block bench - captioned "Patio enclosure project". Dave
+has exactly one photograph of a finished enclosure, `patio-cover`, and it was being spent as the
+hero backdrop. It leads the grid now, full width, with the two honest patio shots under it.
+
+**Dave needs real sunroom photos.** One is all there is, and it has a garden shed in the
+background. Three or four of a finished three-season room, and one of a Helios install, would
+carry that page on their own.
