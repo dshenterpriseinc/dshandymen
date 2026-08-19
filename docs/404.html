@@ -160,6 +160,20 @@ img{height:auto}
 /* Service-card mascots. They are letterboxed into a fixed square with
    object-fit:contain, and at 170px the bear was swimming in card whitespace. */
 img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !important}
+
+/* Per-page hero loops. The scrim is directional: heaviest on the left where the
+   headline sits, lightest on the right where the footage can actually be seen.
+   Opacity keeps the clip firmly behind the type rather than competing with it. */
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:0;opacity:.55;pointer-events:none}
+.hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(100deg, rgba(10,23,26,.94) 0%, rgba(10,23,26,.80) 46%, rgba(10,23,26,.46) 100%)}
+@media (max-width:760px){
+  /* on a phone the text takes the whole width, so the scrim has to as well */
+  .hero-scrim{background:linear-gradient(180deg, rgba(10,23,26,.88) 0%, rgba(10,23,26,.93) 100%)}
+  .hero-vid{opacity:.42}
+}
+@media (prefers-reduced-motion:reduce){.hero-vid{display:none}}
 </style>
 </head>
 <body>

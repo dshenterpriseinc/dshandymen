@@ -585,6 +585,79 @@ def retire_two_object_bird(s):
     return s.replace('mascot-pigeon-blueprint', 'bird-pose-brush')
 
 
+# ---------------------------------------------------------------- 14. hero video
+# Each service page gets the clip that matches what it sells, behind its hero,
+# the way the home page already works. Silent and looping - they carry no audio
+# track at all, so they cannot make noise even if something re-enables it.
+#
+# Two shapes of hero exist. Most are a solid-coloured section with the content
+# straight inside, so the video and a scrim go in as the first two children and
+# the content is lifted above them. Sunrooms already layers a photograph and a
+# gradient absolutely, so the video slots between the two and inherits the
+# gradient it already had as its scrim.
+
+HERO_VIDEO = {
+    'snow-plowing': 'snow-plowing',
+    'pressure-washing': 'pressure-washing',
+    'landscaping': 'landscaping',
+    'handyman-remodeling': 'handyman-remodeling',
+    'house-clearance': 'house-clearance',
+    'sunrooms-patio-enclosures': 'sunrooms-patio-enclosures',
+    'services': 'services',
+}
+
+
+def _vid_tag(prefix, slug):
+    return ('<video class="hero-vid" aria-hidden="true" muted loop playsinline preload="none"'
+            ' poster="%sassets/video/hero-%s-poster.jpg"'
+            ' data-src="%sassets/video/hero-%s.mp4"></video>' % (prefix, slug, prefix, slug))
+
+
+def add_hero_video(path, s, prefix):
+    rel = path.replace(chr(92), '/').split('/docs/')[1]
+    page = rel.split('/')[0]
+    slug = HERO_VIDEO.get(page)
+    if not slug or 'hero-vid' in s:
+        return s
+
+    body = s.index('<body>')
+    m = re.compile(r'<section\b[^>]*>').search(s, body)
+    if not m:
+        return s
+    open_tag, at = m.group(0), m.end()
+    vid = _vid_tag(prefix, slug)
+
+    # the layered kind: drop the video between the photograph and its gradient
+    pic = re.compile(r'</picture>').search(s, at, at + 4000)
+    if pic and 'position: absolute; inset: 0px' in s[at:at + 4000]:
+        return s[:pic.end()] + vid + s[pic.end():]
+
+    # The plain kind: video, scrim, then lift the content above them. The section
+    # MUST be a positioning context first - without it the scrim resolves against
+    # the viewport and greys out the whole page below the hero, which is exactly
+    # what happened the first time this shipped.
+    if 'position:relative' not in open_tag.replace(' ', ''):
+        if 'style="' in open_tag:
+            fixed = open_tag.replace('style="', 'style="position:relative;overflow:hidden;', 1)
+        else:
+            fixed = open_tag[:-1].rstrip() + ' style="position:relative;overflow:hidden">'
+        s = s[:m.start()] + fixed + s[m.end():]
+        at = m.start() + len(fixed)
+
+    nxt = re.compile(r'<div\b([^>]*)>').search(s, at)
+    out = s[:at] + vid + '<div class="hero-scrim"></div>' + s[at:]
+    if nxt:
+        shift = len(vid) + len('<div class="hero-scrim"></div>')
+        a, b = nxt.start() + shift, nxt.end() + shift
+        tag = out[a:b]
+        if 'style="' in tag:
+            tag = tag.replace('style="', 'style="position:relative;z-index:2;', 1)
+        else:
+            tag = tag[:-1] + ' style="position:relative;z-index:2">'
+        out = out[:a] + tag + out[b:]
+    return out
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -604,6 +677,7 @@ def main():
         s = fix_pressure_washing(f, s, prefix)
         if '<picture>' not in s:
             s = fix_images(f, s)
+        s = add_hero_video(f, s, prefix)
         s = relabel_nav(s)
         s = fix_copy(s)
         s = scope_footer_links(s)

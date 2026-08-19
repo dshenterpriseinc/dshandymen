@@ -186,4 +186,26 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       if (!a.target) a.target = '_blank';
     }
   });
+
+  /* ---------------------------------------------------------------- 7. page hero loops */
+  /* Same deal as the seasonal hero: nothing is fetched until the hero is on
+     screen, and reduced-motion visitors keep the poster and never load the clip. */
+  Array.prototype.forEach.call(document.querySelectorAll('video.hero-vid[data-src]'), function (v) {
+    var src = v.getAttribute('data-src');
+    v.removeAttribute('data-src');
+    if (reduced) return;                       // poster only; the CSS hides the element
+    var start = function () {
+      if (v.src) return;
+      v.src = src;
+      v.load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { start(); io.disconnect(); }
+      }, { threshold: 0.05 });
+      io.observe(v);
+    } else { start(); }
+  });
 })();

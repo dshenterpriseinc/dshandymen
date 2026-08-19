@@ -161,6 +161,20 @@ img{height:auto}
 /* Service-card mascots. They are letterboxed into a fixed square with
    object-fit:contain, and at 170px the bear was swimming in card whitespace. */
 img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !important}
+
+/* Per-page hero loops. The scrim is directional: heaviest on the left where the
+   headline sits, lightest on the right where the footage can actually be seen.
+   Opacity keeps the clip firmly behind the type rather than competing with it. */
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:0;opacity:.55;pointer-events:none}
+.hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(100deg, rgba(10,23,26,.94) 0%, rgba(10,23,26,.80) 46%, rgba(10,23,26,.46) 100%)}
+@media (max-width:760px){
+  /* on a phone the text takes the whole width, so the scrim has to as well */
+  .hero-scrim{background:linear-gradient(180deg, rgba(10,23,26,.88) 0%, rgba(10,23,26,.93) 100%)}
+  .hero-vid{opacity:.42}
+}
+@media (prefers-reduced-motion:reduce){.hero-vid{display:none}}
 </style>
 </head>
 <body>
@@ -185,8 +199,8 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 <span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
 </a>
 </div></header><main>
-<section style="background: rgb(19, 46, 53);">
-<div style="max-width: 1240px; margin: 0px auto; padding: 72px 24px 64px;">
+<section style="position:relative;overflow:hidden;background: rgb(19, 46, 53);"><video class="hero-vid" aria-hidden="true" muted loop playsinline preload="none" poster="../assets/video/hero-services-poster.jpg" data-src="../assets/video/hero-services.mp4"></video><div class="hero-scrim"></div>
+<div style="position:relative;z-index:2;max-width: 1240px; margin: 0px auto; padding: 72px 24px 64px;">
 <p style='margin: 0px 0px 12px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(245, 179, 36);'>Services</p>
 <h1 style='margin: 0px 0px 14px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; color: rgb(255, 255, 255);'>Every season. Every job.</h1>
 <p style="margin: 0px; font-size: 20px; color: rgb(186, 217, 223); max-width: 56ch;">Outside work is the Bear's. Design and finish work is the Bird's. Same company, same phone number, same free estimate.</p>
