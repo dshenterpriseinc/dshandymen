@@ -1,50 +1,147 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 780" role="img" aria-labelledby="mapTitle mapDesc" style="width:100%;height:auto;display:block;border-radius:12px">
-<title id="mapTitle">DS Handymen service area across Western New York</title>
-<desc id="mapDesc">Map of the Buffalo Southtowns showing Hamburg, Blasdell, Orchard Park and Lackawanna at the centre of the service area, with Lake Erie to the west and surrounding towns including West Seneca, East Aurora, Eden, Boston, Angola and Springville also served.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 815" role="img" aria-labelledby="mapTitle mapDesc" style="width:100%;height:auto;display:block;border-radius:12px">
+<title id="mapTitle">Where DS Handymen works across Western New York</title>
+<desc id="mapDesc">A map of Erie County and the surrounding Western New York counties, with Lake Erie to the west. Hamburg, Blasdell, Orchard Park and Lackawanna sit at the centre of the service area and are marked in gold. Surrounding towns are marked with dots that get smaller and fainter with distance from the shop in Blasdell, out through West Seneca, Eden, Boston, East Aurora, Angola and Springville.</desc>
 <defs>
-<linearGradient id="land" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2F9FA"/><stop offset="1" stop-color="#DEEDF0"/></linearGradient>
-<radialGradient id="reach" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#00414F" stop-opacity=".26"/><stop offset="70%" stop-color="#00414F" stop-opacity=".13"/><stop offset="100%" stop-color="#00414F" stop-opacity="0"/></radialGradient>
+<linearGradient id="land" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBF3F5"/><stop offset="1" stop-color="#DFECEE"/></linearGradient>
+<radialGradient id="reach" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#00414F" stop-opacity=".30"/><stop offset="55%" stop-color="#00414F" stop-opacity=".14"/><stop offset="100%" stop-color="#00414F" stop-opacity="0"/></radialGradient>
+<linearGradient id="beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#00414F" stop-opacity="0"/><stop offset="100%" stop-color="#00414F" stop-opacity=".42"/></linearGradient>
+<clipPath id="frame"><rect width="1100" height="815" rx="12"/></clipPath>
 </defs>
-<rect width="1000" height="780" fill="url(#land)"/>
-<polygon points="279.1,0.0 302.3,44.6 337.2,100.3 377.9,156.0 412.8,206.1 436.0,250.7 444.2,289.7 436.0,317.6 418.6,345.4 395.3,373.3 369.8,406.7 343.0,440.1 316.3,473.6 284.9,507.0 253.5,540.4 215.1,579.4 168.6,618.4 110.5,663.0 52.3,713.1 0.0,780.0 0.0,780.0 0.0,0.0" fill="#1E4D58" opacity=".92"/>
-<polyline points="279.1,0.0 302.3,44.6 337.2,100.3 377.9,156.0 412.8,206.1 436.0,250.7 444.2,289.7 436.0,317.6 418.6,345.4 395.3,373.3 369.8,406.7 343.0,440.1 316.3,473.6 284.9,507.0 253.5,540.4 215.1,579.4 168.6,618.4 110.5,663.0 52.3,713.1 0.0,780.0" fill="none" stroke="#12343C" stroke-width="2.5" opacity=".55"/>
-<text x="128" y="568" fill="#86C9D8" font-family="Barlow Condensed,sans-serif" font-size="30" letter-spacing="5" transform="rotate(-32 128 568)">LAKE ERIE</text>
-<ellipse cx="528.7" cy="383.4" rx="367.4" ry="258.4" fill="url(#reach)"/>
-<ellipse cx="528.7" cy="383.4" rx="367.4" ry="258.4" fill="none" stroke="#00414F" stroke-width="2.5" stroke-dasharray="9 8" opacity=".65"/>
-<circle cx="467.0" cy="282.6" r="4.5" fill="#7E9CA3"/>
-<text x="481.0" y="274.6" text-anchor="start" fill="#668187" font-family="Source Sans 3,sans-serif" font-size="18" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Buffalo</text>
-<circle cx="530.9" cy="350.3" r="11" fill="#F5B324" stroke="#132E35" stroke-width="3.5"/>
-<text x="512.9" y="357.3" text-anchor="end" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="28" letter-spacing=".5" paint-order="stroke" stroke="#F2F9FA" stroke-width="5">Lackawanna</text>
-<circle cx="528.7" cy="383.4" r="11" fill="#F5B324" stroke="#132E35" stroke-width="3.5"/>
-<text x="510.7" y="393.4" text-anchor="end" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="28" letter-spacing=".5" paint-order="stroke" stroke="#F2F9FA" stroke-width="5">Blasdell</text>
-<circle cx="523.8" cy="472.6" r="11" fill="#F5B324" stroke="#132E35" stroke-width="3.5"/>
-<text x="523.8" y="506.6" text-anchor="middle" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="28" letter-spacing=".5" paint-order="stroke" stroke="#F2F9FA" stroke-width="5">Hamburg</text>
-<circle cx="623.4" cy="415.1" r="11" fill="#F5B324" stroke="#132E35" stroke-width="3.5"/>
-<text x="643.4" y="423.1" text-anchor="start" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="28" letter-spacing=".5" paint-order="stroke" stroke="#F2F9FA" stroke-width="5">Orchard Park</text>
-<circle cx="558.4" cy="323.1" r="6" fill="#132E35" opacity=".85"/>
-<text x="574.4" y="317.1" text-anchor="start" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">West Seneca</text>
-<circle cx="610.7" cy="263.6" r="6" fill="#132E35" opacity=".85"/>
-<text x="610.7" y="251.6" text-anchor="middle" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Cheektowaga</text>
-<circle cx="682.4" cy="262.7" r="6" fill="#132E35" opacity=".85"/>
-<text x="690.4" y="250.7" text-anchor="start" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Depew</text>
-<circle cx="775.1" cy="414.4" r="6" fill="#132E35" opacity=".85"/>
-<text x="775.1" y="440.4" text-anchor="middle" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">East Aurora</text>
-<circle cx="442.8" cy="542.2" r="6" fill="#132E35" opacity=".85"/>
-<text x="442.8" y="530.2" text-anchor="middle" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Eden</text>
-<circle cx="628.8" cy="568.2" r="6" fill="#132E35" opacity=".85"/>
-<text x="628.8" y="556.2" text-anchor="middle" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Boston</text>
-<circle cx="292.9" cy="559.3" r="6" fill="#132E35" opacity=".85"/>
-<text x="284.9" y="547.3" text-anchor="end" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Angola</text>
-<circle cx="712.6" cy="704.1" r="6" fill="#132E35" opacity=".85"/>
-<text x="712.6" y="692.1" text-anchor="middle" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="19" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Springville</text>
-<circle cx="464.8" cy="159.7" r="4.5" fill="#7E9CA3"/>
-<text x="464.8" y="147.7" text-anchor="middle" fill="#668187" font-family="Source Sans 3,sans-serif" font-size="18" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Tonawanda</text>
-<circle cx="558.4" cy="180.1" r="4.5" fill="#7E9CA3"/>
-<text x="558.4" y="168.1" text-anchor="middle" fill="#668187" font-family="Source Sans 3,sans-serif" font-size="18" paint-order="stroke" stroke="#F2F9FA" stroke-width="4">Amherst</text>
-<g transform="translate(528.7,383.4)"><circle r="19" fill="none" stroke="#F5B324" stroke-width="3" opacity=".9"/><circle r="27" fill="none" stroke="#F5B324" stroke-width="1.6" opacity=".45"/></g>
-<rect x="30" y="652" width="330" height="100" rx="10" fill="#fff" opacity=".93" stroke="#CAE1E6"/>
-<circle cx="56" cy="682" r="9" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
-<text x="76" y="689" fill="#132E35" font-family="Source Sans 3,sans-serif" font-size="20" font-weight="600">Core service towns</text>
-<circle cx="56" cy="714" r="6" fill="#132E35" opacity=".85"/>
-<text x="76" y="721" fill="#37545A" font-family="Source Sans 3,sans-serif" font-size="20">Also served across WNY</text>
+<style>@keyframes dshSweep{to{transform:rotate(360deg)}}@keyframes dshPing{0%{r:6;opacity:.5}75%{opacity:0}100%{r:265;opacity:0}}.sweep{animation:dshSweep 7s linear infinite;transform-origin:526.6px 343.3px}.ping{animation:dshPing 7s ease-out infinite;transform-origin:526.6px 343.3px}.ping2{animation-delay:2.33s}.ping3{animation-delay:4.66s}@media (prefers-reduced-motion:reduce){.sweep{animation:none}.ping{display:none}}</style>
+<g clip-path="url(#frame)">
+<rect width="1100" height="815" fill="url(#land)"/>
+<path d="M1041.2,718.3L1309.8,718.6L1311.7,717.8Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M885.6,247.9L886.1,170.7L885.6,-52.6L885.7,-56.4L884.5,-106.8L939.1,-109.5L1352.7,-112.7L885.6,247.9Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M886.1,697.7L885.6,247.9L1301.8,639.4L1311.7,717.8L1309.8,718.6L1041.2,718.3L885.4,721.0L886.1,697.7Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M-244.0,962.2L-196.3,932.6L-161.0,906.9L-124.8,877.1L-103.5,867.8L-79.1,844.4L-55.5,810.5L-31.9,792.6L-12.1,774.0L-2.0,762.1L7.7,761.1L14.9,762.9L18.5,761.9L26.9,754.2L32.3,747.2L66.6,731.8L85.4,715.6L107.1,703.9L126.8,698.1L156.8,684.8L201.3,674.2L211.4,659.5L213.3,652.4L289.2,695.7Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M521.2,27.0L404.7,-23.0L340.3,-26.6L321.6,-23.0L321.3,-26.5L291.6,-34.3L283.7,-55.7L293.2,-104.4L305.9,-119.6L307.6,-127.2L291.6,-256.6L889.6,-225.8L884.5,-106.8L885.7,-56.4L885.6,-52.6L616.4,-46.5L521.2,27.0Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M1352.7,-112.7L939.1,-109.5L884.5,-106.8L889.6,-225.8Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M213.3,652.4L220.4,625.1L223.7,623.6L228.1,619.1L236.3,603.1L238.6,593.1L271.2,556.8L276.7,557.0L286.2,550.5L287.7,518.4L301.1,490.1L331.1,473.3L343.8,469.2L358.8,468.1L405.8,432.0L431.8,424.8L481.4,380.0L496.5,361.4L498.6,350.8L493.5,339.2L490.6,338.7L486.3,321.8L484.3,303.2L489.6,291.9L490.5,283.4L484.4,268.5L477.8,267.2L467.4,248.2L458.3,224.3L437.5,222.0L444.2,203.8L444.3,172.0L440.8,158.6L431.1,140.1L428.8,138.0L417.6,127.9L377.5,113.0L338.4,87.9L330.0,75.0L321.6,-23.0L340.3,-26.6L404.7,-23.0L521.2,27.0L616.4,-46.5L885.6,-52.6L886.1,170.7L885.6,247.9L886.1,697.7L654.1,785.2L429.6,825.1L358.3,707.4L289.2,695.7L213.3,652.4Z" fill="#D7E8EC" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M289.2,695.7L358.3,707.4L429.6,825.1L654.1,785.2L886.1,697.7L885.4,721.0L1041.2,718.3Z" fill="none" stroke="#132E35" stroke-width="1.2" stroke-opacity=".28" stroke-linejoin="round"/>
+<path d="M213.3,652.4L220.4,625.1L223.7,623.6L228.1,619.1L236.3,603.1L238.6,593.1L271.2,556.8L276.7,557.0L286.2,550.5L287.7,518.4L301.1,490.1L331.1,473.3L343.8,469.2L358.8,468.1L405.8,432.0L431.8,424.8L481.4,380.0L496.5,361.4L498.6,350.8L493.5,339.2L490.6,338.7L486.3,321.8L484.3,303.2L489.6,291.9L490.5,283.4L484.4,268.5L477.8,267.2L467.4,248.2L458.3,224.3L437.5,222.0L444.2,203.8L444.3,172.0L440.8,158.6L431.1,140.1L428.8,138.0L417.6,127.9L377.5,113.0L338.4,87.9L330.0,75.0L321.6,-23.0L340.3,-26.6L404.7,-23.0L521.2,27.0L616.4,-46.5L885.6,-52.6L886.1,170.7L885.6,247.9L886.1,697.7L654.1,785.2L429.6,825.1L358.3,707.4L289.2,695.7L213.3,652.4Z" fill="none" stroke="#132E35" stroke-width="2.4" stroke-opacity=".55" stroke-linejoin="round"/>
+<path d="M-256.2,259.9L-229.1,255.9L-145.5,261.5L-134.5,258.7L-126.1,251.5L-119.0,241.9L-110.4,233.5L-97.0,229.9L-18.5,240.3L147.1,230.7L193.9,239.9L237.0,266.7L255.1,271.5L262.8,253.5L273.3,243.9L384.6,217.5L406.5,205.1L424.2,188.3L434.7,160.4L423.0,141.6L379.5,119.6L330.2,82.0L307.8,54.4L307.5,30.4L318.1,-7.2L296.5,-32.4L274.5,-52.8L283.8,-76.3L323.8,-49.6L435.1,-36.0L462.0,-2.0L456.9,28.0L422.0,65.2L413.6,95.6L417.9,107.6L436.6,125.2L441.0,132.8L448.3,192.7L453.8,207.5L475.0,248.3L480.6,265.5L482.5,277.5L482.5,309.1L479.1,341.9L469.4,365.9L454.1,383.5L434.1,397.5L356.1,433.1L318.7,456.2L290.7,491.0L269.7,541.0L253.6,564.6L232.3,574.6L227.9,580.2L211.2,617.0L199.3,637.0L193.9,642.6L180.8,649.8L114.8,669.8L94.1,698.9L41.7,733.7L-8.1,754.5L-18.4,760.9L-25.4,769.7L-34.0,782.5L-44.1,793.7L-73.9,808.9L-120.8,873.3L-176.7,904.9L-192.8,923.7L-210.1,939.7Z" fill="#132E35" fill-opacity=".92" stroke="#0A171A" stroke-width="1.5" stroke-opacity=".5"/>
+<path d="M119.4,-243.1L58.8,-217.9L40.5,-202.3L19.6,-190.3L-3.2,-195.5L-45.0,-217.1L-94.5,-222.3L-195.0,-216.7L-243.7,-225.5Z" fill="#132E35" fill-opacity=".92" stroke="#0A171A" stroke-width="1.5" stroke-opacity=".5"/>
+<text x="150" y="584" fill="#71BDCE" font-family="Barlow Condensed,sans-serif" font-size="27" letter-spacing="6" transform="rotate(-31 150 584)" opacity=".95">LAKE ERIE</text>
+<ellipse cx="526.6" cy="343.3" rx="513.1" ry="511.8" fill="url(#reach)"/>
+<ellipse cx="526.6" cy="343.3" rx="197.4" ry="196.9" fill="none" stroke="#00414F" stroke-width="1.4" stroke-dasharray="7 9" stroke-opacity=".40"/>
+<text x="422.0" y="515.2" fill="#506F76" font-family="Source Sans 3,sans-serif" font-size="15" font-weight="700" text-anchor="middle" opacity=".8" paint-order="stroke" stroke="#EBF3F5" stroke-width="4.5">10 mi</text>
+<ellipse cx="526.6" cy="343.3" rx="394.7" ry="393.7" fill="none" stroke="#00414F" stroke-width="1.4" stroke-dasharray="7 9" stroke-opacity=".40"/>
+<text x="317.4" y="682.1" fill="#506F76" font-family="Source Sans 3,sans-serif" font-size="15" font-weight="700" text-anchor="middle" opacity=".8" paint-order="stroke" stroke="#EBF3F5" stroke-width="4.5">20 mi</text>
+<ellipse cx="526.6" cy="343.3" rx="592.1" ry="590.6" fill="none" stroke="#00414F" stroke-width="1.4" stroke-dasharray="7 9" stroke-opacity=".40"/>
+<text x="212.8" y="849.1" fill="#506F76" font-family="Source Sans 3,sans-serif" font-size="15" font-weight="700" text-anchor="middle" opacity=".8" paint-order="stroke" stroke="#EBF3F5" stroke-width="4.5">30 mi</text>
+<g class="sweep">
+<path d="M526.6,343.3 L856.6,343.3 A330.0,330.0 0 0 0 855.8,320.8 Z" fill="#00414F" fill-opacity="0.260"/>
+<path d="M526.6,343.3 L855.8,320.8 A330.0,330.0 0 0 0 853.5,298.5 Z" fill="#00414F" fill-opacity="0.242"/>
+<path d="M526.6,343.3 L853.5,298.5 A330.0,330.0 0 0 0 849.7,276.3 Z" fill="#00414F" fill-opacity="0.224"/>
+<path d="M526.6,343.3 L849.7,276.3 A330.0,330.0 0 0 0 844.4,254.5 Z" fill="#00414F" fill-opacity="0.207"/>
+<path d="M526.6,343.3 L844.4,254.5 A330.0,330.0 0 0 0 837.7,233.1 Z" fill="#00414F" fill-opacity="0.190"/>
+<path d="M526.6,343.3 L837.7,233.1 A330.0,330.0 0 0 0 829.5,212.2 Z" fill="#00414F" fill-opacity="0.174"/>
+<path d="M526.6,343.3 L829.5,212.2 A330.0,330.0 0 0 0 819.8,191.9 Z" fill="#00414F" fill-opacity="0.158"/>
+<path d="M526.6,343.3 L819.8,191.9 A330.0,330.0 0 0 0 808.9,172.3 Z" fill="#00414F" fill-opacity="0.142"/>
+<path d="M526.6,343.3 L808.9,172.3 A330.0,330.0 0 0 0 796.6,153.5 Z" fill="#00414F" fill-opacity="0.127"/>
+<path d="M526.6,343.3 L796.6,153.5 A330.0,330.0 0 0 0 783.1,135.6 Z" fill="#00414F" fill-opacity="0.113"/>
+<path d="M526.6,343.3 L783.1,135.6 A330.0,330.0 0 0 0 768.3,118.6 Z" fill="#00414F" fill-opacity="0.099"/>
+<path d="M526.6,343.3 L768.3,118.6 A330.0,330.0 0 0 0 752.5,102.7 Z" fill="#00414F" fill-opacity="0.085"/>
+<path d="M526.6,343.3 L752.5,102.7 A330.0,330.0 0 0 0 735.6,87.9 Z" fill="#00414F" fill-opacity="0.072"/>
+<path d="M526.6,343.3 L735.6,87.9 A330.0,330.0 0 0 0 717.8,74.3 Z" fill="#00414F" fill-opacity="0.060"/>
+<path d="M526.6,343.3 L717.8,74.3 A330.0,330.0 0 0 0 699.0,61.9 Z" fill="#00414F" fill-opacity="0.048"/>
+<path d="M526.6,343.3 L699.0,61.9 A330.0,330.0 0 0 0 679.5,50.8 Z" fill="#00414F" fill-opacity="0.037"/>
+<path d="M526.6,343.3 L679.5,50.8 A330.0,330.0 0 0 0 659.2,41.1 Z" fill="#00414F" fill-opacity="0.027"/>
+<path d="M526.6,343.3 L659.2,41.1 A330.0,330.0 0 0 0 638.4,32.8 Z" fill="#00414F" fill-opacity="0.018"/>
+<path d="M526.6,343.3 L638.4,32.8 A330.0,330.0 0 0 0 617.0,25.9 Z" fill="#00414F" fill-opacity="0.010"/>
+<path d="M526.6,343.3 L617.0,25.9 A330.0,330.0 0 0 0 595.2,20.5 Z" fill="#00414F" fill-opacity="0.004"/>
+<line x1="526.6" y1="343.3" x2="856.6" y2="343.3" stroke="#00414F" stroke-width="2" stroke-opacity=".55"/>
+</g>
+<circle class="ping" cx="526.6" cy="343.3" r="6" fill="none" stroke="#00414F" stroke-width="1.8"/>
+<circle class="ping ping2" cx="526.6" cy="343.3" r="6" fill="none" stroke="#00414F" stroke-width="1.8"/>
+<circle class="ping ping3" cx="526.6" cy="343.3" r="6" fill="none" stroke="#00414F" stroke-width="1.8"/>
+<circle cx="526.6" cy="343.3" r="9.5" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
+<circle cx="526.4" cy="304.6" r="9.5" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
+<circle cx="606.4" cy="384.4" r="9.5" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
+<circle cx="595.9" cy="285.8" r="7.1" fill="#00414F" fill-opacity="0.94"/>
+<circle cx="446.9" cy="412.7" r="7.0" fill="#00414F" fill-opacity="0.93"/>
+<circle cx="521.3" cy="453.3" r="9.5" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
+<circle cx="471.9" cy="222.2" r="6.9" fill="#00414F" fill-opacity="0.91"/>
+<circle cx="555.9" cy="209.9" r="6.8" fill="#00414F" fill-opacity="0.90"/>
+<circle cx="573.3" cy="495.0" r="6.7" fill="#00414F" fill-opacity="0.89"/>
+<circle cx="595.2" cy="199.1" r="6.7" fill="#00414F" fill-opacity="0.89"/>
+<circle cx="654.3" cy="200.8" r="6.5" fill="#00414F" fill-opacity="0.86"/>
+<circle cx="713.9" cy="299.1" r="6.5" fill="#00414F" fill-opacity="0.86"/>
+<circle cx="371.9" cy="464.4" r="6.4" fill="#00414F" fill-opacity="0.86"/>
+<circle cx="723.4" cy="359.9" r="6.4" fill="#00414F" fill-opacity="0.85"/>
+<circle cx="680.0" cy="202.9" r="6.4" fill="#00414F" fill-opacity="0.85"/>
+<circle cx="732.2" cy="381.8" r="6.4" fill="#00414F" fill-opacity="0.85"/>
+<circle cx="454.6" cy="540.1" r="6.4" fill="#00414F" fill-opacity="0.84"/>
+<circle cx="545.8" cy="117.4" r="6.2" fill="#00414F" fill-opacity="0.83"/>
+<circle cx="479.1" cy="119.9" r="6.2" fill="#00414F" fill-opacity="0.83"/>
+<circle cx="612.3" cy="117.1" r="6.2" fill="#00414F" fill-opacity="0.82"/>
+<circle cx="612.4" cy="571.9" r="6.1" fill="#00414F" fill-opacity="0.82"/>
+<circle cx="550.2" cy="97.3" r="6.1" fill="#00414F" fill-opacity="0.81"/>
+<circle cx="665.4" cy="551.2" r="6.1" fill="#00414F" fill-opacity="0.81"/>
+<circle cx="484.8" cy="93.9" r="6.1" fill="#00414F" fill-opacity="0.81"/>
+<circle cx="672.5" cy="115.8" r="6.0" fill="#00414F" fill-opacity="0.80"/>
+<circle cx="795.0" cy="285.2" r="5.9" fill="#00414F" fill-opacity="0.79"/>
+<circle cx="772.2" cy="216.5" r="5.9" fill="#00414F" fill-opacity="0.79"/>
+<circle cx="633.3" cy="608.1" r="5.9" fill="#00414F" fill-opacity="0.78"/>
+<circle cx="322.2" cy="559.1" r="5.8" fill="#00414F" fill-opacity="0.77"/>
+<circle cx="409.2" cy="617.6" r="5.8" fill="#00414F" fill-opacity="0.77"/>
+<circle cx="395.0" cy="72.7" r="5.8" fill="#00414F" fill-opacity="0.77"/>
+<circle cx="471.6" cy="39.8" r="5.7" fill="#00414F" fill-opacity="0.77"/>
+<circle cx="386.4" cy="43.0" r="5.6" fill="#00414F" fill-opacity="0.75"/>
+<circle cx="483.9" cy="12.5" r="5.6" fill="#00414F" fill-opacity="0.75"/>
+<circle cx="584.4" cy="671.9" r="5.6" fill="#00414F" fill-opacity="0.75"/>
+<circle cx="756.9" cy="99.4" r="5.6" fill="#00414F" fill-opacity="0.74"/>
+<circle cx="283.0" cy="578.3" r="5.5" fill="#00414F" fill-opacity="0.74"/>
+<circle cx="705.5" cy="631.5" r="5.5" fill="#00414F" fill-opacity="0.74"/>
+<circle cx="332.5" cy="627.0" r="5.5" fill="#00414F" fill-opacity="0.74"/>
+<circle cx="712.8" cy="53.7" r="5.5" fill="#00414F" fill-opacity="0.74"/>
+<circle cx="808.3" cy="555.3" r="5.4" fill="#00414F" fill-opacity="0.73"/>
+<circle cx="858.0" cy="203.7" r="5.4" fill="#00414F" fill-opacity="0.73"/>
+<circle cx="619.1" cy="699.1" r="5.3" fill="#00414F" fill-opacity="0.72"/>
+<circle cx="585.0" cy="717.6" r="5.3" fill="#00414F" fill-opacity="0.71"/>
+<circle cx="709.5" cy="676.1" r="5.3" fill="#00414F" fill-opacity="0.71"/>
+<circle cx="901.6" cy="468.5" r="5.2" fill="#00414F" fill-opacity="0.70"/>
+<circle cx="931.4" cy="424.8" r="5.1" fill="#00414F" fill-opacity="0.68"/>
+<circle cx="429.4" cy="751.9" r="5.0" fill="#00414F" fill-opacity="0.68"/>
+<circle cx="683.3" cy="735.3" r="5.0" fill="#00414F" fill-opacity="0.67"/>
+<circle cx="952.0" cy="289.4" r="5.0" fill="#00414F" fill-opacity="0.67"/>
+<circle cx="216.6" cy="661.4" r="4.9" fill="#00414F" fill-opacity="0.66"/>
+<circle cx="854.7" cy="39.5" r="4.8" fill="#00414F" fill-opacity="0.66"/>
+<circle cx="414.6" cy="797.4" r="4.7" fill="#00414F" fill-opacity="0.64"/>
+<circle cx="841.9" cy="691.2" r="4.7" fill="#00414F" fill-opacity="0.64"/>
+<circle cx="915.3" cy="71.2" r="4.7" fill="#00414F" fill-opacity="0.63"/>
+<circle cx="183.3" cy="687.0" r="4.6" fill="#00414F" fill-opacity="0.62"/>
+<circle cx="999.7" cy="201.0" r="4.5" fill="#00414F" fill-opacity="0.62"/>
+<circle cx="877.2" cy="706.2" r="4.5" fill="#00414F" fill-opacity="0.61"/>
+<circle cx="952.2" cy="33.9" r="4.3" fill="#00414F" fill-opacity="0.59"/>
+<circle cx="926.9" cy="701.0" r="4.3" fill="#00414F" fill-opacity="0.58"/>
+<circle cx="869.1" cy="761.7" r="4.2" fill="#00414F" fill-opacity="0.58"/>
+<circle cx="173.2" cy="789.9" r="4.0" fill="#00414F" fill-opacity="0.56"/>
+<circle cx="1039.8" cy="73.8" r="4.0" fill="#00414F" fill-opacity="0.55"/>
+<circle cx="112.7" cy="762.9" r="3.9" fill="#00414F" fill-opacity="0.54"/>
+<circle cx="1018.9" cy="767.8" r="3.5" fill="#00414F" fill-opacity="0.49"/>
+<text x="504.6" y="349.3" text-anchor="end" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="26" paint-order="stroke" stroke="#EBF3F5" stroke-width="5.5" stroke-opacity=".92">Blasdell</text>
+<text x="526.4" y="278.6" text-anchor="middle" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="26" paint-order="stroke" stroke="#EBF3F5" stroke-width="5.5" stroke-opacity=".92">Lackawanna</text>
+<text x="630.4" y="392.4" text-anchor="start" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="26" paint-order="stroke" stroke="#EBF3F5" stroke-width="5.5" stroke-opacity=".92">Orchard Park</text>
+<text x="521.3" y="487.3" text-anchor="middle" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="26" paint-order="stroke" stroke="#EBF3F5" stroke-width="5.5" stroke-opacity=".92">Hamburg</text>
+<text x="471.9" y="209.2" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="18" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Buffalo</text>
+<text x="595.2" y="186.1" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Cheektowaga</text>
+<text x="713.9" y="286.1" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Elma Center</text>
+<text x="680.0" y="189.9" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Lancaster</text>
+<text x="454.6" y="527.1" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Eden</text>
+<text x="612.4" y="558.9" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Boston</text>
+<text x="550.2" y="84.3" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="18" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Amherst</text>
+<text x="322.2" y="546.1" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Angola</text>
+<text x="409.2" y="604.6" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="16" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">North Collins</text>
+<text x="683.3" y="722.3" text-anchor="middle" fill="#506F76" font-family="Source Sans 3,sans-serif" font-weight="600" font-size="18" paint-order="stroke" stroke="#EBF3F5" stroke-width="5" stroke-opacity=".9">Springville</text>
+<text x="429.0" y="423.0" text-anchor="middle" fill="#132E35" font-family="Barlow Condensed,sans-serif" font-weight="600" font-size="19" letter-spacing="3.5" opacity=".32">ERIE COUNTY</text>
+<g transform="translate(526.6,343.3)"><circle r="17" fill="none" stroke="#F5B324" stroke-width="3"/><circle r="26" fill="none" stroke="#F5B324" stroke-width="1.5" opacity=".5"/><circle r="4.5" fill="#F5B324"/></g>
+<rect x="26" y="687" width="322" height="102" rx="10" fill="#fff" fill-opacity=".93" stroke="#132E35" stroke-opacity=".18"/>
+<circle cx="52" cy="717" r="8.5" fill="#F5B324" stroke="#132E35" stroke-width="3"/>
+<text x="72" y="723" fill="#132E35" font-family="Source Sans 3,sans-serif" font-size="19" font-weight="600">On the daily round</text>
+<circle cx="46.0" cy="753" r="6.4" fill="#00414F" fill-opacity="0.85"/>
+<circle cx="61.0" cy="753" r="4.4" fill="#00414F" fill-opacity="0.55"/>
+<circle cx="76.0" cy="753" r="2.8" fill="#00414F" fill-opacity="0.34"/>
+<text x="92" y="759" fill="#506F76" font-family="Source Sans 3,sans-serif" font-size="18">Further out, less often</text>
+</g>
 </svg>
