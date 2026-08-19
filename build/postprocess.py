@@ -694,6 +694,29 @@ def add_hero_video(path, s, prefix):
     return out
 
 
+# ---------------------------------------------------------------- 15. mobile header
+# The header is sticky and, on a 390px phone, was 238px tall - seven nav links
+# wrapping onto three rows took 28% of the screen and kept it, on every page,
+# forever. It gets a toggle below 760px: the bar stays compact and the nav opens
+# on demand. The button is injected here rather than in the capture because the
+# design tool never produced one.
+
+MENU_BTN = (
+    '<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mainnav" '
+    'aria-label="Menu">'
+    '<span class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></span>'
+    '<span class="menu-word">Menu</span>'
+    '</button>')
+
+
+def add_mobile_nav(s):
+    if 'class="menu-btn"' in s or '<nav aria-label="Main"' not in s:
+        return s
+    s = s.replace('<nav aria-label="Main"', '<nav id="mainnav" aria-label="Main"', 1)
+    i = s.find('<nav id="mainnav"')
+    return s[:i] + MENU_BTN + s[i:]
+
+
 def main():
     css = io.open(os.path.join(ROOT, "build", "responsive.css"), encoding="utf-8").read()
     n = 0
@@ -716,6 +739,7 @@ def main():
         s = add_hero_video(f, s, prefix)
         s = relabel_nav(s)
         s = fix_copy(s)
+        s = add_mobile_nav(s)
         s = scope_footer_links(s)
         s = fix_terracotta(s)
         s = fix_scrims(s)

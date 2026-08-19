@@ -215,4 +215,27 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
       io.observe(v);
     } else { start(); }
   });
+
+  /* ---------------------------------------------------------------- 8. mobile menu */
+  var menuBtn = document.querySelector('.menu-btn');
+  var hdr = document.querySelector('header');
+  if (menuBtn && hdr) {
+    var setMenu = function (open) {
+      hdr.classList.toggle('nav-open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+    };
+    menuBtn.addEventListener('click', function () {
+      setMenu(hdr.className.indexOf('nav-open') === -1);
+    });
+    // a menu that stays open after you have chosen is just in the way
+    hdr.addEventListener('click', function (e) {
+      if (e.target.closest('nav#mainnav a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setMenu(false);
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 760) setMenu(false);
+    });
+  }
 })();

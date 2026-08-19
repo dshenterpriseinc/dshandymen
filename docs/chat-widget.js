@@ -353,11 +353,19 @@ poseCss(poses.length),
 '    .figs{height:min(250px,32vh);width:calc(min(250px,32vh) * 0.92)}',
 '    .hello{width:min(300px,calc(100vw - 40px))}',
 '  }',
+'  /* On a phone he was 172px of bear plus a full-width card - a fifth of the',
+"     screen, permanently, over the content someone came to read. Smaller, and",
+"     the bubble is a compact card rather than the width of the display. */",
 '  @media(max-width:640px){',
-'    .stage{right:8px}',
-'    .figs{height:172px;width:158px}',
-'    .hello{width:calc(100vw - 32px);padding:12px 14px;margin-bottom:8px}',
-'    .hello p{font-size:15px;margin-bottom:10px}',
+'    .stage{right:6px}',
+'    .figs{height:112px;width:104px}',
+'    .hello{width:min(232px,calc(100vw - 132px));padding:10px 12px;margin-bottom:6px;',
+'      margin-right:4px;border-radius:13px}',
+'    .hello p{font-size:14px;line-height:1.38;margin-bottom:8px;padding-right:18px}',
+'    .hello:after{right:30px;width:14px;height:14px;bottom:-8px}',
+'    .ask{min-height:38px;font-size:14px;padding:0 10px}',
+'    .mic{min-width:38px;min-height:38px;font-size:15px}',
+'    .hello-x{min-width:28px;min-height:28px;font-size:17px;top:3px;right:4px}',
 '  }',
 '  @media(prefers-reduced-motion:reduce){',
 '    .stage,.launcher{transition:none}.launcher:hover{transform:none}.caret{animation:none}',
@@ -523,7 +531,7 @@ poses.map(function (u, i) {
       var self = this;
       this._fold = setTimeout(function () {
         if (!self.open && !self._dismissed) self.$hello.style.display = 'none';
-      }, 26000);
+      }, window.innerWidth < 700 ? 13000 : 26000);
     }
 
     _type(el, text) {
