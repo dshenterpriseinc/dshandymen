@@ -650,9 +650,14 @@ def add_hero_video(path, s, prefix):
         at = m.start() + len(fixed)
 
     nxt = re.compile(r'<div\b([^>]*)>').search(s, at)
-    out = s[:at] + vid + '<div class="hero-scrim"></div>' + s[at:]
+    # The Bird's page is a light hero - cream and drafting grid - and the dark
+    # scrim the service pages use buries its type, which is coloured for cream.
+    # It gets a cream scrim that carries the grid on top of the footage instead.
+    scrim = ('<div class="hero-scrim hero-scrim--light"></div>' if page == 'design-remodeling'
+             else '<div class="hero-scrim"></div>')
+    out = s[:at] + vid + scrim + s[at:]
     if nxt:
-        shift = len(vid) + len('<div class="hero-scrim"></div>')
+        shift = len(vid) + len(scrim)
         a, b = nxt.start() + shift, nxt.end() + shift
         tag = out[a:b]
         if 'style="' in tag:

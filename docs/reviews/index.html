@@ -176,6 +176,21 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
   .hero-vid{opacity:.42}
 }
 @media (prefers-reduced-motion:reduce){.hero-vid{display:none}}
+
+/* The Pigeon Division hero is cream, not navy: its heading and body colours are
+   picked for a light ground, so the service pages' dark scrim makes them
+   illegible. This one keeps the page light and carries the drafting grid above
+   the footage, since a section's own background paints beneath its children. */
+.hero-scrim--light{
+  background:
+    repeating-linear-gradient(0deg, rgba(36,78,87,.07) 0px, rgba(36,78,87,.07) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(90deg, rgba(36,78,87,.07) 0px, rgba(36,78,87,.07) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg, rgba(36,78,87,.16) 0px, rgba(36,78,87,.16) 1px, transparent 1px, transparent 160px),
+    repeating-linear-gradient(90deg, rgba(36,78,87,.16) 0px, rgba(36,78,87,.16) 1px, transparent 1px, transparent 160px),
+    linear-gradient(180deg, rgba(246,242,237,.88) 0%, rgba(246,242,237,.82) 45%, rgba(246,242,237,.92) 100%)}
+@media (max-width:760px){
+  .hero-scrim--light{background:linear-gradient(180deg, rgba(246,242,237,.95) 0%, rgba(246,242,237,.97) 100%)}
+}
 </style>
 </head>
 <body>

@@ -176,6 +176,21 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
   .hero-vid{opacity:.42}
 }
 @media (prefers-reduced-motion:reduce){.hero-vid{display:none}}
+
+/* The Pigeon Division hero is cream, not navy: its heading and body colours are
+   picked for a light ground, so the service pages' dark scrim makes them
+   illegible. This one keeps the page light and carries the drafting grid above
+   the footage, since a section's own background paints beneath its children. */
+.hero-scrim--light{
+  background:
+    repeating-linear-gradient(0deg, rgba(36,78,87,.07) 0px, rgba(36,78,87,.07) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(90deg, rgba(36,78,87,.07) 0px, rgba(36,78,87,.07) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg, rgba(36,78,87,.16) 0px, rgba(36,78,87,.16) 1px, transparent 1px, transparent 160px),
+    repeating-linear-gradient(90deg, rgba(36,78,87,.16) 0px, rgba(36,78,87,.16) 1px, transparent 1px, transparent 160px),
+    linear-gradient(180deg, rgba(246,242,237,.88) 0%, rgba(246,242,237,.82) 45%, rgba(246,242,237,.92) 100%)}
+@media (max-width:760px){
+  .hero-scrim--light{background:linear-gradient(180deg, rgba(246,242,237,.95) 0%, rgba(246,242,237,.97) 100%)}
+}
 </style>
 </head>
 <body>
@@ -200,10 +215,10 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 <span style='font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 21px; color: rgb(255, 255, 255); line-height: 1;'>(716) 803-0091</span>
 </a>
 </div></header><main>
-<section style="background: repeating-linear-gradient(0deg, rgba(36, 78, 87, .07) 0px, rgba(36, 78, 87, .07) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(90deg, rgba(36, 78, 87, .07) 0px, rgba(36, 78, 87, .07) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(0deg, rgba(36, 78, 87, .16) 0px, rgba(36, 78, 87, .16) 1px, transparent 1px, transparent 160px), repeating-linear-gradient(90deg, rgba(36, 78, 87, .16) 0px, rgba(36, 78, 87, .16) 1px, transparent 1px, transparent 160px), linear-gradient(180deg, rgba(246,242,237,.96) 0%, rgba(246,242,237,.93) 45%, rgba(246,242,237,.98) 100%), url(../assets/photos/diningroom-arched-window.webp) center 38%/cover no-repeat, rgb(246, 242, 237);">
-<div style="max-width: 1080px; margin: 0px auto; padding: 96px 24px 88px; text-align: center;">
+<section style="position:relative;overflow:hidden;background: repeating-linear-gradient(0deg, rgba(36, 78, 87, .07) 0px, rgba(36, 78, 87, .07) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(90deg, rgba(36, 78, 87, .07) 0px, rgba(36, 78, 87, .07) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(0deg, rgba(36, 78, 87, .16) 0px, rgba(36, 78, 87, .16) 1px, transparent 1px, transparent 160px), repeating-linear-gradient(90deg, rgba(36, 78, 87, .16) 0px, rgba(36, 78, 87, .16) 1px, transparent 1px, transparent 160px), linear-gradient(180deg, rgba(246,242,237,.96) 0%, rgba(246,242,237,.93) 45%, rgba(246,242,237,.98) 100%), url(../assets/photos/diningroom-arched-window.webp) center 38%/cover no-repeat, rgb(246, 242, 237);"><video class="hero-vid" aria-hidden="true" muted loop playsinline preload="none" poster="../assets/video/hero-design-remodeling-poster.jpg" data-src="../assets/video/hero-design-remodeling.mp4"></video><div class="hero-scrim hero-scrim--light"></div>
+<div style="position:relative;z-index:2;max-width: 1080px; margin: 0px auto; padding: 96px 24px 88px; text-align: center;">
 <picture><source srcset="../assets/web/logo-pigeon-division.webp" type="image/webp"><img alt="The Pigeon Division badge" height="180" loading="eager" src="../assets/web/logo-pigeon-division.png" style="width: 180px; height: 180px; object-fit: contain; display: block; margin: 0px auto 10px;" width="180" decoding="async" fetchpriority="high"></picture>
-<p style='margin: 0px 0px 26px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(112, 103, 97);'>A division of DS Handymen, Inc.</p>
+<p style='margin: 0px 0px 26px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(106, 98, 92);'>A division of DS Handymen, Inc.</p>
 <h1 style='margin: 0px 0px 20px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 500; font-size: clamp(46px, 6vw, 74px); line-height: 1.04; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(36, 78, 87);'>Design &amp; Remodeling</h1>
 <p style="margin: 0px auto; font-size: 20px; font-weight: 300; color: rgb(92, 83, 72); max-width: 52ch;">Kitchens, bathrooms, custom trim, cabinets, tile, paint and finish carpentry across the Southtowns &mdash; by our <strong>Pigeon Division</strong>, led by Nichole Pigeon.</p>
 </div>

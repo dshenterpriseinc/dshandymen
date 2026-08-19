@@ -45,7 +45,7 @@
   "file": "docs/design-remodeling/index.html",
   "style": "margin: 0px 0px 26px; font-family: \"Barlow Condensed\", \"Barlow Condensed Fallback\", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: rgb(138, 128, 120);",
   "swaps": {
-   "rgb(138, 128, 120)": "rgb(112, 103, 97)"
+   "rgb(138, 128, 120)": "rgb(106, 98, 92)"
   }
  },
  {
