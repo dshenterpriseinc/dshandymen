@@ -32,8 +32,12 @@ CLIPS = [
     ('pressure-washing',          '05A.mp4', 1.5, 7.0),
     ('landscaping',               '12A.mp4', 1.0, 7.0),
     ('handyman-remodeling',       '08A.mp4', 1.5, 7.0),
-    ('house-clearance',           '16A.mp4', 1.0, 7.0),
-    ('sunrooms-patio-enclosures', '16B.mp4', 1.0, 7.0),
+    # 16A is the cover coming off a three-season room - a sunroom reveal, not a
+    # clear-out. It was on house clearance by mistake and belongs here.
+    ('sunrooms-patio-enclosures', '16A.mp4', 1.0, 7.0),
+    # house-clearance waits on its own footage; add_hero_video skips a page whose
+    # clip is not on disk, so the hero simply stays as it was until then
+    ('house-clearance',           'house-clearance.mp4', 0.5, 7.0),
     ('services',                  '05B.mp4', 1.0, 7.0),
     # Dropped in by hand from Gemini - no pigeon footage exists in the scene
     # library. Encoded the same way as the rest so it matches.
