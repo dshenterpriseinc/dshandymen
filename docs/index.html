@@ -195,6 +195,20 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 @media (max-width:760px){
   .hero-scrim--light{background:linear-gradient(180deg, rgba(246,242,237,.95) 0%, rgba(246,242,237,.97) 100%)}
 }
+
+/* Sticky side rails have nowhere to sit once a two-column grid collapses to one.
+   The snow-depth ruler on the plowing page kept its position:sticky, detached,
+   and floated over the copy underneath it - the text was genuinely unreadable.
+   Scoped to main so the sticky header is left alone. */
+@media (max-width:760px){
+  main [style*="position: sticky"]{position:static !important;height:auto !important}
+}
+
+/* The service map ships in two crops with different shapes, so a single
+   width/height pair cannot reserve the right box for both - and reserving none
+   cost the page 0.149 CLS. Declare the ratio per breakpoint instead. */
+.svc-map{aspect-ratio:1100/815}
+@media (max-width:760px){.svc-map{aspect-ratio:720/760}}
 </style>
 </head>
 <body>
@@ -353,7 +367,10 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
       The shop is on Miriam Avenue in Blasdell, so Hamburg, Blasdell, Orchard Park and Lackawanna are
       right on the route. We cover most of the greater Buffalo area besides &mdash; if you are near
       the ring below, just ask.</p>
-    <img src="assets/web/service-area-map.svg" alt="Map of Western New York showing the DS Handymen service area centred on Blasdell, covering Hamburg, Orchard Park, Lackawanna and the wider greater Buffalo area, with Lake Erie to the west" width="1000" height="780" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #DCE5EF;border-radius:12px;box-shadow:0 6px 22px rgba(27,42,74,.10)">
+    <picture>
+      <source media="(max-width: 760px)" srcset="assets/web/service-area-map-sm.svg" type="image/svg+xml">
+    <img class="svc-map" src="assets/web/service-area-map.svg" alt="Map of Western New York showing the DS Handymen service area centred on Blasdell, covering Hamburg, Orchard Park, Lackawanna and the wider greater Buffalo area, with Lake Erie to the west" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #DCE5EF;border-radius:12px;box-shadow:0 6px 22px rgba(27,42,74,.10)">
+    </picture>
     <p style="margin:16px 0 0;font-size:15.5px;color:#5B6779">
       Not on the map? Call the Bear on <a href="tel:+17168030091" style="color:#00338D;font-weight:600">(716) 803-0091</a> &mdash; if we can get there, we will.</p>
   </div>

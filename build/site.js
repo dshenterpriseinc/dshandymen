@@ -194,6 +194,13 @@ var __DSH_BASE=(function(){var d=document.currentScript;if(!d){var a=document.qu
     var src = v.getAttribute('data-src');
     v.removeAttribute('data-src');
     if (reduced) return;                       // poster only; the CSS hides the element
+    // These clips are decoration. Anyone who has asked their phone to save data,
+    // or is on a slow connection, keeps the poster and pays nothing for them.
+    var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ''))) {
+      v.style.display = 'none';
+      return;
+    }
     var start = function () {
       if (v.src) return;
       v.src = src;

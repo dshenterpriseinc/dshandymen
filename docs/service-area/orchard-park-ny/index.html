@@ -190,6 +190,20 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 @media (max-width:760px){
   .hero-scrim--light{background:linear-gradient(180deg, rgba(246,242,237,.95) 0%, rgba(246,242,237,.97) 100%)}
 }
+
+/* Sticky side rails have nowhere to sit once a two-column grid collapses to one.
+   The snow-depth ruler on the plowing page kept its position:sticky, detached,
+   and floated over the copy underneath it - the text was genuinely unreadable.
+   Scoped to main so the sticky header is left alone. */
+@media (max-width:760px){
+  main [style*="position: sticky"]{position:static !important;height:auto !important}
+}
+
+/* The service map ships in two crops with different shapes, so a single
+   width/height pair cannot reserve the right box for both - and reserving none
+   cost the page 0.149 CLS. Declare the ratio per breakpoint instead. */
+.svc-map{aspect-ratio:1100/815}
+@media (max-width:760px){.svc-map{aspect-ratio:720/760}}
 </style>
 </head>
 <body>

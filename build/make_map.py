@@ -25,10 +25,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEO = os.path.join(ROOT, 'build', 'geo')
 OUT = os.path.join(ROOT, 'docs', 'assets', 'web', 'service-area-map.svg')
 
+# Two builds from the same data. The wide one is the desktop map; the small one
+# is a tighter crop with larger type and fewer names, because the desktop map
+# scaled into a 308px phone column turns every secondary label into a smudge.
+VARIANTS = [
+    dict(out='service-area-map.svg', w=1100, h=815,
+         lon=(-79.35, -78.25), lat=(42.45, 43.05), scale=1.0, label_mi=17, extras=True),
+    dict(out='service-area-map-sm.svg', w=720, h=760,
+         lon=(-79.22, -78.30), lat=(42.50, 43.02), scale=1.55, label_mi=9, extras=False),
+]
+
 W, H = 1100, 815
 LON0, LON1 = -79.35, -78.25
 LAT0, LAT1 = 42.45, 43.05
 LATM = math.radians((LAT0 + LAT1) / 2)
+SCALE = 1.0
+LABEL_MI = 17
+EXTRAS = True
 
 HUB = (42.7973, -78.8234)          # the shop, Blasdell
 HUB_NAME = 'Blasdell'
@@ -107,13 +120,7 @@ def polygons(geom):
     return geom['coordinates']
 
 
-def main():
-    # One trimmed file rather than the 8 MB of source downloads: just the eight
-    # Western New York counties, the two lakes, and the place nodes. Committed, so
-    # the map can be regenerated without going back out to the network.
-    geo = json.load(io.open(os.path.join(GEO, 'wny.json'), encoding='utf-8'))
-    counties, lakes, places = geo['counties'], geo['lakes'], geo['places']
-
+def build_one(counties, lakes, places):
     s = []
     a = s.append
     a('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" role="img" '
@@ -193,9 +200,11 @@ def main():
                 a('<path d="%s" fill="%s" fill-opacity=".92" stroke="%s" '
                   'stroke-width="1.5" stroke-opacity=".5"/>' % (d, WATER, WATER_EDGE))
 
-    a('<text x="%.0f" y="%.0f" fill="#8FB6D8" font-family="Barlow Condensed,sans-serif" '
-      'font-size="27" letter-spacing="6" transform="rotate(-31 %.0f %.0f)" opacity=".95">LAKE ERIE</text>'
-      % (X(-79.20), Y(42.62), X(-79.20), Y(42.62)))
+    lex, ley = X(-79.20), Y(42.62)
+    if 20 < lex < W - 150 and 30 < ley < H - 30:
+        a('<text x="%.0f" y="%.0f" fill="#8FB6D8" font-family="Barlow Condensed,sans-serif" '
+          'font-size="%d" letter-spacing="6" transform="rotate(-31 %.0f %.0f)" opacity=".95">LAKE ERIE</text>'
+          % (lex, ley, int(round(27 * SCALE)), lex, ley))
 
     # ------------------------------------------------------------------ reach
     hx, hy = X(HUB[1]), Y(HUB[0])
@@ -302,21 +311,30 @@ def main():
             continue
         dx, dy, anchor = CORE_AT[nm]
         x, y = X(lon) + dx, Y(lat) + dy
-        w = len(nm) * 26 * 0.47
+        w = len(nm) * 26 * SCALE * 0.47
+        # hand-placed labels skip the collision test, so they need their own
+        # bounds clamp or a long name runs off the tighter mobile frame
+        half = w / 2 if anchor == 'middle' else (0 if anchor == 'start' else w)
+        x = min(max(x, 8 + half), W - 8 - (w - half))
+        y = min(max(y, 34), H - 12)
         cx = x + (w / 2 if anchor == 'start' else (-w / 2 if anchor == 'end' else 0))
         placed.append((cx, y, w, 26))
-        a('<text x="%.1f" y="%.1f" text-anchor="%s" fill="%s" font-family="Barlow Condensed,sans-serif" '
-          'font-weight="700" font-size="26" paint-order="stroke" stroke="%s" stroke-width="5.5" '
-          'stroke-opacity=".92">%s</text>' % (x, y, anchor, INK, LAND, nm))
+        core_fmt = ('<text x="%.1f" y="%.1f" text-anchor="%s" fill="%s" '
+                     'font-family="Barlow Condensed,sans-serif" font-weight="700" '
+                     'font-size="' + str(int(round(26 * SCALE))) + '" paint-order="stroke" '
+                     'stroke="%s" stroke-width="5.5" stroke-opacity=".92">%s</text>')
+        a(core_fmt % (x, y, anchor, INK, LAND, nm))
 
     for d, nm, lat, lon, kind in towns:
         if nm in CORE_AT:
             continue                      # already placed above
         if not (nm in CONTEXT or nm in NAMED):
             continue
+        if d > LABEL_MI and nm not in CONTEXT:
+            continue
         x, y = X(lon), Y(lat)
         core = nm in CORE
-        size = 26 if core else (18 if nm in CONTEXT else 16)
+        size = int(round((18 if nm in CONTEXT else 16) * SCALE))
         w = len(nm) * size * 0.47
         ly = y - (19 if core else 13)
         if not (4 < x - w / 2 and x + w / 2 < W - 4 and 26 < ly < H - 14):
@@ -335,7 +353,7 @@ def main():
     # County names last, so they can dodge everything already on the map. Context
     # rather than content: if a county has no clear space, it goes unlabelled
     # rather than sitting on top of a town.
-    for name, geom in feats.items():
+    for name, geom in (feats.items() if EXTRAS else []):
         ring = max((poly[0] for poly in polygons(geom)), key=len)
         cx = sum(pt[0] for pt in ring) / len(ring)
         cy = sum(pt[1] for pt in ring) / len(ring)
@@ -375,10 +393,24 @@ def main():
     a('</g>')
     a('</svg>')
 
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    io.open(OUT, 'w', encoding='utf-8').write('\n'.join(s))
-    print('  %s  (%d KB, %d towns in New York, %d dropped across the border)'
-          % (os.path.basename(OUT), os.path.getsize(OUT) // 1024 or 1, len(towns), dropped))
+    path = os.path.join(os.path.dirname(OUT), CURRENT['out'])
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    io.open(path, 'w', encoding='utf-8').write(chr(10).join(s))
+    print('  %-26s %2d KB  %3d towns  %2d dropped over the border'
+          % (CURRENT['out'], os.path.getsize(path) // 1024 or 1, len(towns), dropped))
+
+
+def main():
+    global W, H, LON0, LON1, LAT0, LAT1, LATM, SCALE, LABEL_MI, EXTRAS, CURRENT
+    geo = json.load(io.open(os.path.join(GEO, 'wny.json'), encoding='utf-8'))
+    for v in VARIANTS:
+        CURRENT = v
+        W, H = v['w'], v['h']
+        LON0, LON1 = v['lon']
+        LAT0, LAT1 = v['lat']
+        LATM = math.radians((LAT0 + LAT1) / 2)
+        SCALE, LABEL_MI, EXTRAS = v['scale'], v['label_mi'], v['extras']
+        build_one(geo['counties'], geo['lakes'], geo['places'])
 
 
 if __name__ == '__main__':

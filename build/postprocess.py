@@ -145,7 +145,10 @@ MAP_BLOCK = """
       The shop is on Miriam Avenue in Blasdell, so Hamburg, Blasdell, Orchard Park and Lackawanna are
       right on the route. We cover most of the greater Buffalo area besides &mdash; if you are near
       the ring below, just ask.</p>
-    <img src="{PREFIX}assets/web/service-area-map.svg" alt="Map of Western New York showing the DS Handymen service area centred on Blasdell, covering Hamburg, Orchard Park, Lackawanna and the wider greater Buffalo area, with Lake Erie to the west" width="1000" height="780" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #DCE5EF;border-radius:12px;box-shadow:0 6px 22px rgba(27,42,74,.10)">
+    <picture>
+      <source media="(max-width: 760px)" srcset="{PREFIX}assets/web/service-area-map-sm.svg" type="image/svg+xml">
+    <img class="svc-map" src="{PREFIX}assets/web/service-area-map.svg" alt="Map of Western New York showing the DS Handymen service area centred on Blasdell, covering Hamburg, Orchard Park, Lackawanna and the wider greater Buffalo area, with Lake Erie to the west" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #DCE5EF;border-radius:12px;box-shadow:0 6px 22px rgba(27,42,74,.10)">
+    </picture>
     <p style="margin:16px 0 0;font-size:15.5px;color:#5B6779">
       Not on the map? Call the Bear on <a href="tel:+17168030091" style="color:#00338D;font-weight:600">(716) 803-0091</a> &mdash; if we can get there, we will.</p>
   </div>
@@ -183,6 +186,9 @@ COPY_FIXES = [
      "&mdash; by our <strong>Pigeon Division</strong>, led by Nichole Pigeon."),
     # stale "new division" language elsewhere
     ("Now... introducing the Pigeon Division!", "The Pigeon Division"),
+    # the ruler is a left-hand rail on desktop but sits above the copy once the
+    # grid collapses, so the wording cannot name a direction
+    ('that stick on the left is what', 'that stick is what'),
 ]
 
 def fix_copy(s):

@@ -191,6 +191,20 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 @media (max-width:760px){
   .hero-scrim--light{background:linear-gradient(180deg, rgba(246,242,237,.95) 0%, rgba(246,242,237,.97) 100%)}
 }
+
+/* Sticky side rails have nowhere to sit once a two-column grid collapses to one.
+   The snow-depth ruler on the plowing page kept its position:sticky, detached,
+   and floated over the copy underneath it - the text was genuinely unreadable.
+   Scoped to main so the sticky header is left alone. */
+@media (max-width:760px){
+  main [style*="position: sticky"]{position:static !important;height:auto !important}
+}
+
+/* The service map ships in two crops with different shapes, so a single
+   width/height pair cannot reserve the right box for both - and reserving none
+   cost the page 0.149 CLS. Declare the ratio per breakpoint instead. */
+.svc-map{aspect-ratio:1100/815}
+@media (max-width:760px){.svc-map{aspect-ratio:720/760}}
 </style>
 </head>
 <body>
@@ -271,7 +285,7 @@ img[style*="width: 170px; height: 170px"]{width:206px !important;height:206px !i
 </div>
 <div style="max-width: 720px;">
 <h2 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(19, 46, 53);'>How it works</h2>
-<p style="margin: 0px 0px 40px; font-size: 18.5px; color: rgb(55, 73, 78);">Keep scrolling &mdash; that stick on the left is what an average Southtowns winter does to a driveway. It's why the plow list fills up by Thanksgiving.</p>
+<p style="margin: 0px 0px 40px; font-size: 18.5px; color: rgb(55, 73, 78);">Keep scrolling &mdash; that stick is what an average Southtowns winter does to a driveway. It's why the plow list fills up by Thanksgiving.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px;">
 <div style="background: rgb(242, 249, 250); border: 1px solid rgb(218, 235, 239); border-radius: 8px; padding: 28px;">
 <h3 style='margin: 0px 0px 10px; font-family: "Barlow Condensed", "Barlow Condensed Fallback", sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; color: rgb(19, 46, 53);'>Seasonal contract</h3>
