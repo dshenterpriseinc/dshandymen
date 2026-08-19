@@ -23,6 +23,7 @@ import os, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'assets', '09_scenes')
+EXTRA = os.path.join(ROOT, 'assets', '09_commercials')
 OUT = os.path.join(ROOT, 'site-export', 'assets', 'video')
 
 # (page slug, scene file, start seconds, seconds to keep)
@@ -34,6 +35,9 @@ CLIPS = [
     ('house-clearance',           '16A.mp4', 1.0, 7.0),
     ('sunrooms-patio-enclosures', '16B.mp4', 1.0, 7.0),
     ('services',                  '05B.mp4', 1.0, 7.0),
+    # Dropped in by hand from Gemini - no pigeon footage exists in the scene
+    # library. Encoded the same way as the rest so it matches.
+    ('design-remodeling',         'pigeon-design.mp4', 0.5, 7.0),
 ]
 
 W = 960             # behind a heavy scrim, so detail beyond this is not seen
@@ -53,6 +57,8 @@ def main():
     total = 0
     for slug, src, ss, dur in CLIPS:
         p = os.path.join(SRC, src)
+        if not os.path.exists(p):
+            p = os.path.join(EXTRA, src)
         if not os.path.exists(p):
             print('   !! missing source %s' % src)
             continue

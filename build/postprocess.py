@@ -604,6 +604,9 @@ HERO_VIDEO = {
     'house-clearance': 'house-clearance',
     'sunrooms-patio-enclosures': 'sunrooms-patio-enclosures',
     'services': 'services',
+    # registered ahead of its footage: add_hero_video skips any page whose clip is
+    # not on disk yet, so this switches itself on the moment the file is encoded
+    'design-remodeling': 'design-remodeling',
 }
 
 
@@ -617,8 +620,10 @@ def add_hero_video(path, s, prefix):
     rel = path.replace(chr(92), '/').split('/docs/')[1]
     page = rel.split('/')[0]
     slug = HERO_VIDEO.get(page)
-    if not slug or 'hero-vid' in s:
+    if not slug or '<video class="hero-vid"' in s:
         return s
+    if not os.path.exists(os.path.join(OUT, 'assets', 'video', 'hero-%s.mp4' % slug)):
+        return s          # footage not cut yet; leave the hero alone rather than 404
 
     body = s.index('<body>')
     m = re.compile(r'<section\b[^>]*>').search(s, body)
